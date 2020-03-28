@@ -12,8 +12,8 @@
     "clean": "rm -rf dist && cpy manifest.json dist && cpy src/assets/* dist/assets",
     "prebuild": "npm run clean",
     "prewatch": "npm run clean",
-    "watch:popup": "npm run watch:build --prefix src/popup",
-    "build:popup": "npm run build --prefix src/popup && cd src/popup/build && cpy * /static/* ../../../dist/popup --parents"
+    "watch:frontEnd": "npm run watch:build --prefix src/frontEnd",
+    "build:frontEnd": "npm run build --prefix src/frontEnd && cd src/frontEnd/build && cpy * /static/* ../../../dist/frontEnd --parents"
   },
   "repository": {
     "type": "git",

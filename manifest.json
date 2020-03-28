@@ -15,14 +15,14 @@
     "persistent": false
   },
   "browser_action": {
-    "default_popup": "popup/index.html",
+    "default_popup": "frontEnd/index.html",
     "default_title": "React Chrome Extension Starter"
   },
   "icons": {
-    "16": "assets/EduGlobe-logos_16x16.png",
-    "32": "assets/EduGlobe-logos_32x32.png",
-    "48": "assets/EduGlobe-logos_48x48.png",
-    "128": "assets/EduGlobe-logos_128x128.png"
+    "16": "assets/EduGlobe-logo-16x16.png",
+    "32": "assets/EduGlobe-logo-32x32.png",
+    "48": "assets/EduGlobe-logo-48x48.png",
+    "128": "assets/EduGlobe-logo-128x128.png"
   },
   "web_accessible_resources": ["assets/*"],
   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
