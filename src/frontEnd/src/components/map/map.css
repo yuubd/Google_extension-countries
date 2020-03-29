@@ -1,0 +1,9 @@
+div > .place-card.place-card-large {
+    display: none;
+}
+
+div > iframe {
+    width:"600px";
+    height: "600px";
+    border: "0px";
+}
