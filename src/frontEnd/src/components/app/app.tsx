@@ -1,15 +1,13 @@
 import React from 'react';
-import logo from '../../images/logo.svg';
 import './app.css';
 
-import { Map } from '../map'
+import { Wrapper } from '../wrapper'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Map/>
+        <Wrapper/>
       </header>
     </div>
   );
