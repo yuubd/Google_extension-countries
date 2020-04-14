@@ -12,11 +12,12 @@ const EXAMPLE_CENTER = {
   zoom: 11  
 };
 
-function Map() {
+function Map(props: { country: string }) {
+  const mapRequest = `https://www.google.com/maps/embed/v1/place?q=${props.country}&key=AIzaSyDPqfgpCOeRSh817V36gHv1WfQclbWkVSg`
   return (
     <div className="map">
       <iframe title="test" frameBorder="0" 
-      src="https://www.google.com/maps/embed/v1/place?q=canada&key=KEY_GOES_HERE"/>
+      src={mapRequest}/>
     </div>
   );
 }

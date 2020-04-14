@@ -2,10 +2,16 @@ import React from 'react';
 import './infoPanel.css';
 import { InfoRow } from './infoRow';
 
-function InfoPanel() {
+import { InfoRowModel } from '../../data/models';
+
+function InfoPanel(props: { infoRows: Array<InfoRowModel> }) {
   return (
     <div>
-      <InfoRow title="testTitle" value="tsetValue" />
+      {
+        props.infoRows.map((row: InfoRowModel) => 
+          <InfoRow title={row.title} value={row.value} /> 
+        )
+      }
     </div>
   );
 }

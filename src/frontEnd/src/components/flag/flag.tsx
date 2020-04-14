@@ -1,10 +1,11 @@
 import React from 'react';
 import './flag.css';
 
-function Flag(props: string) {
+function Flag(props: { countryCode: string; }) {
+  const srcStr = `https://restcountries.eu/data/${props.countryCode}.svg`;
   return (
     <div className="flag" >
-      <img src="https://restcountries.eu/data/col.svg" style = {{width: "500px"}}/>
+      <img src={srcStr} style = {{width: "100px"}}/>
     </div>
   );
 }
