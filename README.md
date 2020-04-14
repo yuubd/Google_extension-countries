@@ -3,4 +3,4 @@ Know more countries
 
 $/ npm install
 $/src/frontEnd npm install
-$/ npm run watch
+$/ npm run watch    
