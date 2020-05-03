@@ -1,0 +1,18 @@
+.name-flag {
+    height: 100px;
+    border-bottom: 1px solid #DBDFE3;
+}
+
+.ui.grid>.row {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.country-name {
+    font-family: "Ubuntu Light";
+    font-size: 32px;
+}
+
+.main-layout {
+    height: 825px;
+}
