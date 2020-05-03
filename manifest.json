@@ -2,7 +2,7 @@
   "name": "Getting Started Example",
   "version": "1.0",
   "description": "Build an Extension!",
-  "permissions": ["activeTab", "tabs", "declarativeContent", "storage", "debugger"],
+  "permissions": ["notifications", "activeTab", "tabs", "declarativeContent", "storage", "debugger"],
   "content_scripts": [
     {
       "js": ["contentscript.js"],
@@ -16,7 +16,7 @@
   },
   "browser_action": {
     "default_popup": "frontEnd/index.html",
-    "default_title": "React Chrome Extension Starter"
+    "default_title": "EduGlobe"
   },
   "icons": {
     "16": "assets/EduGlobe-logo-16x16.png",
