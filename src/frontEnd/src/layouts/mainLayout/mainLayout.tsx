@@ -13,7 +13,7 @@ import { CountryModel } from '../../data/models/CountryModel';
 type RawCountry = {
     name: string,
     flag: string,
-    subregion: string,
+    region: string,
     capital: string,
     population: string,
     languages: Name[],
@@ -76,8 +76,8 @@ function MainLayout() {
         const name: string = rawCountry.name;
         const flagUrl: string = rawCountry.flag;
 
-        const continent = rawCountry.subregion;
-        const population = rawCountry.population;
+        const continent = rawCountry.region;
+        const population = formatNumber(rawCountry.population);
         const capital = rawCountry.capital;
         const language = rawCountry.languages[0].name;
         const currency = rawCountry.currencies[0].name;
@@ -97,6 +97,22 @@ function MainLayout() {
     function getInfoRows(infos: Array<Object>) {
         console.log(infos); // console
         return infos.map(rowInfo => new InfoRowModel(rowInfo.name, rowInfo.value));
+    }
+
+    function formatNumber(num: number): string {
+        const numStr = num.toString()
+        if (numStr.length <= 3) { return numStr; }
+        let res = "";
+        let acc = 3;
+        for (let i = numStr.length-1; i > -1; i--) {
+            if (acc === 0) {
+                res = "," + res;
+                acc = 2;
+           } else { acc--; }
+           
+           res = numStr[i] + res;
+         }
+        return res;
     }
     
     async function addNewCountry(): Promise<void> {
@@ -143,14 +159,16 @@ function MainLayout() {
                     <Grid.Row className="name-flag">
                         <Grid.Column textAlign="center" verticalAlign="middle" width={10}>
                             <div className="country-name">{countryModelArr[currIdx].name}</div>
+                            <div className="date">MON, APRIL, 13, 12:00PM</div>
                         </Grid.Column>
-                        <Grid.Column textAlign="center" verticalAlign="middle" width={5}>
+                        <Grid.Column textAlign="right" verticalAlign="middle" width={5} style={{paddingRight: "0px;"}}>
                             <Flag flagUrl={countryModelArr[currIdx].flagUrl} />
                         </Grid.Column>
                     </Grid.Row>
-
-                    <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
                     
+                    <Grid.Row>
+                        <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
+                    </Grid.Row>
                 
                     <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
                     <Button icon='right arrow' labelPosition='right' onClick={setNextCountry} />

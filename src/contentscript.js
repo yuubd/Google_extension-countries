@@ -34,7 +34,7 @@ async function activityWatcher(){
                     type: 'notification',
                     options: {
                         title: 'EduGlobe',
-                        message: 'What is the name of the country with the flag',
+                        message: 'Can you recognize this country? \nOpen Eduglobe it to explore!',
                         iconUrl: `https://restcountries.eu/data/${alphaCode}.svg`,
                         type: 'basic'
                     } 

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './infoRow.css';
-import { Grid } from 'semantic-ui-react'
+import url from '../resources/continent.png';
+
 
 type Row = {
   title: string,
@@ -9,14 +10,13 @@ type Row = {
 
 function InfoRow(props: Row) {
     return (
-        <Grid.Row className="infoRow">
-            <Grid.Column>
-                <img src="get it with props.title" alt="rowIcon" />
-            </Grid.Column>
-            <Grid.Column>
-                <div>{props.title + " : " + props.value}</div>
-            </Grid.Column>
-        </Grid.Row>
+        <div className="infoRow" >
+            <div className="icon-title">
+              <img className="icon-img" src={url} alt="icon"/>
+              <div className="title">{props.title}</div>
+            </div>
+            <div className="value">{props.value}</div>
+        </div>
     );
 }
 

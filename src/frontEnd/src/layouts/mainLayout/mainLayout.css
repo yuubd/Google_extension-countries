@@ -9,10 +9,17 @@
 }
 
 .country-name {
-    font-family: "Ubuntu Light";
     font-size: 32px;
+    line-height: 32px;
+    font-weight: 300;
+    text-align: left;
+    margin: auto auto auto 5px;
+}
+.date {
+    text-align: left;
+    color: #808285;
+    margin: 3px auto auto 7px;
 }
 
 .main-layout {
-    height: 825px;
 }

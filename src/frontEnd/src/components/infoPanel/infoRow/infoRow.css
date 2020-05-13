@@ -1,3 +1,27 @@
 .infoRow {
+    display: flex;
+    margin-bottom: 24px;
     font-size: 18px;
+    font-weight: 300;
+} 
+
+.icon-title {
+    width: 150px;
+    margin: auto 0;
+    display: flex;
+    text-align: center;
+}
+
+.title {
+    margin: auto 0 auto 15px;
+    color: #1B75BB;
+}
+
+.value {
+    margin: auto 0;
+    color: #808285;
+}
+
+.icon-img {
+    width: 25px;
 }
