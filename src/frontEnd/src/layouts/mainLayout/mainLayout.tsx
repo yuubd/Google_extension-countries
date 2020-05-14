@@ -13,6 +13,7 @@ import { CountryModel } from '../../data/models/CountryModel';
 type RawCountry = {
     name: string,
     flag: string,
+    timezones: string[],
     region: string,
     capital: string,
     population: string,
@@ -75,9 +76,10 @@ function MainLayout() {
     function getCountryModel(rawCountry: RawCountry): CountryModel {
         const name: string = rawCountry.name;
         const flagUrl: string = rawCountry.flag;
+        const timezone: string = rawCountry.timezones[0]; // use index 0 (for now)
 
         const continent = rawCountry.region;
-        const population = formatNumber(rawCountry.population);
+        const population = formatNumber(+rawCountry.population);
         const capital = rawCountry.capital;
         const language = rawCountry.languages[0].name;
         const currency = rawCountry.currencies[0].name;
@@ -91,7 +93,7 @@ function MainLayout() {
         ]
         const rows: Array<InfoRowModel> = getInfoRows(infoForRows);
 
-        return new CountryModel(name, flagUrl, rows);
+        return new CountryModel(name, flagUrl, timezone, rows);
     }
 
     function getInfoRows(infos: Array<Object>) {
@@ -159,9 +161,10 @@ function MainLayout() {
                     <Grid.Row className="name-flag">
                         <Grid.Column textAlign="center" verticalAlign="middle" width={10}>
                             <div className="country-name">{countryModelArr[currIdx].name}</div>
-                            <div className="date">MON, APRIL, 13, 12:00PM</div>
+                            {/* <div className="date">MON, APRIL, 13, 12:00PM</div> */}
+                            <div className="date">{countryModelArr[currIdx].timezone}</div>
                         </Grid.Column>
-                        <Grid.Column textAlign="right" verticalAlign="middle" width={5} style={{paddingRight: "0px;"}}>
+                        <Grid.Column textAlign="right" verticalAlign="middle" width={5} style={{paddingRight: "0px"}}>
                             <Flag flagUrl={countryModelArr[currIdx].flagUrl} />
                         </Grid.Column>
                     </Grid.Row>
