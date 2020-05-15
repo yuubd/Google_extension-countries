@@ -172,14 +172,14 @@ function MainLayout() {
                     </Grid.Row>
 
                     <Grid.Row className="name-flag">
-                        <Grid.Column textAlign="center" verticalAlign="middle" width={10}>
+                        <div className="name-flag__text">
                             { makeCountryNameElement(countryModelArr[currIdx].name) }
                             {/* <div className="date">MON, APRIL, 13, 12:00PM</div> */}
                             <div className="date">{countryModelArr[currIdx].timezone}</div>
-                        </Grid.Column>
-                        <Grid.Column textAlign="right" verticalAlign="middle" width={5} style={{paddingRight: "0px"}}>
+                        </div>
+                        <div className="name-flag__flag">
                             <Flag flagUrl={countryModelArr[currIdx].flagUrl} />
-                        </Grid.Column>
+                        </div>
                     </Grid.Row>
                     
                     <Grid.Row>

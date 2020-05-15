@@ -1,6 +1,22 @@
 .name-flag {
     height: 100px;
     border-bottom: 1px solid #DBDFE3;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.name-flag__text {
+    text-align: center;
+    vertical-align: middle;
+    margin-left: 1rem;
+    flex: 1 1 0;
+}
+
+.name-flag__flag {
+    text-align: right;
+    vertical-align: middle;
+    margin-right: 1.75rem;
+    flex: 0;
 }
 
 .ui.grid>.row {
@@ -11,7 +27,7 @@
 .country-name {
     line-height: 1;
     text-align: left;
-    margin: auto auto auto 5px;
+    margin: auto 20px auto 5px;
 }
 .date {
     text-align: left;
@@ -19,5 +35,4 @@
     margin: 3px auto auto 7px;
 }
 
-.main-layout {
-}
+/* .main-layout {} */
