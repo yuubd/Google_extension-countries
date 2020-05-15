@@ -142,6 +142,19 @@ function MainLayout() {
         else
             setCurrIdx(currIdx + 1);
     }
+
+    function makeCountryNameElement(name: string): JSX.Element {
+        let size: string = "20px"; // init with min size
+        const fontSizes: string[] = ["32px", "28px", "24px"];
+        const maxLengths: number[] = [12, 22, 32];
+        for (let index in maxLengths) {
+            if (name.length <= maxLengths[index]) {
+                size = fontSizes[index];
+                break;
+            }
+        }
+        return (<div className="country-name" style={{fontSize: size}}>{ name }</div>);
+    }
     
     // main
     if (!load)
@@ -160,7 +173,7 @@ function MainLayout() {
 
                     <Grid.Row className="name-flag">
                         <Grid.Column textAlign="center" verticalAlign="middle" width={10}>
-                            <div className="country-name">{countryModelArr[currIdx].name}</div>
+                            { makeCountryNameElement(countryModelArr[currIdx].name) }
                             {/* <div className="date">MON, APRIL, 13, 12:00PM</div> */}
                             <div className="date">{countryModelArr[currIdx].timezone}</div>
                         </Grid.Column>
