@@ -1,10 +1,11 @@
 export class CountryModel {
     public readonly name: string;                  // used for Map
     public readonly flagUrl: string;               // used for flag
+    public readonly timezone: string;              // used for timezone
     public readonly infoRows: Array<InfoRowModel>; // used for infoPanel
 
     // TODO implement a layer between layout componenet and data model to convert JSON to data model
-    constructor(name: string = "", flagUrl: string = "", infoRows: Array<InfoRowModel> = []) {
+    constructor(name: string = "", flagUrl: string = "", timezone: string = "", infoRows: Array<InfoRowModel> = []) {
         // if (!name) {
         //     throw new Error(`Error instantiating CountryModel, name invalid: ${name}`);
         // } else if(!code) {
@@ -14,6 +15,7 @@ export class CountryModel {
         // }
         this.name = name;
         this.flagUrl = flagUrl;
+        this.timezone = timezone;
         this.infoRows = infoRows;
     }
 }

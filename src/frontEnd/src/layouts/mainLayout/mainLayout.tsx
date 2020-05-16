@@ -5,7 +5,7 @@ import './mainLayout.css';
 
 import { InfoPanel } from '../../components/infoPanel'
 import { Map } from '../../components/map'
-import { Flag } from '../../components/flag'
+import { NameSection } from '../../components/nameSection'
 import { InfoRowModel } from '../../data/models';
 import { getRandomAlphaCode } from './utils';
 import { CountryModel } from '../../data/models/CountryModel';
@@ -13,9 +13,10 @@ import { CountryModel } from '../../data/models/CountryModel';
 type RawCountry = {
     name: string,
     flag: string,
+    timezones: string[],
     region: string,
     capital: string,
-    population: string,
+    population: number,
     languages: Name[],
     currencies: Name[]
 }
@@ -75,6 +76,7 @@ function MainLayout() {
     function getCountryModel(rawCountry: RawCountry): CountryModel {
         const name: string = rawCountry.name;
         const flagUrl: string = rawCountry.flag;
+        const timezone: string = rawCountry.timezones[0]; // use index 0 (for now)
 
         const continent = rawCountry.region;
         const population = formatNumber(rawCountry.population);
@@ -91,7 +93,7 @@ function MainLayout() {
         ]
         const rows: Array<InfoRowModel> = getInfoRows(infoForRows);
 
-        return new CountryModel(name, flagUrl, rows);
+        return new CountryModel(name, flagUrl, timezone, rows);
     }
 
     function getInfoRows(infos: Array<Object>) {
@@ -140,7 +142,7 @@ function MainLayout() {
         else
             setCurrIdx(currIdx + 1);
     }
-    
+
     // main
     if (!load)
         return <div> Loading... </div>; 
@@ -156,14 +158,12 @@ function MainLayout() {
                         <Map country={countryModelArr[currIdx].name} />
                     </Grid.Row>
 
-                    <Grid.Row className="name-flag">
-                        <Grid.Column textAlign="center" verticalAlign="middle" width={10}>
-                            <div className="country-name">{countryModelArr[currIdx].name}</div>
-                            <div className="date">MON, APRIL, 13, 12:00PM</div>
-                        </Grid.Column>
-                        <Grid.Column textAlign="right" verticalAlign="middle" width={5} style={{paddingRight: "0px;"}}>
-                            <Flag flagUrl={countryModelArr[currIdx].flagUrl} />
-                        </Grid.Column>
+                    <Grid.Row>
+                        <NameSection
+                            name={countryModelArr[currIdx].name}
+                            timezone={countryModelArr[currIdx].timezone}
+                            flagUrl={countryModelArr[currIdx].flagUrl}
+                        />
                     </Grid.Row>
                     
                     <Grid.Row>
