@@ -5,7 +5,7 @@ import './mainLayout.css';
 
 import { InfoPanel } from '../../components/infoPanel'
 import { Map } from '../../components/map'
-import { Flag } from '../../components/flag'
+import { NameSection } from '../../components/nameSection'
 import { InfoRowModel } from '../../data/models';
 import { getRandomAlphaCode } from './utils';
 import { CountryModel } from '../../data/models/CountryModel';
@@ -16,7 +16,7 @@ type RawCountry = {
     timezones: string[],
     region: string,
     capital: string,
-    population: string,
+    population: number,
     languages: Name[],
     currencies: Name[]
 }
@@ -79,7 +79,7 @@ function MainLayout() {
         const timezone: string = rawCountry.timezones[0]; // use index 0 (for now)
 
         const continent = rawCountry.region;
-        const population = formatNumber(+rawCountry.population);
+        const population = formatNumber(rawCountry.population);
         const capital = rawCountry.capital;
         const language = rawCountry.languages[0].name;
         const currency = rawCountry.currencies[0].name;
@@ -143,19 +143,6 @@ function MainLayout() {
             setCurrIdx(currIdx + 1);
     }
 
-    function makeCountryNameElement(name: string): JSX.Element {
-        let size: string = "20px"; // init with min size
-        const fontSizes: string[] = ["32px", "28px", "24px"];
-        const maxLengths: number[] = [12, 22, 32];
-        for (let index in maxLengths) {
-            if (name.length <= maxLengths[index]) {
-                size = fontSizes[index];
-                break;
-            }
-        }
-        return (<div className="country-name" style={{fontSize: size}}>{ name }</div>);
-    }
-    
     // main
     if (!load)
         return <div> Loading... </div>; 
@@ -171,15 +158,12 @@ function MainLayout() {
                         <Map country={countryModelArr[currIdx].name} />
                     </Grid.Row>
 
-                    <Grid.Row className="name-flag">
-                        <div className="name-flag__text">
-                            { makeCountryNameElement(countryModelArr[currIdx].name) }
-                            {/* <div className="date">MON, APRIL, 13, 12:00PM</div> */}
-                            <div className="date">{countryModelArr[currIdx].timezone}</div>
-                        </div>
-                        <div className="name-flag__flag">
-                            <Flag flagUrl={countryModelArr[currIdx].flagUrl} />
-                        </div>
+                    <Grid.Row>
+                        <NameSection
+                            name={countryModelArr[currIdx].name}
+                            timezone={countryModelArr[currIdx].timezone}
+                            flagUrl={countryModelArr[currIdx].flagUrl}
+                        />
                     </Grid.Row>
                     
                     <Grid.Row>

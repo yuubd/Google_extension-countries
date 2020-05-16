@@ -15,7 +15,7 @@ export class CountryModel {
         // }
         this.name = name;
         this.flagUrl = flagUrl;
-        this.timezone = timezone === "UTC" ? "" : timezone; // hide undefined timezones
+        this.timezone = timezone;
         this.infoRows = infoRows;
     }
 }
