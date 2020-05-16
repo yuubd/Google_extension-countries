@@ -8,22 +8,21 @@
 }
 
 .name-section__text {
-    margin-left: 1rem;
+    margin-left: 18px;
 }
 
 .country-name {
     line-height: 1;
-    margin: auto 20px auto 5px;
+    width: 100%;
 }
 
 .timezone {
     color: #808285;
     margin-top: 3px;
-    margin-left: 7px;
 }
 
 .name-section__flag {
-    margin-right: 1.5rem;
+    margin: 0 24px;
 }
 
 .flag-img {

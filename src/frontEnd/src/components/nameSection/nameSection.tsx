@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './nameSection.css';
 
 function NameSection(props: { name: string, timezone: string, flagUrl: string }) {
 
+    // states
+    const [isSearching, setSearching]: [boolean, any] = useState(false);
+    const [searchValue, setSearchValue]: [string, any] = useState("");
+
+    function startSearch(): void {
+        setSearching(true);
+        setSearch(props.name);
+    }
+
+    function setSearch(value: string): void {
+        setSearchValue(value);
+    }
+
     function makeCountryNameElement(name: string): JSX.Element {
-        let size: string = "20px"; // init with min size
-        const fontSizes: string[] = ["32px", "28px", "24px"];
+        let size: number = 20; // init with min size, in pixels
+        const fontSizes: number[] = [32, 28, 24]; // in pixels
         const maxLengths: number[] = [12, 22, 32];
         for (let index in maxLengths) {
             if (name.length <= maxLengths[index]) {
@@ -13,7 +26,23 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
                 break;
             }
         }
-        return <div className="country-name" style={{fontSize: size}}>{ name }</div>;
+        if (isSearching) {
+            return (
+                <input
+                    className="country-name"
+                    style={{fontSize: (size*0.9)+"px"}}
+                    placeholder="Search"
+                    value={searchValue}
+                    onChange={(event)=>setSearch(event.target.value)}
+                />
+            );
+        } else {
+            return (
+                <div className="country-name" style={{fontSize: size+"px"}} onClick={startSearch}>
+                    { name }
+                </div>
+            );
+        }
     }
 
     function makeTimezoneElement(timezone: string): JSX.Element {
@@ -27,9 +56,9 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
                 { makeCountryNameElement(props.name) }
                 { makeTimezoneElement(props.timezone) }
             </div>
-            <div className="name-section__flag">
+            <div className="name-section__flag" onClick={() => setSearching(!isSearching)}>
                 <img className="flag-img" src={props.flagUrl} />
-            </div>    
+            </div>
         </div>
     );
 }
