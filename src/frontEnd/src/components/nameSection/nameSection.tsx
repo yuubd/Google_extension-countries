@@ -28,13 +28,16 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
         }
         if (isSearching) {
             return (
-                <input
-                    className="country-name"
-                    style={{fontSize: (size*0.9)+"px"}}
-                    placeholder="Search"
-                    value={searchValue}
-                    onChange={(event)=>setSearch(event.target.value)}
-                />
+                <div className="country-name">
+                    <input
+                        className="country-name__input"
+                        style={{fontSize: (size*0.9)+"px"}}
+                        placeholder="Search"
+                        value={searchValue}
+                        onChange={(event)=>setSearch(event.target.value)}
+                    />
+                    <i className="close link icon country-name__close" onClick={()=>setSearching(false)}></i>
+                </div>
             );
         } else {
             return (
@@ -56,7 +59,7 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
                 { makeCountryNameElement(props.name) }
                 { makeTimezoneElement(props.timezone) }
             </div>
-            <div className="name-section__flag" onClick={() => setSearching(!isSearching)}>
+            <div className="name-section__flag">
                 <img className="flag-img" src={props.flagUrl} />
             </div>
         </div>

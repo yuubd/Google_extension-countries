@@ -14,6 +14,23 @@
 .country-name {
     line-height: 1;
     width: 100%;
+    position: relative;
+}
+
+.country-name__input {
+    width: 100%;
+}
+
+.country-name__close {
+    margin: 0 6px !important;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.country-name__close__icon {
+    align-self: center;
 }
 
 .timezone {
