@@ -38,6 +38,7 @@ function MainLayout() {
     // states
     const [currIdx, setCurrIdx]: [number, any] = useState(0);
     const [countryModelArr, setCountruModelArr]: [Array<CountryModel>, any] = useState([]);
+    const [isSearching, setSearching]: [boolean, any] = useState(false);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
     
@@ -132,11 +133,13 @@ function MainLayout() {
 
     // used in the template
     function setPrevCountry(): void {
+        setSearching(false);
         if (currIdx > 0)
             setCurrIdx(currIdx - 1);
     }
 
     function setNextCountry(): void {
+        setSearching(false);
         if (currIdx === countryModelArr.length - 1)
             addNewCountry();
         else
@@ -144,6 +147,7 @@ function MainLayout() {
     }
 
     function setNextCountryAndReplace(code: string): void {
+        setSearching(false);
         addNewCountry(code);
         countryModelArr.splice(currIdx+1); // remove elements after it
     }
@@ -168,6 +172,8 @@ function MainLayout() {
                             name={countryModelArr[currIdx].name}
                             timezone={countryModelArr[currIdx].timezone}
                             flagUrl={countryModelArr[currIdx].flagUrl}
+                            isSearching={isSearching}
+                            setSearching={(state: boolean) => setSearching(state)}
                             changeCountry={(code: string)=>setNextCountryAndReplace(code)}
                         />
                     </Grid.Row>

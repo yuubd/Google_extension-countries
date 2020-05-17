@@ -3,11 +3,16 @@ import './nameSection.css';
 
 import { SearchBar } from '../searchBar';
 
-function NameSection(props: { name: string, timezone: string, flagUrl: string, changeCountry: Function }) {
+function NameSection(props: {
+    name: string,
+    timezone: string,
+    flagUrl: string,
+    isSearching: boolean,
+    setSearching: Function,
+    changeCountry: Function
+}) {
 
     // states
-    const [isSearching, setSearching]: [boolean, any] = useState(false);
-
     function makeCountryNameElement(name: string): JSX.Element {
         let size: number = 20; // init with min size, in pixels
         const fontSizes: number[] = [32, 28, 24]; // in pixels
@@ -18,16 +23,16 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string, c
                 break;
             }
         }
-        if (isSearching) {
+        if (props.isSearching) {
             return <SearchBar
                 initStr={props.name}
                 size={size}
-                searchOff={()=>setSearching(false)}
+                setSearching={()=>props.setSearching(false)}
                 changeCountry={(code: string) => props.changeCountry(code)}
             />;
         } else {
             return (
-                <div className="country-name" style={{fontSize: size+"px"}} onClick={()=>setSearching(true)}>
+                <div className="country-name" style={{fontSize: size+"px"}} onClick={()=>props.setSearching(true)}>
                     { name }
                 </div>
             );

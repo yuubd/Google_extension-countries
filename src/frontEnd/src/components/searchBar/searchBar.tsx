@@ -7,7 +7,7 @@ type CountryId = {
     code: string
 }
 
-function SearchBar(props: { initStr: string, size: number, searchOff: Function, changeCountry: Function }) {
+function SearchBar(props: { initStr: string, size: number, setSearching: Function, changeCountry: Function }) {
 
     // states
     const [searchValue, setSearchValue]: [string, any] = useState(props.initStr);
@@ -32,11 +32,6 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function, 
         return matched;
     }
 
-    function onClickSearchResult(isoCode: string): void {
-        props.changeCountry(isoCode);
-        props.searchOff();
-    }
-
     function renderResults(): JSX.Element[] {
         let resultElements: JSX.Element[] = [];
         if ((results.length === 0)) {
@@ -46,7 +41,7 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function, 
         } else {
             for (let result of results) {
                 resultElements.push(
-                    <div key={ result.code } className="search-bar__results__result" onClick={()=>onClickSearchResult(result.code)}>
+                    <div key={ result.code } className="search-bar__results__result" onClick={()=>props.changeCountry(result.code)}>
                         <div className="search-bar__results__name">{ result.name }</div>
                     </div>
                 );
@@ -65,7 +60,7 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function, 
                 onChange={(event)=>onUpdateSearch(event.target.value)}
             />
             <div className="search-bar__button-bar">
-                <i className="close link icon search-bar__icon" onClick={()=>props.searchOff()}></i>
+                <i className="close link icon search-bar__icon" onClick={()=>props.setSearching()}></i>
             </div>
             <div className="search-bar__results">
                 { renderResults() }
