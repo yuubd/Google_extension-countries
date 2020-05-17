@@ -117,8 +117,8 @@ function MainLayout() {
         return res;
     }
     
-    async function addNewCountry(): Promise<void> {
-        const alphaCode = getRandomAlphaCode();
+    async function addNewCountry(code: string): Promise<void> {
+        const alphaCode = code.length > 0 ? code : getRandomAlphaCode();
         try {
             const res = await getRestCountry(alphaCode);
             const countryModel = getCountryModel(res.data);
@@ -136,9 +136,9 @@ function MainLayout() {
             setCurrIdx(currIdx - 1);
     }
 
-    function setNextCountry(): void {
+    function setNextCountry(code: string = ""): void {
         if (currIdx === countryModelArr.length - 1)
-            addNewCountry();
+            addNewCountry(code);
         else
             setCurrIdx(currIdx + 1);
     }
@@ -163,6 +163,7 @@ function MainLayout() {
                             name={countryModelArr[currIdx].name}
                             timezone={countryModelArr[currIdx].timezone}
                             flagUrl={countryModelArr[currIdx].flagUrl}
+                            nextCountry={(code: string)=>setNextCountry(code)}
                         />
                     </Grid.Row>
                     
@@ -171,7 +172,7 @@ function MainLayout() {
                     </Grid.Row>
                 
                     <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
-                    <Button icon='right arrow' labelPosition='right' onClick={setNextCountry} />
+                    <Button icon='right arrow' labelPosition='right' onClick={() => setNextCountry()} />
                 </Grid>
             </Container>
         );

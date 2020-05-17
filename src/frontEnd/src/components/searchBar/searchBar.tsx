@@ -7,7 +7,7 @@ type CountryId = {
     code: string
 }
 
-function SearchBar(props: { initStr: string, size: number, searchOff: Function }) {
+function SearchBar(props: { initStr: string, size: number, searchOff: Function, nextCountry: Function }) {
 
     // states
     const [searchValue, setSearchValue]: [string, any] = useState(props.initStr);
@@ -32,6 +32,11 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function }
         return matched;
     }
 
+    function onClickSearchResult(isoCode: string): void {
+        props.nextCountry(isoCode);
+        props.searchOff();
+    }
+
     function renderResults(): JSX.Element[] {
         let resultElements: JSX.Element[] = [];
         if ((results.length === 0)) {
@@ -41,7 +46,7 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function }
         } else {
             for (let result of results) {
                 resultElements.push(
-                    <div key={ result.code } className="search-bar__results__result">
+                    <div key={ result.code } className="search-bar__results__result" onClick={()=>onClickSearchResult(result.code)}>
                         <div className="search-bar__results__name">{ result.name }</div>
                     </div>
                 );
