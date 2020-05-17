@@ -12,12 +12,14 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function }
     // states
     const [searchValue, setSearchValue]: [string, any] = useState(props.initStr);
     const [results, setResults]: [CountryId[], any] = useState([]);
+    const [didFirstSearch, setDidFirstSearch]: [boolean, any] = useState(false);
 
     function setSearch(value: string): void {
         setSearchValue(value);
     }
 
     function searchForCountry(): void {
+        setDidFirstSearch(true);
         let regex = new RegExp(searchValue.toLowerCase());
         const matched: CountryId[] = [];
         for (let country of countries) {
@@ -33,8 +35,18 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function }
 
     function renderResults(): JSX.Element[] {
         let resultElements: JSX.Element[] = [];
-        for (let result of results) {
-            resultElements.push(<div key={result.code}>{ result.name }</div>);
+        if ((results.length === 0) && (didFirstSearch)) {
+            resultElements.push(
+                <div key="none" className="search-bar__results__result no-results">No Search Results</div>
+            );
+        } else {
+            for (let result of results) {
+                resultElements.push(
+                    <div key={ result.code } className="search-bar__results__result">
+                        <div className="search-bar__results__name">{ result.name }</div>
+                    </div>
+                );
+            }
         }
         return resultElements;
     }
@@ -49,10 +61,10 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function }
                 onChange={(event)=>setSearch(event.target.value)}
             />
             <div className="search-bar__button-bar">
-                <i className="search link icon search-bar__buttons__icon" onClick={()=> searchForCountry()}></i>
-                <i className="close link icon search-bar__buttons__icon" onClick={()=>props.searchOff()}></i>
+                <i className="search link icon search-bar__icon" onClick={()=> searchForCountry()}></i>
+                <i className="close link icon search-bar__icon" onClick={()=>props.searchOff()}></i>
             </div>
-            <div>
+            <div className="search-bar__results">
                 { renderResults() }
             </div>
         </div>
