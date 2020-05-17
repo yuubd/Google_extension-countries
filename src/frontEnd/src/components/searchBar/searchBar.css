@@ -1,0 +1,17 @@
+.search-bar {
+    line-height: 1;
+    width: 100%;
+    position: relative;
+}
+
+.search-bar__input {
+    width: 100%;
+}
+
+.search-bar__button-bar {
+    margin: 0 6px !important;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}

@@ -1,20 +1,12 @@
 import React, { useState } from 'react';
 import './nameSection.css';
 
+import { SearchBar } from '../searchBar';
+
 function NameSection(props: { name: string, timezone: string, flagUrl: string }) {
 
     // states
     const [isSearching, setSearching]: [boolean, any] = useState(false);
-    const [searchValue, setSearchValue]: [string, any] = useState("");
-
-    function startSearch(): void {
-        setSearching(true);
-        setSearch(props.name);
-    }
-
-    function setSearch(value: string): void {
-        setSearchValue(value);
-    }
 
     function makeCountryNameElement(name: string): JSX.Element {
         let size: number = 20; // init with min size, in pixels
@@ -27,21 +19,10 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
             }
         }
         if (isSearching) {
-            return (
-                <div className="country-name">
-                    <input
-                        className="country-name__input"
-                        style={{fontSize: (size*0.9)+"px"}}
-                        placeholder="Search"
-                        value={searchValue}
-                        onChange={(event)=>setSearch(event.target.value)}
-                    />
-                    <i className="close link icon country-name__close" onClick={()=>setSearching(false)}></i>
-                </div>
-            );
+            return <SearchBar initStr={props.name} size={size} searchOff={()=>setSearching(false)} />;
         } else {
             return (
-                <div className="country-name" style={{fontSize: size+"px"}} onClick={startSearch}>
+                <div className="country-name" style={{fontSize: size+"px"}} onClick={()=>setSearching(true)}>
                     { name }
                 </div>
             );
