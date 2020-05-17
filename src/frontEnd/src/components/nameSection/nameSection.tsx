@@ -3,7 +3,7 @@ import './nameSection.css';
 
 import { SearchBar } from '../searchBar';
 
-function NameSection(props: { name: string, timezone: string, flagUrl: string, nextCountry: Function }) {
+function NameSection(props: { name: string, timezone: string, flagUrl: string, changeCountry: Function }) {
 
     // states
     const [isSearching, setSearching]: [boolean, any] = useState(false);
@@ -23,7 +23,7 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string, n
                 initStr={props.name}
                 size={size}
                 searchOff={()=>setSearching(false)}
-                nextCountry={(code: string) => props.nextCountry(code)}
+                changeCountry={(code: string) => props.changeCountry(code)}
             />;
         } else {
             return (

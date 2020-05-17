@@ -7,7 +7,7 @@ type CountryId = {
     code: string
 }
 
-function SearchBar(props: { initStr: string, size: number, searchOff: Function, nextCountry: Function }) {
+function SearchBar(props: { initStr: string, size: number, searchOff: Function, changeCountry: Function }) {
 
     // states
     const [searchValue, setSearchValue]: [string, any] = useState(props.initStr);
@@ -33,7 +33,7 @@ function SearchBar(props: { initStr: string, size: number, searchOff: Function, 
     }
 
     function onClickSearchResult(isoCode: string): void {
-        props.nextCountry(isoCode);
+        props.changeCountry(isoCode);
         props.searchOff();
     }
 

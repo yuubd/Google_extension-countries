@@ -117,7 +117,7 @@ function MainLayout() {
         return res;
     }
     
-    async function addNewCountry(code: string): Promise<void> {
+    async function addNewCountry(code: string = ""): Promise<void> {
         const alphaCode = code.length > 0 ? code : getRandomAlphaCode();
         try {
             const res = await getRestCountry(alphaCode);
@@ -136,11 +136,16 @@ function MainLayout() {
             setCurrIdx(currIdx - 1);
     }
 
-    function setNextCountry(code: string = ""): void {
+    function setNextCountry(): void {
         if (currIdx === countryModelArr.length - 1)
-            addNewCountry(code);
+            addNewCountry();
         else
             setCurrIdx(currIdx + 1);
+    }
+
+    function setNextCountryAndReplace(code: string): void {
+        addNewCountry(code);
+        countryModelArr.splice(currIdx+1); // remove elements after it
     }
 
     // main
@@ -163,7 +168,7 @@ function MainLayout() {
                             name={countryModelArr[currIdx].name}
                             timezone={countryModelArr[currIdx].timezone}
                             flagUrl={countryModelArr[currIdx].flagUrl}
-                            nextCountry={(code: string)=>setNextCountry(code)}
+                            changeCountry={(code: string)=>setNextCountryAndReplace(code)}
                         />
                     </Grid.Row>
                     
