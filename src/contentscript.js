@@ -1,68 +1,77 @@
-import { getRandomAlphaCode } from './frontEnd/src/layouts/mainLayout/utils';
+/** This script is for each tab */
 
+import { getRandomAlphaCode } from "./frontEnd/src/layouts/mainLayout/utils";
+
+// This checks if the current tab is running the monitoring 
+let isRunning = false;
 
 // Listening to messages
-chrome.runtime.onMessage.addListener((msg, sender,senderRes) => {
-    console.log("conetnt Script received : " + msg);
-    
+chrome.runtime.onMessage.addListener((msg, sender, senderRes) => {
+    // console.log(isRunning);
+    // if already running a monitoring thread, do not start a new monitoring thread
+    if (!isRunning) {
+        isRunning = true;
+        activityWatcher(msg.activeTab);
+    }
 });
 
-async function activityWatcher(){
-    chrome.storage.local.get("alphaCode", shouldContinue);
-    function shouldContinue(data) {
-        let alphaCode = data.alphaCode;
-        console.log("alphaCode is in content is : " + alphaCode);
-        if (typeof alphaCode != "undefined") { chrome.storage.local.clear(); return; }
-        //The number of seconds that have passed
-        //since the user was active.
-        let secondsSinceLastActivity = 0;
-
-        //Five minutes. 60 x 5 = 300 seconds.
-        let maxInactivity = 10;
-
-        //Setup the setInterval method to run
-        //every second. 1000 milliseconds = 1 second.
-        let monitoring = setInterval(setAlphaCode, 1000);        
-        function setAlphaCode(){
-            secondsSinceLastActivity++;
-            console.log("secondsSinceLastActivity" + secondsSinceLastActivity);
-            //if the user has been inactive or idle for longer
-            //then the seconds specified in maxInactivity
-            if(secondsSinceLastActivity > maxInactivity) {
-                const alphaCode = getRandomAlphaCode();
-                chrome.runtime.sendMessage('', {
-                    type: 'notification',
-                    options: {
-                        title: 'EduGlobe',
-                        message: 'Can you recognize this country? \nOpen Eduglobe it to explore!',
-                        iconUrl: `https://restcountries.eu/data/${alphaCode}.svg`,
-                        type: 'basic'
-                    } 
-                });
-                chrome.storage.local.set({alphaCode: alphaCode});
-                console.log('User has been inactive for more than ' + maxInactivity + ' seconds.');
-                maxInactivity = 3600;
-                clearInterval(monitoring);
-            }
-        }
-        //The function that will be called whenever a user is active
-        function reset(){
-            //reset the secondsSinceLastActivity letiable
-            //back to 0
-            secondsSinceLastActivity = 0;
-        }
-
-        //An array of DOM events that should be interpreted as user activity.
-        let activityEvents = [
-            'mousedown', 'mousemove', 'keydown',
-            'scroll', 'touchstart'
-        ];
-
-        //add these events to the document. register the activity function as the listener parameter.
-        activityEvents.forEach(function(eventName) {
-            document.addEventListener(eventName, reset, true);
-        });
+function activityWatcher(currentTab){
+    // An array of DOM events that should be interpreted as user activity and 
+    // add these events to the document. register the activity function as the listener parameter.
+    const activityEvents = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
+    activityEvents.forEach((eventName) => {
+        document.addEventListener(eventName, reset, true);
+    });
+    // The function that will be called whenever a user is active
+    function reset() {
+        chrome.storage.local.set({monitoringTabId: currentTab});
+        secondsSinceLastActivity = 0;
     }
+
+    // The number of seconds that have passed since the user was active.
+    let secondsSinceLastActivity = 0;
+    
+    const maxInactivity = 120;
+    function monitor() {
+        let monitoring = setInterval(setAlphaCode, 1000);
+        function setAlphaCode() {
+            // console.log("running again");
+            chrome.storage.local.get("monitoringTabId", (storage) => {
+                // console.log("sorage.monitoringTabId : " + storage.monitoringTabId + "   currentTab : " + currentTab);
+                // user is not active in the current tab, swtich to the active tab
+                if (storage.monitoringTabId !== currentTab) {
+                    clearInterval(monitoring);
+                    // console.log("monitoring stopped");
+                    isRunning = false;
+                    chrome.runtime.sendMessage("", {type: "switchTab", moniroingTab: storage.monitoringTabId});
+                } else {
+                    secondsSinceLastActivity++;
+                    // console.log("secondsSinceLastActivity" + secondsSinceLastActivity);
+                    // if the user has been inactive or idle for longer then the seconds specified in maxInactivity
+                    if(secondsSinceLastActivity > maxInactivity) {
+                        const alphaCode = getRandomAlphaCode();
+                        chrome.runtime.sendMessage("", getNotificationOption(alphaCode));
+                        reset();
+                        chrome.storage.local.set({alphaCode: alphaCode});
+                    }
+                }
+            });
+        }
+        // console.log("stop!");
+    }
+    // main
+    // console.log("monitoring start");
+    monitor();
 }
 
-activityWatcher();
+function getNotificationOption(alphaCode) {
+    return {
+        type: "notification",
+        options: {
+            title: "EduGlobe",
+            message: "Can you recognize this country? \nOpen Eduglobe it to explore!",
+            iconUrl: `https://restcountries.eu/data/${alphaCode}.svg`,
+            type: "basic"
+        } 
+    };
+}
