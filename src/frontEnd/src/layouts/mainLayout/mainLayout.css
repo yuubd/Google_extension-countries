@@ -2,6 +2,8 @@
     width: 400px !important;
     height: 600px !important;
     padding: 0 26px;
+    border: 2px solid transparent;
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -10,6 +12,7 @@
 .main-layout.theme-dark {
     background-color: #13151b;
     color: #ffffff;
+    border-color: #efefef;
 }
 
 .background-image {

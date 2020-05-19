@@ -1,21 +1,15 @@
 .button-bar {
     z-index: 1;
-    width: 400px;
     height: 60px;
     margin: 0 -26px;
     display: flex;
-    justify-content: space-between;   
-}
-
-:not(.theme-dark) .button-bar {
+    justify-content: space-between;
     background-color: #1B75BB;
-    border: 1px solid #E4E4E4;
     border-top: 2px solid #E4E4E4;
 }
 
 .theme-dark .button-bar {
     background-color: transparent;
-    border: 1px solid rgba(239,239,239,0.6);
     border-top: 2px solid rgba(239,239,239,0.6);
 }
 
