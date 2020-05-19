@@ -39,7 +39,7 @@ function MainLayout() {
     const [currIdx, setCurrIdx]: [number, any] = useState(0);
     const [countryModelArr, setCountryModelArr]: [Array<CountryModel>, any] = useState([]);
     const [isSearching, setSearching]: [boolean, any] = useState(false);
-    const [isDarkTheme, setDarkTheme]: [boolean, any] = useState(true);
+    const [isDarkTheme, setDarkTheme]: [boolean, any] = useState(false);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
     
@@ -163,6 +163,7 @@ function MainLayout() {
     else 
         return (
             <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
+                { isDarkTheme && <img className="background-image" src={require("../../assets/darkmode-bg.png")} alt="background" />}
                 <NameSection
                     name={countryModelArr[currIdx].name}
                     timezone={countryModelArr[currIdx].timezone}

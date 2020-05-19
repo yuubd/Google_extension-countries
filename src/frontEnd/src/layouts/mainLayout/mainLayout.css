@@ -11,3 +11,13 @@
     background-color: #13151b;
     color: #ffffff;
 }
+
+.background-image {
+    position: absolute;
+    z-index: 0;
+    height: 110%;
+    width: auto;
+    top: -5%;
+    right: -30%;
+    opacity: 50%;
+}
