@@ -39,6 +39,7 @@ function MainLayout() {
     const [currIdx, setCurrIdx]: [number, any] = useState(0);
     const [countryModelArr, setCountryModelArr]: [Array<CountryModel>, any] = useState([]);
     const [isSearching, setSearching]: [boolean, any] = useState(false);
+    const [isDarkTheme, setDarkTheme]: [boolean, any] = useState(true);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
     
@@ -161,7 +162,7 @@ function MainLayout() {
 
     else 
         return (
-            <div className="main-layout theme-dark">
+            <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
                 <NameSection
                     name={countryModelArr[currIdx].name}
                     timezone={countryModelArr[currIdx].timezone}
@@ -172,7 +173,12 @@ function MainLayout() {
                 />
                 <Map country={countryModelArr[currIdx].name} />
                 <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
-                <ButtonBar onClickPrev={setPrevCountry} onClickNext={setNextCountry} />
+                <ButtonBar
+                    onClickPrev={setPrevCountry}
+                    onClickNext={setNextCountry}
+                    isDarkTheme={isDarkTheme}
+                    setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
+                />
             </div>
         );
 }

@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './buttonBar.css';
-import { Button } from 'semantic-ui-react'
 
-function ButtonBar(props: { onClickPrev: Function, onClickNext: Function }) {
+type ButtonBarProps = {
+    onClickPrev: Function,
+    onClickNext: Function,
+    isDarkTheme: boolean,
+    setDarkTheme: Function
+}
+
+function ButtonBar(props: ButtonBarProps) {
+
+    // states
+    const [isBookmarked, setBookmarked]: [boolean, any] = useState(false);
+
+    function onSettingsClicked(): void {
+        // temporary behaviour: theme toggling
+        props.setDarkTheme(!props.isDarkTheme);
+    }
+
+    function toggleBookmarked(): void {
+        // temporary behaviour: just toggles the icon
+        setBookmarked(!isBookmarked);
+    }
+
+    function getBookmarkIcon(): JSX.Element {
+        if (isBookmarked) {
+            return (<i className="bookmark large icon" />);
+        } else {
+            return (<i className="bookmark outline large icon" />);
+        }
+    }
 
     return (
         <div className="button-bar">
             <div className="button-bar__section right-border">
-                <div className="button-bar__button">
+                <div className="button-bar__button" onClick={() => onSettingsClicked()}>
                     <i className="setting large icon" />
                 </div>
-                <div className="button-bar__button">
-                    <i className="bookmark outline large icon" />
+                <div className="button-bar__button" onClick={() => toggleBookmarked()}>
+                    { getBookmarkIcon() }
                 </div>
                 <div className="button-bar__button">
                     <i className="ellipsis horizontal large icon" />
