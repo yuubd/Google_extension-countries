@@ -1,8 +1,13 @@
+.map {
+    height: 200px;
+}
+
 div > .place-card.place-card-large {
     display: none;
 }
 
 div > iframe {
-    
-    border: "0px";
+    border: 0px;
+    width: 350px;
+    height: 200px;
 }

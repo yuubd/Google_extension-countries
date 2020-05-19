@@ -1,0 +1,8 @@
+.button-bar {
+    width: 400px;
+    height: 65px;
+    margin: 0 -26px;
+    background-color: #dddddd;
+    display: flex;
+    justify-content: space-between;
+}

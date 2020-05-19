@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Button, Container, Grid } from 'semantic-ui-react'
 import './mainLayout.css';
 
 import { InfoPanel } from '../../components/infoPanel'
@@ -8,6 +7,7 @@ import { Map } from '../../components/map'
 import { NameSection } from '../../components/nameSection'
 import { InfoRowModel } from '../../data/models';
 import { getRandomIndex, getCountryName, getAlphaCode } from './utils';
+import { ButtonBar } from '../../components/buttonBar';
 import { CountryModel } from '../../data/models/CountryModel';
 
 type RawCountry = {
@@ -161,31 +161,27 @@ function MainLayout() {
 
     else 
         return (
-            <Container className="main-layout">
-                <Grid>
-                    <Grid.Row>
-                        <Map country={countryModelArr[currIdx].name} />
-                    </Grid.Row>
-
-                    <Grid.Row>
-                        <NameSection
-                            name={countryModelArr[currIdx].name}
-                            timezone={countryModelArr[currIdx].timezone}
-                            flagUrl={countryModelArr[currIdx].flagUrl}
-                            isSearching={isSearching}
-                            setSearching={(state: boolean) => setSearching(state)}
-                            changeCountry={(index: number) => setNextCountryAndReplace(index)}
-                        />
-                    </Grid.Row>
-                    
-                    <Grid.Row>
-                        <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
-                    </Grid.Row>
-                
-                    <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
-                    <Button icon='right arrow' labelPosition='right' onClick={() => setNextCountry()} />
-                </Grid>
-            </Container>
+            <div className="main-layout">
+                <div>
+                    <NameSection
+                        name={countryModelArr[currIdx].name}
+                        timezone={countryModelArr[currIdx].timezone}
+                        flagUrl={countryModelArr[currIdx].flagUrl}
+                        isSearching={isSearching}
+                        setSearching={(state: boolean) => setSearching(state)}
+                        changeCountry={(index: number) => setNextCountryAndReplace(index)}
+                    />
+                </div>
+                <div>
+                    <Map country={countryModelArr[currIdx].name} />
+                </div>
+                <div style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, display: "flex" }}>
+                    <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
+                </div>
+                <div>
+                    <ButtonBar onClickPrev={setPrevCountry} onClickNext={setNextCountry} />
+                </div>
+            </div>
         );
 }
 

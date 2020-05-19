@@ -3,4 +3,10 @@
     padding-bottom: 0px;
 }
 
-/* .main-layout {} */
+.main-layout {
+    width: 400px !important;
+    height: 600px !important;
+    padding: 0 26px;
+    display: flex;
+    flex-direction: column;
+}

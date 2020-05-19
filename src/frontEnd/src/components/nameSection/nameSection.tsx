@@ -46,6 +46,9 @@ function NameSection(props: {
 
     return (
         <div className="name-section">
+            <div className="name-section__flag">
+                <img className="flag-img" src={props.flagUrl} />
+            </div>
             <div className="name-section__text">
                 { makeCountryNameElement(props.name) }
                 { makeTimezoneElement(props.timezone) }
