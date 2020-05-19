@@ -162,25 +162,17 @@ function MainLayout() {
     else 
         return (
             <div className="main-layout">
-                <div>
-                    <NameSection
-                        name={countryModelArr[currIdx].name}
-                        timezone={countryModelArr[currIdx].timezone}
-                        flagUrl={countryModelArr[currIdx].flagUrl}
-                        isSearching={isSearching}
-                        setSearching={(state: boolean) => setSearching(state)}
-                        changeCountry={(index: number) => setNextCountryAndReplace(index)}
-                    />
-                </div>
-                <div>
-                    <Map country={countryModelArr[currIdx].name} />
-                </div>
-                <div style={{ flexGrow: 1, flexShrink: 1, flexBasis: 0, display: "flex" }}>
-                    <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
-                </div>
-                <div>
-                    <ButtonBar onClickPrev={setPrevCountry} onClickNext={setNextCountry} />
-                </div>
+                <NameSection
+                    name={countryModelArr[currIdx].name}
+                    timezone={countryModelArr[currIdx].timezone}
+                    flagUrl={countryModelArr[currIdx].flagUrl}
+                    isSearching={isSearching}
+                    setSearching={(state: boolean) => setSearching(state)}
+                    changeCountry={(index: number) => setNextCountryAndReplace(index)}
+                />
+                <Map country={countryModelArr[currIdx].name} />
+                <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
+                <ButtonBar onClickPrev={setPrevCountry} onClickNext={setNextCountry} />
             </div>
         );
 }

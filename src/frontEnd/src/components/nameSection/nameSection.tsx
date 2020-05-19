@@ -14,9 +14,9 @@ function NameSection(props: {
 
     // states
     function makeCountryNameElement(name: string): JSX.Element {
-        let size: number = 20; // init with min size, in pixels
-        const fontSizes: number[] = [32, 28, 24]; // in pixels
-        const maxLengths: number[] = [12, 22, 32];
+        let size: number = 18; // init with min size, in pixels
+        const fontSizes: number[] = [32, 28, 24, 20]; // in pixels
+        const maxLengths: number[] = [12, 18, 24, 30];
         for (let index in maxLengths) {
             if (name.length <= maxLengths[index]) {
                 size = fontSizes[index];
@@ -47,6 +47,7 @@ function NameSection(props: {
     return (
         <div className="name-section">
             <div className="name-section__flag">
+                <img className="flag-img" src={props.flagUrl} />
                 <img className="flag-img" src={props.flagUrl} />
             </div>
             <div className="name-section__text">
