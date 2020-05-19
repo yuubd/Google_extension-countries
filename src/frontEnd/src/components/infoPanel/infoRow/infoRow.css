@@ -22,12 +22,20 @@
     color: #1B75BB;
 }
 
+.theme-dark .title {
+    color: #FFFFFF;
+}
+
 .value {
     width: 50%;
     padding-left: 24px;
     color: #000000; /* #808285 */
     position: absolute;
     right: 0;
+}
+
+.theme-dark .value {
+    color: #FFFFFF;
 }
 
 .value.very-long-value {
@@ -38,4 +46,8 @@
 .icon-img {
     width: 20px;
     height: 100%;
+}
+
+.theme-dark .icon-img {
+    filter: brightness(10);
 }

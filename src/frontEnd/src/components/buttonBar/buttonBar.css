@@ -3,10 +3,19 @@
     height: 60px;
     margin: 0 -26px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between;   
+}
+
+:not(.theme-dark) .button-bar {
     background-color: #1B75BB;
     border: 1px solid #E4E4E4;
     border-top: 2px solid #E4E4E4;
+}
+
+.theme-dark .button-bar {
+    background-color: transparent;
+    border: 1px solid rgba(239,239,239,0.6);
+    border-top: 2px solid rgba(239,239,239,0.6);
 }
 
 .button-bar__section {
@@ -23,6 +32,14 @@
     border-right: 1px solid #E4E4E4;
 }
 
+.theme-dark .left-border {
+    border-left: 1px solid rgba(239,239,239,0.6);
+}
+
+.theme-dark .right-border {
+    border-right: 1px solid rgba(239,239,239,0.6);
+}
+
 .button-bar__button {
     color: #E4E4E4;
     width: 100%;
@@ -32,9 +49,17 @@
     position: relative;
 }
 
+.theme-dark .button-bar__button {
+    color: rgba(239,239,239,0.6);
+}
+
 .button-bar__button:hover {
     background-color: #1a4c73;
     cursor: pointer;
+}
+
+.theme-dark .button-bar__button:hover {
+    background-color: rgba(27, 117, 187, 0.4);
 }
 
 .button-bar__button .icon {

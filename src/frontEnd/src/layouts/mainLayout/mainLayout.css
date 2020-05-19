@@ -6,3 +6,8 @@
     flex-direction: column;
     justify-content: space-between;
 }
+
+.main-layout.theme-dark {
+    background-color: #13151b;
+    color: #ffffff;
+}

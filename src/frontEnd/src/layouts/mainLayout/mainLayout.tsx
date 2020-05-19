@@ -161,7 +161,7 @@ function MainLayout() {
 
     else 
         return (
-            <div className="main-layout">
+            <div className="main-layout theme-dark">
                 <NameSection
                     name={countryModelArr[currIdx].name}
                     timezone={countryModelArr[currIdx].timezone}

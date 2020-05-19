@@ -18,8 +18,12 @@
 
 .timezone {
     color: #808285;
-    margin-top: 2px;
+    margin-top: 4px;
     margin-left: 2px;
+}
+
+.theme-dark .timezone {
+    color: #FFFFFF;
 }
 
 .name-section__flag {
