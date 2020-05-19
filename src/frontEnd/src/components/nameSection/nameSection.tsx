@@ -48,7 +48,6 @@ function NameSection(props: {
         <div className="name-section">
             <div className="name-section__flag">
                 <img className="flag-img" src={props.flagUrl} />
-                <img className="flag-img" src={props.flagUrl} />
             </div>
             <div className="name-section__text">
                 { makeCountryNameElement(props.name) }
