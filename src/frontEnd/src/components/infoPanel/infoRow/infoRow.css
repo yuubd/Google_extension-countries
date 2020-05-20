@@ -1,13 +1,13 @@
 .infoRow {
     display: flex;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
     position: relative;
     align-items: center;
 }
 
 .infoRow:not(:last-child) {
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .icon-title {
@@ -18,7 +18,7 @@
 }
 
 .title {
-    padding-left: 16px;
+    padding-left: 18px;
     color: #1B75BB;
 }
 
@@ -28,7 +28,7 @@
 
 .value {
     width: 50%;
-    padding-left: 24px;
+    padding-left: 18px;
     color: #000000; /* #808285 */
     position: absolute;
     right: 0;

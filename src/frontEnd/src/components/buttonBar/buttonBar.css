@@ -1,7 +1,7 @@
 .button-bar {
     z-index: 1;
-    height: 60px;
-    margin: 0 -26px;
+    height: 55px;
+    margin: 0 -20px; /* needs to match main-layout padding */
     display: flex;
     justify-content: space-between;
     background-color: #1B75BB;

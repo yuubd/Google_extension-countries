@@ -1,6 +1,6 @@
 .map {
     z-index: 1;
-    height: 200px;
+    height: 250px;
 }
 
 div > .place-card.place-card-large {
@@ -10,5 +10,5 @@ div > .place-card.place-card-large {
 div > iframe {
     border: 2px solid rgba(239,239,239,0.8);
     width: 100%;
-    height: 200px;
+    height: 250px;
 }

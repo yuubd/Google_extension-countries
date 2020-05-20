@@ -1,7 +1,7 @@
 .main-layout {
     width: 400px !important;
     height: 600px !important;
-    padding: 0 26px;
+    padding: 0 20px;
     border: 2px solid transparent;
     position: relative;
     display: flex;
