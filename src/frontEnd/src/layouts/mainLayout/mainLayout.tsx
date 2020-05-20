@@ -38,6 +38,7 @@ function MainLayout() {
     // states
     const [currIdx, setCurrIdx]: [number, any] = useState(0);
     const [countryModelArr, setCountruModelArr]: [Array<CountryModel>, any] = useState([]);
+    const [isSearching, setSearching]: [boolean, any] = useState(false);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
     
@@ -117,8 +118,8 @@ function MainLayout() {
         return res;
     }
     
-    async function addNewCountry(): Promise<void> {
-        const alphaCode = getRandomAlphaCode();
+    async function addNewCountry(code: string = ""): Promise<void> {
+        const alphaCode = code.length > 0 ? code : getRandomAlphaCode();
         try {
             const res = await getRestCountry(alphaCode);
             const countryModel = getCountryModel(res.data);
@@ -132,15 +133,23 @@ function MainLayout() {
 
     // used in the template
     function setPrevCountry(): void {
+        setSearching(false);
         if (currIdx > 0)
             setCurrIdx(currIdx - 1);
     }
 
     function setNextCountry(): void {
+        setSearching(false);
         if (currIdx === countryModelArr.length - 1)
             addNewCountry();
         else
             setCurrIdx(currIdx + 1);
+    }
+
+    function setNextCountryAndReplace(code: string): void {
+        setSearching(false);
+        addNewCountry(code);
+        countryModelArr.splice(currIdx+1); // remove elements after it
     }
 
     // main
@@ -163,6 +172,9 @@ function MainLayout() {
                             name={countryModelArr[currIdx].name}
                             timezone={countryModelArr[currIdx].timezone}
                             flagUrl={countryModelArr[currIdx].flagUrl}
+                            isSearching={isSearching}
+                            setSearching={(state: boolean) => setSearching(state)}
+                            changeCountry={(code: string)=>setNextCountryAndReplace(code)}
                         />
                     </Grid.Row>
                     
@@ -171,7 +183,7 @@ function MainLayout() {
                     </Grid.Row>
                 
                     <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
-                    <Button icon='right arrow' labelPosition='right' onClick={setNextCountry} />
+                    <Button icon='right arrow' labelPosition='right' onClick={() => setNextCountry()} />
                 </Grid>
             </Container>
         );
