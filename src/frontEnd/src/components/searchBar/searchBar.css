@@ -8,6 +8,8 @@
     width: 100%;
     position: relative;
     z-index: 2;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 300;
 }
 
 .search-bar__button-bar {
@@ -21,7 +23,6 @@
 
 .search-bar__results {
     position: absolute;
-    z-index: 1;
     left: 0.25px;
     right: 0.25px;
     max-height: 96px;

@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './nameSection.css';
 
 import { SearchBar } from '../searchBar';
 
-function NameSection(props: {
+type NameSectionProps = {
     name: string,
     timezone: string,
     flagUrl: string,
     isSearching: boolean,
     setSearching: Function,
     changeCountry: Function
-}) {
+}
+
+function NameSection(props: NameSectionProps) {
 
     // states
     function makeCountryNameElement(name: string): JSX.Element {
@@ -52,9 +54,6 @@ function NameSection(props: {
             <div className="name-section__text">
                 { makeCountryNameElement(props.name) }
                 { makeTimezoneElement(props.timezone) }
-            </div>
-            <div className="name-section__flag">
-                <img className="flag-img" src={props.flagUrl} />
             </div>
         </div>
     );

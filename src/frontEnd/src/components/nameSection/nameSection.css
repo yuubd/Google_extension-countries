@@ -1,5 +1,5 @@
 .name-section {
-    z-index: 1;
+    z-index: 2;
     display: flex;
     width: 100%;
     height: 60px;
@@ -15,6 +15,10 @@
 .country-name {
     line-height: 1;
     font-weight: 300;
+}
+
+.theme-dark .country-name {
+    color: #ffffff;
 }
 
 .timezone {
