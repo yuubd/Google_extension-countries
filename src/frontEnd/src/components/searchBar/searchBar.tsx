@@ -2,30 +2,30 @@ import React, { useState } from 'react';
 import { countries } from '../../data/json/countries.json';
 import './searchBar.css';
 
-type CountryId = {
-    name: string,
-    code: string
+type CountryInfo = {
+    index: number,
+    name: string
 }
 
 function SearchBar(props: { initStr: string, size: number, setSearching: Function, changeCountry: Function }) {
 
     // states
     const [searchValue, setSearchValue]: [string, any] = useState(props.initStr);
-    const [results, setResults]: [CountryId[], any] = useState(searchForCountry(props.initStr));
+    const [results, setResults]: [CountryInfo[], any] = useState(searchForCountry(props.initStr));
 
     function onUpdateSearch(input: string): void {
         setSearchValue(input);
         setResults(searchForCountry(input));
     }
 
-    function searchForCountry(search: string): CountryId[] {
+    function searchForCountry(search: string): CountryInfo[] {
         let regex = new RegExp(search.toLowerCase());
-        const matched: CountryId[] = [];
-        for (let country of countries) {
-            if (regex.test(country.ADMIN.toLowerCase())) {
+        const matched: CountryInfo[] = [];
+        for (let index in countries) {
+            if (regex.test(countries[index].ADMIN.toLowerCase())) {
                 matched.push({
-                    name: country.ADMIN,
-                    code: country.ISO_A3.toLowerCase()
+                    index: +index,
+                    name: countries[index].ADMIN
                 });
             }
         }
@@ -41,7 +41,7 @@ function SearchBar(props: { initStr: string, size: number, setSearching: Functio
         } else {
             for (let result of results) {
                 resultElements.push(
-                    <div key={ result.code } className="search-bar__results__result" onClick={()=>props.changeCountry(result.code)}>
+                    <div key={ result.index } className="search-bar__results__result" onClick={()=>props.changeCountry(result.index)}>
                         <div className="search-bar__results__name">{ result.name }</div>
                     </div>
                 );

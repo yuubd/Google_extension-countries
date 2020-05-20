@@ -7,7 +7,7 @@ import { InfoPanel } from '../../components/infoPanel'
 import { Map } from '../../components/map'
 import { NameSection } from '../../components/nameSection'
 import { InfoRowModel } from '../../data/models';
-import { getRandomAlphaCode } from './utils';
+import { getRandomIndex, getCountryName, getAlphaCode } from './utils';
 import { CountryModel } from '../../data/models/CountryModel';
 
 type RawCountry = {
@@ -37,23 +37,23 @@ const ROW_TYPES = {
 function MainLayout() {
     // states
     const [currIdx, setCurrIdx]: [number, any] = useState(0);
-    const [countryModelArr, setCountruModelArr]: [Array<CountryModel>, any] = useState([]);
+    const [countryModelArr, setCountryModelArr]: [Array<CountryModel>, any] = useState([]);
     const [isSearching, setSearching]: [boolean, any] = useState(false);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
     
     // componentDidMount
     useEffect(() => {
-        chrome.storage.local.get("alphaCode", async (data) => {
-            let alphaCode = data.alphaCode;
-            if (typeof data.alphaCode == "undefined") { 
-                alphaCode = getRandomAlphaCode();
+        chrome.storage.local.get("countryIdx", async (data) => {
+            let countryIdx = data.countryIdx;
+            if (typeof data.countryIdx == "undefined") { 
+                countryIdx = getRandomIndex();
             }
             try {
-                const res = await getRestCountry(alphaCode);
+                const res = await getRestCountry(getAlphaCode(countryIdx));
                 console.log(res.data); // console
-                const countryModel = getCountryModel(res.data);
-                setCountruModelArr([...countryModelArr, countryModel]);
+                const countryModel = getCountryModel(countryIdx, res.data);
+                setCountryModelArr([...countryModelArr, countryModel]);
                 setLoad(true);
             } catch(err) {
                 setError(err.message);
@@ -65,7 +65,7 @@ function MainLayout() {
     // componentWillUnmount
     useEffect(() => {
         return () => {
-            chrome.storage.local.set({alphaCode: undefined});
+            chrome.storage.local.set({countryIdx: undefined});
             alert('will unmount');
         }
     }, []);
@@ -74,8 +74,8 @@ function MainLayout() {
     }
 
     // Below two functions are deserialing JSON to data models
-    function getCountryModel(rawCountry: RawCountry): CountryModel {
-        const name: string = rawCountry.name;
+    function getCountryModel(countryIdx: number, rawCountry: RawCountry): CountryModel {
+        const name: string = getCountryName(countryIdx);
         const flagUrl: string = rawCountry.flag;
         const timezone: string = rawCountry.timezones[0]; // use index 0 (for now)
 
@@ -118,13 +118,13 @@ function MainLayout() {
         return res;
     }
     
-    async function addNewCountry(code: string = ""): Promise<void> {
-        const alphaCode = code.length > 0 ? code : getRandomAlphaCode();
+    async function addNewCountry(index?: number): Promise<void> {
+        const countryIdx = (index === undefined) ? getRandomIndex() : index;
         try {
-            const res = await getRestCountry(alphaCode);
-            const countryModel = getCountryModel(res.data);
-            setCountruModelArr([...countryModelArr, countryModel]);
-            console.log(countryModelArr); // console
+            const res = await getRestCountry(getAlphaCode(countryIdx));
+            const countryModel = getCountryModel(countryIdx, res.data);
+            setCountryModelArr([...countryModelArr, countryModel]);
+            // console.log(countryModelArr); // console
             setCurrIdx(currIdx + 1);
         } catch (err) {
             console.log(err);
@@ -146,9 +146,9 @@ function MainLayout() {
             setCurrIdx(currIdx + 1);
     }
 
-    function setNextCountryAndReplace(code: string): void {
+    function setNextCountryAndReplace(countryIdx: number): void {
         setSearching(false);
-        addNewCountry(code);
+        addNewCountry(countryIdx);
         countryModelArr.splice(currIdx+1); // remove elements after it
     }
 
@@ -174,7 +174,7 @@ function MainLayout() {
                             flagUrl={countryModelArr[currIdx].flagUrl}
                             isSearching={isSearching}
                             setSearching={(state: boolean) => setSearching(state)}
-                            changeCountry={(code: string)=>setNextCountryAndReplace(code)}
+                            changeCountry={(index: number) => setNextCountryAndReplace(index)}
                         />
                     </Grid.Row>
                     
