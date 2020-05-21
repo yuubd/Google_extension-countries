@@ -4,11 +4,12 @@ import { Button, Container, Grid } from 'semantic-ui-react'
 import './mainLayout.css';
 
 import { InfoPanel } from '../../components/infoPanel'
-import { Map } from '../../components/map'
+import { MapComponent } from '../../components/map'
 import { NameSection } from '../../components/nameSection'
 import { InfoRowModel } from '../../data/models';
 import { getRandomAlphaCode } from './utils';
 import { CountryModel } from '../../data/models/CountryModel';
+import { MapModel } from '../../components/map/map';
 
 type RawCountry = {
     name: string,
@@ -40,12 +41,12 @@ function MainLayout() {
     const [countryModelArr, setCountruModelArr]: [Array<CountryModel>, any] = useState([]);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
-    
+
     // componentDidMount
     useEffect(() => {
         chrome.storage.local.get("alphaCode", async (data) => {
             let alphaCode = data.alphaCode;
-            if (typeof data.alphaCode == "undefined") { 
+            if (typeof data.alphaCode == "undefined") {
                 alphaCode = getRandomAlphaCode();
             }
             try {
@@ -54,25 +55,18 @@ function MainLayout() {
                 const countryModel = getCountryModel(res.data);
                 setCountruModelArr([...countryModelArr, countryModel]);
                 setLoad(true);
-            } catch(err) {
+            } catch (err) {
                 setError(err.message);
                 setLoad(false);
             }
         })
     }, []);
 
-    // componentWillUnmount
-    useEffect(() => {
-        return () => {
-            chrome.storage.local.set({alphaCode: undefined});
-            alert('will unmount');
-        }
-    }, []);
     async function getRestCountry(alphaCode: string): Promise<JSON> {
         return axios.get(`https://restcountries.eu/rest/v2/alpha/${alphaCode}`)
     }
 
-    // Below two functions are deserialing JSON to data models
+    // Below two functions are deserializing JSON to data models
     function getCountryModel(rawCountry: RawCountry): CountryModel {
         const name: string = rawCountry.name;
         const flagUrl: string = rawCountry.flag;
@@ -83,13 +77,13 @@ function MainLayout() {
         const capital = rawCountry.capital;
         const language = rawCountry.languages[0].name;
         const currency = rawCountry.currencies[0].name;
-    
+
         const infoForRows = [
-            {name: ROW_TYPES.continent , value: continent},
-            {name: ROW_TYPES.capital   , value: capital},
-            {name: ROW_TYPES.pupolation, value: population},
-            {name: ROW_TYPES.language  , value: language},
-            {name: ROW_TYPES.currency  , value: currency}
+            { name: ROW_TYPES.continent, value: continent },
+            { name: ROW_TYPES.capital, value: capital },
+            { name: ROW_TYPES.pupolation, value: population },
+            { name: ROW_TYPES.language, value: language },
+            { name: ROW_TYPES.currency, value: currency }
         ]
         const rows: Array<InfoRowModel> = getInfoRows(infoForRows);
 
@@ -106,17 +100,17 @@ function MainLayout() {
         if (numStr.length <= 3) { return numStr; }
         let res = "";
         let acc = 3;
-        for (let i = numStr.length-1; i > -1; i--) {
+        for (let i = numStr.length - 1; i > -1; i--) {
             if (acc === 0) {
                 res = "," + res;
                 acc = 2;
-           } else { acc--; }
-           
-           res = numStr[i] + res;
-         }
+            } else { acc--; }
+
+            res = numStr[i] + res;
+        }
         return res;
     }
-    
+
     async function addNewCountry(): Promise<void> {
         const alphaCode = getRandomAlphaCode();
         try {
@@ -145,17 +139,17 @@ function MainLayout() {
 
     // main
     if (!load)
-        return <div> Loading... </div>; 
-    
-    else if (error)
-        return <li> { error.message } </li>; 
+        return <div> Loading... </div>;
 
-    else 
+    else if (error)
+        return <li> {error.message} </li>;
+
+    else
         return (
             <Container className="main-layout">
                 <Grid>
-                    <Grid.Row>
-                        <Map country={countryModelArr[currIdx].name} />
+                    <Grid.Row className="map-row">
+                        <MapComponent mapModel={new MapModel([[0, 0]], { lat: 36.939510763470565, lng: 8.602510428642177 })} />
                     </Grid.Row>
 
                     <Grid.Row>
@@ -165,11 +159,11 @@ function MainLayout() {
                             flagUrl={countryModelArr[currIdx].flagUrl}
                         />
                     </Grid.Row>
-                    
+
                     <Grid.Row>
                         <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
                     </Grid.Row>
-                
+
                     <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
                     <Button icon='right arrow' labelPosition='right' onClick={setNextCountry} />
                 </Grid>

@@ -3,4 +3,8 @@
     padding-bottom: 0px;
 }
 
+.ui.grid>.row.map-row {
+    width: 400px !important; 
+    height: 325px
+}
 /* .main-layout {} */
