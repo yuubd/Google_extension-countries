@@ -28,7 +28,7 @@ function NameSection(props: {
                 initStr={props.name}
                 size={size}
                 setSearching={()=>props.setSearching(false)}
-                changeCountry={(code: string) => props.changeCountry(code)}
+                changeCountry={(index: number) => props.changeCountry(index)}
             />;
         } else {
             return (
