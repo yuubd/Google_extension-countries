@@ -14,11 +14,10 @@ type NameSectionProps = {
 
 function NameSection(props: NameSectionProps) {
 
-    // states
     function makeCountryNameElement(name: string): JSX.Element {
-        let size: number = 18; // init with min size, in pixels
-        const fontSizes: number[] = [32, 28, 24, 20]; // in pixels
-        const maxLengths: number[] = [12, 18, 24, 30];
+        let size: number = 20; // init with min size, in pixels
+        const fontSizes: number[] = [32, 28, 24]; // in pixels
+        const maxLengths: number[] = [13, 17, 21];
         for (let index in maxLengths) {
             if (name.length <= maxLengths[index]) {
                 size = fontSizes[index];
