@@ -1,6 +1,6 @@
 /** This script is for each tab */
 
-import { getRandomAlphaCode } from "./frontEnd/src/layouts/mainLayout/utils";
+import { getRandomIndex, getAlphaCode } from "./frontEnd/src/layouts/mainLayout/utils";
 
 // This checks if the current tab is running the monitoring 
 let isRunning = false;
@@ -33,8 +33,8 @@ function activityWatcher(currentTab){
     
     const maxInactivity = 120;
     function monitor() {
-        let monitoring = setInterval(setAlphaCode, 1000);
-        function setAlphaCode() {
+        let monitoring = setInterval(setCountryIdx, 1000);
+        function setCountryIdx() {
             // console.log("running again");
             chrome.storage.local.get("monitoringTabId", (storage) => {
                 // console.log("sorage.monitoringTabId : " + storage.monitoringTabId + "   currentTab : " + currentTab);
@@ -43,16 +43,16 @@ function activityWatcher(currentTab){
                     clearInterval(monitoring);
                     // console.log("monitoring stopped");
                     isRunning = false;
-                    chrome.runtime.sendMessage("", {type: "switchTab", moniroingTab: storage.monitoringTabId});
+                    chrome.runtime.sendMessage("", {type: "switchTab", monitoringTab: storage.monitoringTabId});
                 } else {
                     secondsSinceLastActivity++;
                     // console.log("secondsSinceLastActivity" + secondsSinceLastActivity);
                     // if the user has been inactive or idle for longer then the seconds specified in maxInactivity
                     if(secondsSinceLastActivity > maxInactivity) {
-                        const alphaCode = getRandomAlphaCode();
-                        chrome.runtime.sendMessage("", getNotificationOption(alphaCode));
+                        const countryIdx = getRandomIndex();
+                        chrome.runtime.sendMessage("", getNotificationOption(getAlphaCode(countryIdx)));
                         reset();
-                        chrome.storage.local.set({alphaCode: alphaCode});
+                        chrome.storage.local.set({countryIdx: countryIdx});
                     }
                 }
             });

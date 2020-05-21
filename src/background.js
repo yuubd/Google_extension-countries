@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(async (data) => {
     } 
     else if (data.type === "switchTab") {
         // console.log("switch");
-        await monitorActiveTab(data.moniroingTab);
+        await monitorActiveTab(data.monitoringTab);
     }
 });
 

@@ -7,7 +7,7 @@ import { InfoPanel } from '../../components/infoPanel'
 import { MapComponent } from '../../components/map'
 import { NameSection } from '../../components/nameSection'
 import { InfoRowModel } from '../../data/models';
-import { getRandomAlphaCode } from './utils';
+import { getRandomIndex, getCountryName, getAlphaCode } from './utils';
 import { CountryModel } from '../../data/models/CountryModel';
 import { MapModel } from '../../components/map/map';
 
@@ -38,22 +38,23 @@ const ROW_TYPES = {
 function MainLayout() {
     // states
     const [currIdx, setCurrIdx]: [number, any] = useState(0);
-    const [countryModelArr, setCountruModelArr]: [Array<CountryModel>, any] = useState([]);
+    const [countryModelArr, setCountryModelArr]: [Array<CountryModel>, any] = useState([]);
+    const [isSearching, setSearching]: [boolean, any] = useState(false);
     const [load, setLoad] = useState(false);
     const [error, setError] = useState('');
 
     // componentDidMount
     useEffect(() => {
-        chrome.storage.local.get("alphaCode", async (data) => {
-            let alphaCode = data.alphaCode;
-            if (typeof data.alphaCode == "undefined") {
-                alphaCode = getRandomAlphaCode();
+        chrome.storage.local.get("countryIdx", async (data) => {
+            let countryIdx = data.countryIdx;
+            if (typeof data.countryIdx == "undefined") {
+                countryIdx = getRandomIndex();
             }
             try {
-                const res = await getRestCountry(alphaCode);
+                const res = await getRestCountry(getAlphaCode(countryIdx));
                 console.log(res.data); // console
-                const countryModel = getCountryModel(res.data);
-                setCountruModelArr([...countryModelArr, countryModel]);
+                const countryModel = getCountryModel(countryIdx, res.data);
+                setCountryModelArr([...countryModelArr, countryModel]);
                 setLoad(true);
             } catch (err) {
                 setError(err.message);
@@ -66,9 +67,9 @@ function MainLayout() {
         return axios.get(`https://restcountries.eu/rest/v2/alpha/${alphaCode}`)
     }
 
-    // Below two functions are deserializing JSON to data models
-    function getCountryModel(rawCountry: RawCountry): CountryModel {
-        const name: string = rawCountry.name;
+    // Below two functions are deserialing JSON to data models
+    function getCountryModel(countryIdx: number, rawCountry: RawCountry): CountryModel {
+        const name: string = getCountryName(countryIdx);
         const flagUrl: string = rawCountry.flag;
         const timezone: string = rawCountry.timezones[0]; // use index 0 (for now)
 
@@ -111,13 +112,13 @@ function MainLayout() {
         return res;
     }
 
-    async function addNewCountry(): Promise<void> {
-        const alphaCode = getRandomAlphaCode();
+    async function addNewCountry(index?: number): Promise<void> {
+        const countryIdx = (index === undefined) ? getRandomIndex() : index;
         try {
-            const res = await getRestCountry(alphaCode);
-            const countryModel = getCountryModel(res.data);
-            setCountruModelArr([...countryModelArr, countryModel]);
-            console.log(countryModelArr); // console
+            const res = await getRestCountry(getAlphaCode(countryIdx));
+            const countryModel = getCountryModel(countryIdx, res.data);
+            setCountryModelArr([...countryModelArr, countryModel]);
+            // console.log(countryModelArr); // console
             setCurrIdx(currIdx + 1);
         } catch (err) {
             console.log(err);
@@ -126,15 +127,23 @@ function MainLayout() {
 
     // used in the template
     function setPrevCountry(): void {
+        setSearching(false);
         if (currIdx > 0)
             setCurrIdx(currIdx - 1);
     }
 
     function setNextCountry(): void {
+        setSearching(false);
         if (currIdx === countryModelArr.length - 1)
             addNewCountry();
         else
             setCurrIdx(currIdx + 1);
+    }
+
+    function setNextCountryAndReplace(countryIdx: number): void {
+        setSearching(false);
+        addNewCountry(countryIdx);
+        countryModelArr.splice(currIdx + 1); // remove elements after it
     }
 
     // main
@@ -157,6 +166,9 @@ function MainLayout() {
                             name={countryModelArr[currIdx].name}
                             timezone={countryModelArr[currIdx].timezone}
                             flagUrl={countryModelArr[currIdx].flagUrl}
+                            isSearching={isSearching}
+                            setSearching={(state: boolean) => setSearching(state)}
+                            changeCountry={(index: number) => setNextCountryAndReplace(index)}
                         />
                     </Grid.Row>
 
@@ -165,7 +177,7 @@ function MainLayout() {
                     </Grid.Row>
 
                     <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
-                    <Button icon='right arrow' labelPosition='right' onClick={setNextCountry} />
+                    <Button icon='right arrow' labelPosition='right' onClick={() => setNextCountry()} />
                 </Grid>
             </Container>
         );

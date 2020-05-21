@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './nameSection.css';
 
-function NameSection(props: { name: string, timezone: string, flagUrl: string }) {
+import { SearchBar } from '../searchBar';
 
+function NameSection(props: {
+    name: string,
+    timezone: string,
+    flagUrl: string,
+    isSearching: boolean,
+    setSearching: Function,
+    changeCountry: Function
+}) {
+
+    // states
     function makeCountryNameElement(name: string): JSX.Element {
-        let size: string = "20px"; // init with min size
-        const fontSizes: string[] = ["32px", "28px", "24px"];
+        let size: number = 20; // init with min size, in pixels
+        const fontSizes: number[] = [32, 28, 24]; // in pixels
         const maxLengths: number[] = [12, 22, 32];
         for (let index in maxLengths) {
             if (name.length <= maxLengths[index]) {
@@ -13,7 +23,20 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
                 break;
             }
         }
-        return <div className="country-name" style={{fontSize: size}}>{ name }</div>;
+        if (props.isSearching) {
+            return <SearchBar
+                initStr={props.name}
+                size={size}
+                setSearching={()=>props.setSearching(false)}
+                changeCountry={(index: number) => props.changeCountry(index)}
+            />;
+        } else {
+            return (
+                <div className="country-name" style={{fontSize: size+"px"}} onClick={()=>props.setSearching(true)}>
+                    { name }
+                </div>
+            );
+        }
     }
 
     function makeTimezoneElement(timezone: string): JSX.Element {
@@ -29,7 +52,7 @@ function NameSection(props: { name: string, timezone: string, flagUrl: string })
             </div>
             <div className="name-section__flag">
                 <img className="flag-img" src={props.flagUrl} />
-            </div>    
+            </div>
         </div>
     );
 }
