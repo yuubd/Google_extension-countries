@@ -1,0 +1,15 @@
+.page-header {
+    margin: 0 -20px; /* needs to match main-layout padding */
+    width: 400px;
+    height: 60px;
+    background-color: #1B75BB;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    display: flex;
+}
+
+.page-header__icon {
+    margin-right: 12px !important;
+    cursor: pointer;
+}

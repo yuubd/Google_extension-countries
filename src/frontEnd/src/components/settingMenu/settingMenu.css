@@ -1,0 +1,31 @@
+.setting-menu {
+    width: 400px;
+    margin: 0 -20px; /* needs to match main-layout padding */
+    flex: 1 1 0;
+    border-bottom: 2px solid #E4E4E4;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+
+.setting-menu:last-child {
+    border-bottom: none;
+}
+
+.setting-menu:hover {
+    background-color: rgba(239,239,239,0.95);
+}
+
+.setting-menu--clickable {
+    cursor: pointer;
+}
+
+.setting-menu__title {
+    font-size: 16px;
+}
+
+.setting-menu__description {
+    font-size: 14px;
+    text-transform: uppercase;
+}
