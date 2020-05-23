@@ -3,13 +3,17 @@ import axios from 'axios'
 import { Button, Container, Grid } from 'semantic-ui-react'
 import './mainLayout.css';
 
+
 import { InfoPanel } from '../../components/infoPanel'
-import { MapComponent } from '../../components/map'
+import { MapComponent } from '../../components/mapComponent'
 import { NameSection } from '../../components/nameSection'
+
 import { InfoRowModel } from '../../data/models';
-import { getRandomIndex, getCountryName, getAlphaCode } from './utils';
 import { CountryModel } from '../../data/models/CountryModel';
-import { MapModel } from '../../components/map/map';
+import { MapModel, Coord } from '../../components/mapComponent/mapComponent';
+
+import { getRandomIndex, getCountryName, getAlphaCode, getAllCoords } from './utils';
+
 
 type RawCountry = {
     name: string,
@@ -34,14 +38,14 @@ const ROW_TYPES = {
     currency: "Currency"
 }
 
-
 function MainLayout() {
     // states
-    const [currIdx, setCurrIdx]: [number, any] = useState(0);
-    const [countryModelArr, setCountryModelArr]: [Array<CountryModel>, any] = useState([]);
-    const [isSearching, setSearching]: [boolean, any] = useState(false);
-    const [load, setLoad] = useState(false);
-    const [error, setError] = useState('');
+    const [currIdx, setCurrIdx]: [number, Function] = useState(0);
+    const [countryModelArr, setCountryModelArr]: [CountryModel[], Function] = useState([new CountryModel()]);
+    const [isSearching, setSearching]: [boolean, Function] = useState(false);
+    const [load, setLoad]: [boolean, Function] = useState(false);
+    const [error, setError]: [string, Function] = useState('');
+    const [mapModels, setMapModel]: [MapModel[], Function] = useState([new MapModel()]);
 
     // componentDidMount
     useEffect(() => {
@@ -52,9 +56,15 @@ function MainLayout() {
             }
             try {
                 const res = await getRestCountry(getAlphaCode(countryIdx));
+                console.log("rawCountry"); // console
                 console.log(res.data); // console
+
                 const countryModel = getCountryModel(countryIdx, res.data);
-                setCountryModelArr([...countryModelArr, countryModel]);
+                setCountryModelArr([countryModel]);
+
+                const center: Coord = { lat: res.data.latlng[0], lng: res.data.latlng[1] }
+                const mapModel = new MapModel(getAllCoords(countryIdx), center)
+                setMapModel([mapModel]);
                 setLoad(true);
             } catch (err) {
                 setError(err.message);
@@ -96,6 +106,7 @@ function MainLayout() {
         return infos.map(rowInfo => new InfoRowModel(rowInfo.name, rowInfo.value));
     }
 
+
     function formatNumber(num: number): string {
         const numStr = num.toString()
         if (numStr.length <= 3) { return numStr; }
@@ -118,10 +129,15 @@ function MainLayout() {
             const res = await getRestCountry(getAlphaCode(countryIdx));
             const countryModel = getCountryModel(countryIdx, res.data);
             setCountryModelArr([...countryModelArr, countryModel]);
-            // console.log(countryModelArr); // console
-            setCurrIdx(currIdx + 1);
+            console.log("countryModel in addNewCountry"); // console
+            console.log(countryModel); // console
+
+            const center: Coord = { lat: res.data.latlng[0], lng: res.data.latlng[1] };
+            const mapModel = new MapModel(getAllCoords(countryIdx), center);
+            setMapModel([...mapModels, mapModel]);
         } catch (err) {
-            console.log(err);
+            setError(err.message);
+            setLoad(false);
         }
     }
 
@@ -132,19 +148,37 @@ function MainLayout() {
             setCurrIdx(currIdx - 1);
     }
 
-    function setNextCountry(): void {
-        setSearching(false);
-        if (currIdx === countryModelArr.length - 1)
-            addNewCountry();
-        else
+    async function setNextCountry(): Promise<void> {
+        try {
+            setSearching(false);
+            if (currIdx === countryModelArr.length - 1) {
+                await addNewCountry()
+                console.log("added a new country");
+            }
             setCurrIdx(currIdx + 1);
+        } catch (err) {
+            setError(err.message);
+            setLoad(false);
+        }
+
     }
 
-    function setNextCountryAndReplace(countryIdx: number): void {
+    async function setNextCountryAndReplace(countryIdx: number): Promise<void> {
         setSearching(false);
-        addNewCountry(countryIdx);
+        await addNewCountry(countryIdx);
+        console.log("added a new country");
+        setCurrIdx(currIdx + 1);
         countryModelArr.splice(currIdx + 1); // remove elements after it
     }
+
+    // console.log("mapModel in mainLayout");
+    // console.log(mapModels);
+    // console.log("currIdx");
+    // console.log(currIdx);
+    // console.log("countryModels");
+    // console.log(countryModelArr);
+    // console.log("countryModel");
+    // console.log(countryModelArr[currIdx]);
 
     // main
     if (!load)
@@ -153,12 +187,12 @@ function MainLayout() {
     else if (error)
         return <li> {error.message} </li>;
 
-    else
+    else {
         return (
             <Container className="main-layout">
                 <Grid>
                     <Grid.Row className="map-row">
-                        <MapComponent mapModel={new MapModel([[0, 0]], { lat: 36.939510763470565, lng: 8.602510428642177 })} />
+                        <MapComponent mapModel={mapModels[currIdx]} />
                     </Grid.Row>
 
                     <Grid.Row>
@@ -177,10 +211,11 @@ function MainLayout() {
                     </Grid.Row>
 
                     <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
-                    <Button icon='right arrow' labelPosition='right' onClick={() => setNextCountry()} />
+                    <Button icon='right arrow' labelPosition='right' onClick={async () => await setNextCountry()} />
                 </Grid>
             </Container>
         );
+    }
 }
 
 export default MainLayout;
