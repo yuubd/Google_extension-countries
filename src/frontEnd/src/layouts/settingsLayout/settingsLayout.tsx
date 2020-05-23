@@ -14,8 +14,8 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
     const [themeIdx, setThemeIdx]: [number, any] = useState(props.isDarkTheme ? 1 : 0);
 
     // setting options
-    const thresholdTimeArr: number[] = [10, 20, 60, 120];
-    const thresholdArr: string[] = ["10 secs", "20 secs", "1 min", "2 mins"];
+    const thresholdTimeArr: number[] = [60, 120, 300, 600, 0];
+    const thresholdArr: string[] = ["1 minute", "2 minutes", "5 minutes", "10 minutes", "disable"];
     const themeArr: string[] = ["Light Mode", "Dark Mode"];
 
     // componentDidMount
@@ -34,7 +34,7 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
         });
     }, []);
 
-    function onModalCloseClicked() {
+    function onModalSaveClicked() {
         if (modalType === "threshold") {
             chrome.storage.local.set({timeThreshold: thresholdTimeArr[thresholdIdx]});
         } else if (modalType === "theme") {
@@ -52,7 +52,7 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
                     options={thresholdArr}
                     selected={thresholdArr[thresholdIdx]}
                     onOptionChanged={(index: number) => setThresholdIdx(index)}
-                    onCloseClicked={() => onModalCloseClicked()}
+                    onSaveClicked={() => onModalSaveClicked()}
                 />
             }
             { (modalType === "theme") &&
@@ -61,7 +61,7 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
                     options={themeArr}
                     selected={themeArr[themeIdx]}
                     onOptionChanged={(index: number) => setThemeIdx(index)}
-                    onCloseClicked={() => onModalCloseClicked()}
+                    onSaveClicked={() => onModalSaveClicked()}
                 />
             }
             <PageHeader title="Settings" onGoBackClicked={()=> props.setCurrPage("")} />

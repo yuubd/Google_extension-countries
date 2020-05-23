@@ -13,7 +13,7 @@
 }
 
 .theme-dark .setting-menu {
-    color: rgba(239,239,239,0.6);
+    color: rgba(239,239,239,0.85);
     border-color: rgba(239,239,239,0.6);
 }
 
@@ -31,7 +31,7 @@
 }
 
 .theme-dark .setting-menu__title {
-    color: rgba(256,256,256,0.85);
+    color: rgba(256,256,256,0.95);
 }
 
 .setting-menu__description {

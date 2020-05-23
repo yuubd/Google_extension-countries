@@ -6,7 +6,7 @@ type SettingModalProps = {
     options: string[],
     selected: string,
     onOptionChanged: Function,
-    onCloseClicked: Function
+    onSaveClicked: Function
 }
 
 function SettingModal(props: SettingModalProps) {
@@ -38,7 +38,7 @@ function SettingModal(props: SettingModalProps) {
                     <div className="setting-modal__title">{ props.title }</div>
                     { renderSettingOptions() }
                 </div>
-                <div className="setting-modal__close" onClick={() => props.onCloseClicked()}>Close</div>
+                <div className="setting-modal__close" onClick={() => props.onSaveClicked()}>Save</div>
             </div>
         </div>
     );
