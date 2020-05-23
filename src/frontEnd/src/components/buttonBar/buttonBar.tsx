@@ -4,8 +4,8 @@ import './buttonBar.css';
 type ButtonBarProps = {
     currPage: string,
     setCurrPage: Function,
-    onClickPrev: Function,
-    onClickNext: Function,
+    onClickPrev?: Function,
+    onClickNext?: Function,
 }
 
 function ButtonBar(props: ButtonBarProps) {
@@ -27,12 +27,15 @@ function ButtonBar(props: ButtonBarProps) {
     }
 
     return (
-        <div className="button-bar">
+        <div className={`button-bar button-bar--${props.currPage === "" ? "enabled" : "disabled"}`}>
             <div className="button-bar__section right-border">
-                <div className="button-bar__button" onClick={() => ((props.currPage === "settings") ? props.setCurrPage("") : props.setCurrPage("settings"))}>
+                <div
+                    className={`button-bar__button${props.currPage === "settings" ? " button-bar__button--selected" : ""}`}
+                    onClick={() => ((props.currPage === "settings") ? props.setCurrPage("") : props.setCurrPage("settings"))}
+                >
                     <i className="setting large icon" />
                 </div>
-                <div className="button-bar__button" onClick={() => toggleBookmarked()}>
+                <div className="button-bar__button" onClick={() => (props.currPage === "" ? toggleBookmarked() : "")}>
                     { getBookmarkIcon() }
                 </div>
                 <div className="button-bar__button">
@@ -40,10 +43,10 @@ function ButtonBar(props: ButtonBarProps) {
                 </div>
             </div>
             <div className="button-bar__section left-border">
-                <div className="button-bar__button right-border" onClick={() => props.onClickPrev()}>
+                <div className="button-bar__button right-border" onClick={() => (typeof props.onClickPrev === "undefined") ? "" : props.onClickPrev()}>
                     <i className="reply large icon" />
                 </div>
-                <div className="button-bar__button left-border" onClick={() => props.onClickNext()}>
+                <div className="button-bar__button left-border" onClick={() => (typeof props.onClickNext === "undefined") ? "" : props.onClickNext()}>
                     <i className="share large icon" />
                 </div>
             </div>

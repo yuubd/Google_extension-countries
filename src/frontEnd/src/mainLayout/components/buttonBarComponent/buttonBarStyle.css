@@ -6,6 +6,10 @@
     border-top: 2px solid #E4E4E4;
 }
 
+.button-bar--disabled {
+    background-color: rgb(61, 123, 170);
+}
+
 .theme-dark .button-bar {
     background-color: transparent;
     border-top: 2px solid rgba(239,239,239,0.6);
@@ -54,15 +58,23 @@
 }
 
 .theme-dark .button-bar__button {
-    color: rgba(239,239,239,0.6);
+    color: rgba(239,239,239,0.75);
 }
 
-.button-bar__button:hover {
-    background-color: #1a4c73;
+.theme-dark
+.button-bar--disabled
+.button-bar__button:not(.button-bar__button--selected) {
+    color: rgba(239,239,239,0.3);
+}
+
+.button-bar__button--selected,
+.button-bar--enabled .button-bar__button:hover {
     cursor: pointer;
+    background-color: #1a4c73;
 }
 
-.theme-dark .button-bar__button:hover {
+.theme-dark .button-bar__button--selected,
+.theme-dark .button-bar--enabled .button-bar__button:hover {
     background-color: rgba(27, 117, 187, 0.4);
 }
 
