@@ -4,10 +4,26 @@
     position: relative;
 }
 
+/* search bar input field */
 .search-bar__input {
+    background-color: rgba(256,256,256,0.25);
+    border: 1px solid #DBDFE3;
     width: 100%;
     position: relative;
     z-index: 2;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 300;
+    padding: 4px;
+    padding-right: 32px;
+}
+
+.theme-dark .search-bar__input {
+    border-color: rgba(256,256,256,0.75);
+    color: white;
+}
+
+.search-bar__input:focus {
+    outline: none;
 }
 
 .search-bar__button-bar {
@@ -19,26 +35,48 @@
     transform: translateY(-50%);
 }
 
-.search-bar__results {
-    position: absolute;
-    z-index: 1;
-    left: 0.25px;
-    right: 0.25px;
-    max-height: 96px;
-    overflow-y: auto;
+.theme-dark .search-bar__icon {
+    color: white;
 }
 
+/* search bar results wrapper */
+.search-bar__results {
+    position: absolute;
+    left: 0.25px;
+    right: 0.25px;
+    max-height: 108px;
+    overflow-y: scroll;
+    border-right: 1px solid #DBDFE3;
+    border-bottom: 1px solid #DBDFE3;
+}
+
+/* search bar single result */
 .search-bar__results__result {
+    background-color: rgba(256, 256, 256, 0.95);
     border: 1px solid #DBDFE3;
     border-top: none;
     padding: 8px;
-    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 32px;
+    height: 36px;
 }
 
+.theme-dark .search-bar__results__result {
+    background-color: rgba(19, 21, 27, 0.95);
+    border-color: rgba(256,256,256,0.75);
+    color: white;
+}
+
+.search-bar__results__result:last-child {
+    border-bottom-width: 0;
+}
+
+.search-bar__results__name {
+    font-weight: 500;
+}
+
+/* search bar no results */
 .no-results {
     color: #989EA5;
     cursor: default;
@@ -49,6 +87,6 @@
     cursor: pointer;
 }
 
-.search-bar__results__name {
-    font-weight: 500;
+.theme-dark .search-bar__results__result:not(.no-results):hover {
+    background-color: rgba(47, 48, 51, 0.95);
 }

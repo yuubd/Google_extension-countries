@@ -1,22 +1,23 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './nameSection.css';
 
 import { SearchBar } from '../searchBar';
 
-function NameSection(props: {
+type NameSectionProps = {
     name: string,
     timezone: string,
     flagUrl: string,
     isSearching: boolean,
     setSearching: Function,
     changeCountry: Function
-}) {
+}
 
-    // states
+function NameSection(props: NameSectionProps) {
+
     function makeCountryNameElement(name: string): JSX.Element {
         let size: number = 20; // init with min size, in pixels
         const fontSizes: number[] = [32, 28, 24]; // in pixels
-        const maxLengths: number[] = [12, 22, 32];
+        const maxLengths: number[] = [13, 17, 21];
         for (let index in maxLengths) {
             if (name.length <= maxLengths[index]) {
                 size = fontSizes[index];
@@ -46,12 +47,12 @@ function NameSection(props: {
 
     return (
         <div className="name-section">
+            <div className="name-section__flag">
+                <img className="flag-img" src={props.flagUrl} />
+            </div>
             <div className="name-section__text">
                 { makeCountryNameElement(props.name) }
                 { makeTimezoneElement(props.timezone) }
-            </div>
-            <div className="name-section__flag">
-                <img className="flag-img" src={props.flagUrl} />
             </div>
         </div>
     );

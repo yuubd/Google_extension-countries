@@ -7,7 +7,7 @@ function Map(props: { country: string }) {
   const mapRequest = `https://www.google.com/maps/embed/v1/place?q=${props.country}&key=AIzaSyDPqfgpCOeRSh817V36gHv1WfQclbWkVSg`
   return (
     <div className="map">
-      <iframe title="test" frameBorder="0" src={mapRequest} style={{width: "400px", height: "325px"}}/>
+      <iframe title="test" frameBorder="0" src={mapRequest} />
     </div>
   );
 }
