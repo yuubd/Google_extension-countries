@@ -9,12 +9,23 @@ import { ButtonBar } from '../../components/buttonBar';
 function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
 
     // states
-    const [modalType, setmodalType]: [string, any] = useState(""); // "" - modal closed
+    const [modalType, setmodalType]: [string, any] = useState(""); // ""(closed), "threshold", "theme"
     const [thresholdIdx, setThresholdIdx]: [number, any] = useState(3);
+    const [themeIdx, setThemeIdx]: [number, any] = useState(props.isDarkTheme ? 1 : 0);
 
     // setting options
     const thresholdArr = ["10 secs", "20 secs", "1 min", "2 mins"];
     const themeArr = ["Light Mode", "Dark Mode"];
+
+    function onModalCloseClicked() {
+        if (modalType === "threshold") {
+            console.log("threshold set to " + thresholdArr[thresholdIdx]);
+        } else if (modalType === "theme") {
+            chrome.storage.local.set({isDarkTheme: (themeIdx === 1)});
+            props.setDarkTheme(themeIdx === 1);
+        }
+        setmodalType("");
+    }
 
     return (
         <div className="settings-layout">
@@ -24,16 +35,16 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
                     options={thresholdArr}
                     selected={thresholdArr[thresholdIdx]}
                     onOptionChanged={(index: number) => setThresholdIdx(index)}
-                    onCloseClicked={() => setmodalType("")}
+                    onCloseClicked={() => onModalCloseClicked()}
                 />
             }
             { (modalType === "theme") &&
                 <SettingModal
                     title="Theme"
                     options={themeArr}
-                    selected={themeArr[props.isDarkTheme ? 1 : 0]}
-                    onOptionChanged={(index: number) => props.setDarkTheme(index == 1)}
-                    onCloseClicked={() => setmodalType("")}
+                    selected={themeArr[themeIdx]}
+                    onOptionChanged={(index: number) => setThemeIdx(index)}
+                    onCloseClicked={() => onModalCloseClicked()}
                 />
             }
             <PageHeader title="Settings" onGoBackClicked={()=> props.setCurrPage("")} />

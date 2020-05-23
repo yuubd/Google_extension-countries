@@ -20,9 +20,9 @@ function SettingModal(props: SettingModalProps) {
                         type="radio"
                         value={ optionIdx }
                         checked={props.selected === props.options[optionIdx]}
-                        onChange={() => props.onOptionChanged(optionIdx)}
+                        onChange={() => props.onOptionChanged(+optionIdx)}
                     />
-                    <div className="setting-modal__option" onClick={() => props.onOptionChanged(optionIdx)}>
+                    <div className="setting-modal__option" onClick={() => props.onOptionChanged(+optionIdx)}>
                         { props.options[optionIdx] }
                     </div>
                 </div>

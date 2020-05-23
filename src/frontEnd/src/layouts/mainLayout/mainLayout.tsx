@@ -52,7 +52,10 @@ function MainLayout() {
 
     // componentDidMount
     useEffect(() => {
-        chrome.storage.local.get("countryIdx", async (data) => {
+        chrome.storage.local.get(["isDarkTheme", "countryIdx"], async (data) => {
+            if (typeof data.isDarkTheme != "undefined") {
+                setDarkTheme(data.isDarkTheme);
+            }
             let countryIdx = data.countryIdx;
             if (typeof data.countryIdx == "undefined") {
                 countryIdx = getRandomIndex();
