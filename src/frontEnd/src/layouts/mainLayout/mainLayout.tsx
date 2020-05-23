@@ -176,7 +176,7 @@ function MainLayout() {
 
     function renderMainLayout(): JSX.Element {
         return (
-            <div>
+            <div className="main-layout">
                 <NameSection
                     name={countryModelArr[currIdx].name}
                     timezone={countryModelArr[currIdx].timezone}
@@ -190,8 +190,8 @@ function MainLayout() {
                 <ButtonBar
                     onClickPrev={setPrevCountry}
                     onClickNext={() => setNextCountry(currIdx)}
-                    isDarkTheme={isDarkTheme}
-                    setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
+                    currPage={currPage}
+                    setCurrPage={(page: string) => setCurrPage(page)}
                 />
             </div>
         );
@@ -199,7 +199,12 @@ function MainLayout() {
 
     function renderSettingsLayout(): JSX.Element {
         return (
-            <SettingsLayout setCurrPage={(page: string) => setCurrPage(page)} />
+            <SettingsLayout
+                currPage={currPage}
+                setCurrPage={(page: string) => setCurrPage(page)}
+                isDarkTheme={isDarkTheme}
+                setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
+            />
         )
     }
 
@@ -220,7 +225,7 @@ function MainLayout() {
 
     else 
         return (
-            <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
+            <div className={`main${isDarkTheme ? " theme-dark" : ""}`}>
                 { isDarkTheme && <img className="background-image" src={require("../../assets/darkmode-bg.png")} alt="background" />}
                 { renderPageContent() }
             </div>

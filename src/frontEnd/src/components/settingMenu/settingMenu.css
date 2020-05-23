@@ -1,6 +1,4 @@
 .setting-menu {
-    width: 400px;
-    margin: 0 -20px; /* needs to match main-layout padding */
     flex: 1 1 0;
     border-bottom: 2px solid #E4E4E4;
     display: flex;
@@ -14,16 +12,26 @@
     border-bottom: none;
 }
 
-.setting-menu:hover {
+.theme-dark .setting-menu {
+    color: rgba(239,239,239,0.6);
+    border-color: rgba(239,239,239,0.6);
+}
+
+.setting-menu--clickable:hover {
+    cursor: pointer;
     background-color: rgba(239,239,239,0.95);
 }
 
-.setting-menu--clickable {
-    cursor: pointer;
+.theme-dark .setting-menu--clickable:hover {
+    background-color: rgba(47, 48, 51, 0.6);
 }
 
 .setting-menu__title {
     font-size: 16px;
+}
+
+.theme-dark .setting-menu__title {
+    color: rgba(256,256,256,0.85);
 }
 
 .setting-menu__description {
