@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'
-import { Button, Container, Grid } from 'semantic-ui-react'
 import './mainLayout.css';
 
 
@@ -9,8 +8,10 @@ import { MapComponent } from '../../components/mapComponent'
 import { NameSection } from '../../components/nameSection'
 
 import { InfoRowModel } from '../../data/models';
-import { CountryModel } from '../../data/models/CountryModel';
 import { MapModel, Coord } from '../../components/mapComponent/mapComponent';
+import { ButtonBar } from '../../components/buttonBar';
+import { CountryModel } from '../../data/models/CountryModel';
+
 
 import { getRandomIndex, getCountryName, getAlphaCode, getAllCoords } from './utils';
 
@@ -40,12 +41,14 @@ const ROW_TYPES = {
 
 function MainLayout() {
     // states
-    const [currIdx, setCurrIdx]: [number, Function] = useState(0);
+    const [currIdx, setCurrIdx]: [number, any] = useState(0);
     const [countryModelArr, setCountryModelArr]: [CountryModel[], Function] = useState([new CountryModel()]);
     const [isSearching, setSearching]: [boolean, Function] = useState(false);
+    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
     const [load, setLoad]: [boolean, Function] = useState(false);
     const [error, setError]: [string, Function] = useState('');
     const [mapModels, setMapModel]: [MapModel[], Function] = useState([new MapModel()]);
+
 
     // componentDidMount
     useEffect(() => {
@@ -189,31 +192,27 @@ function MainLayout() {
 
     else {
         return (
-            <Container className="main-layout">
-                <Grid>
-                    <Grid.Row className="map-row">
-                        <MapComponent mapModel={mapModels[currIdx]} />
-                    </Grid.Row>
-
-                    <Grid.Row>
-                        <NameSection
-                            name={countryModelArr[currIdx].name}
-                            timezone={countryModelArr[currIdx].timezone}
-                            flagUrl={countryModelArr[currIdx].flagUrl}
-                            isSearching={isSearching}
-                            setSearching={(state: boolean) => setSearching(state)}
-                            changeCountry={(index: number) => setNextCountryAndReplace(index)}
-                        />
-                    </Grid.Row>
-
-                    <Grid.Row>
-                        <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
-                    </Grid.Row>
-
-                    <Button icon='left arrow' labelPosition='left' onClick={setPrevCountry} />
-                    <Button icon='right arrow' labelPosition='right' onClick={async () => await setNextCountry()} />
-                </Grid>
-            </Container>
+            <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
+                {isDarkTheme && <img className="background-image" src={require("../../assets/darkmode-bg.png")} alt="background" />}
+                <NameSection
+                    name={countryModelArr[currIdx].name}
+                    timezone={countryModelArr[currIdx].timezone}
+                    flagUrl={countryModelArr[currIdx].flagUrl}
+                    isSearching={isSearching}
+                    setSearching={(state: boolean) => setSearching(state)}
+                    changeCountry={(index: number) => setNextCountryAndReplace(index)}
+                />
+                <div className="map-row">
+                    <MapComponent mapModel={mapModels[currIdx]} />
+                </div>
+                <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
+                <ButtonBar
+                    onClickPrev={setPrevCountry}
+                    onClickNext={setNextCountry}
+                    isDarkTheme={isDarkTheme}
+                    setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
+                />
+            </div>
         );
     }
 }

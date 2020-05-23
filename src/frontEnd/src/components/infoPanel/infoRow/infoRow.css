@@ -1,27 +1,53 @@
 .infoRow {
     display: flex;
-    margin-bottom: 24px;
-    font-size: 18px;
-    font-weight: 300;
-} 
+    font-size: 16px;
+    font-weight: 400;
+    position: relative;
+    align-items: center;
+}
+
+.infoRow:not(:last-child) {
+    margin-bottom: 12px;
+}
 
 .icon-title {
-    width: 150px;
+    width: 50%;
     margin: auto 0;
     display: flex;
     text-align: center;
 }
 
 .title {
-    margin: auto 0 auto 15px;
+    padding-left: 18px;
     color: #1B75BB;
 }
 
+.theme-dark .title {
+    color: #FFFFFF;
+}
+
 .value {
-    margin: auto 0;
-    color: #808285;
+    width: 50%;
+    padding-left: 18px;
+    color: #000000; /* #808285 */
+    position: absolute;
+    right: 0;
+}
+
+.theme-dark .value {
+    color: #FFFFFF;
+}
+
+.value.very-long-value {
+    font-size: 13px;
+    line-height: 1;
 }
 
 .icon-img {
-    width: 25px;
+    width: 20px;
+    height: 100%;
+}
+
+.theme-dark .icon-img {
+    filter: brightness(10);
 }

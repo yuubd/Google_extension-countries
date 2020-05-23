@@ -1,8 +1,8 @@
-div > .place-card.place-card-large {
-    display: none;
+.map {
+    z-index: 1;
+    height: 250px;
 }
 
-div > iframe {
-    
-    border: "0px";
+div > .place-card.place-card-large {
+    display: none;
 }
