@@ -13,7 +13,7 @@ import { ButtonBar } from '../../components/buttonBar';
 import { CountryModel } from '../../data/models/CountryModel';
 
 
-import { getRandomIndex, getCountryName, getAlphaCode, getAllCoords } from './utils';
+import { getRandomIndex, getCountryName, getAlphaCode, getAllCoords, NUMBER_OF_COUNTRIES } from './utils';
 
 
 type RawCountry = {
@@ -59,8 +59,6 @@ function MainLayout() {
             }
             try {
                 const res = await getRestCountry(getAlphaCode(countryIdx));
-                console.log("rawCountry"); // console
-                console.log(res.data); // console
 
                 const countryModel = getCountryModel(countryIdx, res.data);
                 setCountryModelArr([countryModel]);
@@ -81,7 +79,7 @@ function MainLayout() {
     }
 
     // Below two functions are deserialing JSON to data models
-    function getCountryModel(countryIdx: number, rawCountry: RawCountry): CountryModel {
+    function getCountryModel(countryIdx: number, rawCountry: RawCountry, currentIdx: number): CountryModel {
         const name: string = getCountryName(countryIdx);
         const flagUrl: string = rawCountry.flag;
         const timezone: string = rawCountry.timezones[0]; // use index 0 (for now)
@@ -99,14 +97,15 @@ function MainLayout() {
             { name: ROW_TYPES.language, value: language },
             { name: ROW_TYPES.currency, value: currency }
         ]
-        const rows: Array<InfoRowModel> = getInfoRows(infoForRows);
+        const rows: Array<InfoRowModel> = getInfoRows(infoForRows, currentIdx);
 
         return new CountryModel(name, flagUrl, timezone, rows);
     }
 
-    function getInfoRows(infos: Array<Object>) {
-        console.log(infos); // console
-        return infos.map(rowInfo => new InfoRowModel(rowInfo.name, rowInfo.value));
+    function getInfoRows(infos: Array<Object>, currentIdx: number) {
+        return infos.map(rowInfo => {
+            return new InfoRowModel(rowInfo.name, rowInfo.value)
+        });
     }
 
 
@@ -130,14 +129,13 @@ function MainLayout() {
         const countryIdx = (index === undefined) ? getRandomIndex() : index;
         try {
             const res = await getRestCountry(getAlphaCode(countryIdx));
-            const countryModel = getCountryModel(countryIdx, res.data);
+            const countryModel = getCountryModel(countryIdx, res.data, currIdx);
             setCountryModelArr([...countryModelArr, countryModel]);
-            console.log("countryModel in addNewCountry"); // console
-            console.log(countryModel); // console
 
             const center: Coord = { lat: res.data.latlng[0], lng: res.data.latlng[1] };
-            const mapModel = new MapModel(getAllCoords(countryIdx), center);
+            const mapModel = new MapModel(await getAllCoords(countryIdx), center);
             setMapModel([...mapModels, mapModel]);
+            setCurrIdx(currIdx + 1);
         } catch (err) {
             setError(err.message);
             setLoad(false);
@@ -151,37 +149,30 @@ function MainLayout() {
             setCurrIdx(currIdx - 1);
     }
 
-    async function setNextCountry(): Promise<void> {
+    async function setNextCountry(currIdx: number): Promise<void> {
         try {
             setSearching(false);
+            // Have traversed all countries
+            if (currIdx + 1 == NUMBER_OF_COUNTRIES) {
+                setCurrIdx(0);
+                return;
+            }
             if (currIdx === countryModelArr.length - 1) {
                 await addNewCountry()
-                console.log("added a new country");
+                return;
             }
-            setCurrIdx(currIdx + 1);
         } catch (err) {
             setError(err.message);
             setLoad(false);
         }
-
+        setCurrIdx(currIdx + 1);
     }
 
     async function setNextCountryAndReplace(countryIdx: number): Promise<void> {
         setSearching(false);
         await addNewCountry(countryIdx);
-        console.log("added a new country");
-        setCurrIdx(currIdx + 1);
         countryModelArr.splice(currIdx + 1); // remove elements after it
     }
-
-    // console.log("mapModel in mainLayout");
-    // console.log(mapModels);
-    // console.log("currIdx");
-    // console.log(currIdx);
-    // console.log("countryModels");
-    // console.log(countryModelArr);
-    // console.log("countryModel");
-    // console.log(countryModelArr[currIdx]);
 
     // main
     if (!load)
@@ -202,13 +193,13 @@ function MainLayout() {
                     setSearching={(state: boolean) => setSearching(state)}
                     changeCountry={(index: number) => setNextCountryAndReplace(index)}
                 />
-                <div className="map-row">
-                    <MapComponent mapModel={mapModels[currIdx]} />
-                </div>
+                <MapComponent mapModel={mapModels[currIdx]} />
+
+
                 <InfoPanel infoRows={countryModelArr[currIdx].infoRows} />
                 <ButtonBar
                     onClickPrev={setPrevCountry}
-                    onClickNext={setNextCountry}
+                    onClickNext={() => setNextCountry(currIdx)}
                     isDarkTheme={isDarkTheme}
                     setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
                 />

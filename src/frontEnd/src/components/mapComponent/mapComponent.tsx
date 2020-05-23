@@ -31,7 +31,6 @@ export class MapModel {
 export function MapComponent(props: { mapModel: MapModel, google }) {
 
     function mapLoaded(mapProps, map) {
-        console.log(mapProps);
         map.setOptions({
             styles: mapStyles.dark
         });
@@ -46,10 +45,9 @@ export function MapComponent(props: { mapModel: MapModel, google }) {
         });
         return coordsForPolygons;
     }
-    console.log("props.mapModel in mapComponent");
-    console.log(props.mapModel);
+
     return (
-        <div>
+        <div className="map-component">
             <Map initialCenter={props.mapModel.center}
                 center={props.mapModel.center}
                 google={props.google}

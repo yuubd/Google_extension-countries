@@ -1,7 +1,7 @@
 // import { countries } from '../../data/json/countries.json';
 import { features as countries } from '../../data/json/fullCountries.json';
 
-const NUMBER_OF_COUNTRIES = 255;
+export const NUMBER_OF_COUNTRIES = countries.length;
 
 export function getRandomIndex(): number {
     return Math.floor(Math.random() * Math.floor(NUMBER_OF_COUNTRIES));

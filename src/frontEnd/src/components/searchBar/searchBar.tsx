@@ -22,10 +22,10 @@ function SearchBar(props: { initStr: string, size: number, setSearching: Functio
         let regex = new RegExp(search.toLowerCase());
         const matched: CountryInfo[] = [];
         for (let index in countries) {
-            if (regex.test(countries[index].ADMIN.toLowerCase())) {
+            if (regex.test(countries[index].properties.ADMIN.toLowerCase())) {
                 matched.push({
                     index: +index,
-                    name: countries[index].ADMIN
+                    name: countries[index].properties.ADMIN
                 });
             }
         }

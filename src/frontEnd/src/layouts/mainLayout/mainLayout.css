@@ -9,9 +9,9 @@
     justify-content: space-between;
 }
 
-.main-layout.map-row {
+.map-row {
     width: 400px !important; 
-    height: 325px
+    height: 325px !important; 
 }
 /* .main-layout {} */
 .main-layout.theme-dark {
