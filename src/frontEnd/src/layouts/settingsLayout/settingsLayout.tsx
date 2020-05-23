@@ -11,7 +11,10 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
     // states
     const [modalType, setmodalType]: [string, any] = useState(""); // ""(closed), "threshold", "theme"
     const [thresholdIdx, setThresholdIdx]: [number, any] = useState(0);
-    const [themeIdx, setThemeIdx]: [number, any] = useState(props.isDarkTheme ? 1 : 0);
+
+    // states for modal
+    const [modalThresholdIdx, setmodalThresholdIdx]: [number, any] = useState(0);
+    const [modalThemeIdx, setmodalThemeIdx]: [number, any] = useState(props.isDarkTheme ? 1 : 0);
 
     // setting options
     const thresholdTimeArr: number[] = [60, 120, 300, 600, 0];
@@ -27,6 +30,7 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
                 for (let index in thresholdTimeArr) {
                     if (seconds === thresholdTimeArr[index]) {
                         setThresholdIdx(index);
+                        setmodalThresholdIdx(index);
                         break;
                     }
                 }
@@ -36,10 +40,11 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
 
     function onModalSaveClicked() {
         if (modalType === "threshold") {
-            chrome.storage.local.set({timeThreshold: thresholdTimeArr[thresholdIdx]});
+            chrome.storage.local.set({timeThreshold: thresholdTimeArr[modalThresholdIdx]});
+            setThresholdIdx(modalThresholdIdx);
         } else if (modalType === "theme") {
-            chrome.storage.local.set({isDarkTheme: (themeIdx === 1)});
-            props.setDarkTheme(themeIdx === 1);
+            chrome.storage.local.set({isDarkTheme: (modalThemeIdx === 1)});
+            props.setDarkTheme(modalThemeIdx === 1);
         }
         setmodalType("");
     }
@@ -50,8 +55,8 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
                 <SettingModal
                     title="Time Threshold"
                     options={thresholdArr}
-                    selected={thresholdArr[thresholdIdx]}
-                    onOptionChanged={(index: number) => setThresholdIdx(index)}
+                    selected={thresholdArr[modalThresholdIdx]}
+                    onOptionChanged={(index: number) => setmodalThresholdIdx(index)}
                     onSaveClicked={() => onModalSaveClicked()}
                 />
             }
@@ -59,8 +64,8 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
                 <SettingModal
                     title="Theme"
                     options={themeArr}
-                    selected={themeArr[themeIdx]}
-                    onOptionChanged={(index: number) => setThemeIdx(index)}
+                    selected={themeArr[modalThemeIdx]}
+                    onOptionChanged={(index: number) => setmodalThemeIdx(index)}
                     onSaveClicked={() => onModalSaveClicked()}
                 />
             }
