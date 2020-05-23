@@ -82,7 +82,7 @@
 }
 
 .search-bar__results__result:not(.no-results):hover {
-    background-color: #EFEFEF;
+    background-color: rgba(239,239,239,0.95);
     cursor: pointer;
 }
 
