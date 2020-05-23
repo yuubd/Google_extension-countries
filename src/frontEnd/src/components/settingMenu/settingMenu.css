@@ -7,6 +7,7 @@
     flex-direction: column;
     justify-content: center;
     padding: 20px;
+    cursor: default;
 }
 
 .setting-menu:last-child {

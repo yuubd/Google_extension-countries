@@ -33,11 +33,13 @@ function SettingModal(props: SettingModalProps) {
 
     return (
         <div className="setting-modal">
-            <div>
-                <div className="setting-modal__title">{ props.title }</div>
-                { renderSettingOptions() }
+            <div className="setting-modal__modal">
+                <div>
+                    <div className="setting-modal__title">{ props.title }</div>
+                    { renderSettingOptions() }
+                </div>
+                <div className="setting-modal__close" onClick={() => props.onCloseClicked()}>Close</div>
             </div>
-            <div className="setting-modal__close" onClick={() => props.onCloseClicked()}>Close</div>
         </div>
     );
 }
