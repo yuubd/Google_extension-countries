@@ -9,6 +9,11 @@
     justify-content: space-between;
 }
 
+.map-row {
+    width: 400px !important; 
+    height: 325px !important; 
+}
+/* .main-layout {} */
 .main-layout.theme-dark {
     background-color: #13151b;
     border-color: #efefef;

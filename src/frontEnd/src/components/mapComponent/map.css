@@ -1,0 +1,35 @@
+.map-component {
+    z-index: 1;
+    height: 250px;
+}
+div > .place-card.place-card-large {
+    display: none;
+}
+.map-component > div {
+    position: relative !important;
+    border: 2px solid rgba(239,239,239,0.8);
+}
+
+.gmnoprint > .gm-style-mtc {
+    display: none;
+}
+
+.gm-svpc {
+    display: none;
+}
+
+.gm-fullscreen-control {
+    display: none;
+}
+
+.gmnoprint > div {
+    width: 0px !important;
+}
+
+.gmnoprint > div > div {
+    width: 0 !important;
+}
+.gmnoprint > div > .gm-control-active > img {
+    padding: 2px;
+    background-color: #FFFFFF !important;
+}
