@@ -4,7 +4,7 @@ import 'semantic-ui-css/semantic.min.css'
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 
-import { MainLayout } from './layouts/mainLayout';
+import { MainLayout } from './mainLayout';
 
 
 ReactDOM.render(<MainLayout />, document.getElementById('root'));

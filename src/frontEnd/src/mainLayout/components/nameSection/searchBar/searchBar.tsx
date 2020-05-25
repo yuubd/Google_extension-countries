@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { features as countries } from '../../data/json/fullCountries.json';
+import { features as countries } from '../../../data/json/fullCountries.json';
 import './searchBar.css';
 
 type CountryInfo = {

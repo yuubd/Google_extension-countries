@@ -1,6 +1,6 @@
 /** This script is for each tab */
 
-import { getRandomIndex, getAlphaCode } from "./frontEnd/src/layouts/mainLayout/utils";
+import { getRandomIndex, getAlphaCode } from "./frontEnd/src/mainLayout/utils";
 
 // This checks if the current tab is running the monitoring 
 let isRunning = false;
@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener((msg, sender, senderRes) => {
     }
 });
 
-function activityWatcher(currentTab){
+function activityWatcher(currentTab) {
     // An array of DOM events that should be interpreted as user activity and 
     // add these events to the document. register the activity function as the listener parameter.
     const activityEvents = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
@@ -24,13 +24,13 @@ function activityWatcher(currentTab){
     });
     // The function that will be called whenever a user is active
     function reset() {
-        chrome.storage.local.set({monitoringTabId: currentTab});
+        chrome.storage.local.set({ monitoringTabId: currentTab });
         secondsSinceLastActivity = 0;
     }
 
     // The number of seconds that have passed since the user was active.
     let secondsSinceLastActivity = 0;
-    
+
     const maxInactivity = 120;
     function monitor() {
         let monitoring = setInterval(setCountryIdx, 1000);
@@ -43,16 +43,16 @@ function activityWatcher(currentTab){
                     clearInterval(monitoring);
                     // console.log("monitoring stopped");
                     isRunning = false;
-                    chrome.runtime.sendMessage("", {type: "switchTab", monitoringTab: storage.monitoringTabId});
+                    chrome.runtime.sendMessage("", { type: "switchTab", monitoringTab: storage.monitoringTabId });
                 } else {
                     secondsSinceLastActivity++;
                     // console.log("secondsSinceLastActivity" + secondsSinceLastActivity);
                     // if the user has been inactive or idle for longer then the seconds specified in maxInactivity
-                    if(secondsSinceLastActivity > maxInactivity) {
+                    if (secondsSinceLastActivity > maxInactivity) {
                         const countryIdx = getRandomIndex();
                         chrome.runtime.sendMessage("", getNotificationOption(getAlphaCode(countryIdx)));
                         reset();
-                        chrome.storage.local.set({countryIdx: countryIdx});
+                        chrome.storage.local.set({ countryIdx: countryIdx });
                     }
                 }
             });
@@ -72,6 +72,6 @@ function getNotificationOption(alphaCode) {
             message: "Can you recognize this country? \nOpen Eduglobe it to explore!",
             iconUrl: `https://restcountries.eu/data/${alphaCode}.svg`,
             type: "basic"
-        } 
+        }
     };
 }

@@ -1,5 +1,5 @@
 // import { countries } from '../../data/json/countries.json';
-import { features as countries } from '../../data/json/fullCountries.json';
+import { features as countries } from './data/json/fullCountries.json';
 
 export const NUMBER_OF_COUNTRIES = countries.length;
 
@@ -25,5 +25,21 @@ export function getAllCoords(idx: number) {
 function unseal(sealedCoords) {
     return sealedCoords.map((sealed) => {
         return sealed[0];
-    })
+    });
+}
+
+export function formatNumber(num: number): string {
+    const numStr = num.toString()
+    if (numStr.length <= 3) { return numStr; }
+    let res = "";
+    let acc = 3;
+    for (let i = numStr.length - 1; i > -1; i--) {
+        if (acc === 0) {
+            res = "," + res;
+            acc = 2;
+        } else { acc--; }
+
+        res = numStr[i] + res;
+    }
+    return res;
 }
