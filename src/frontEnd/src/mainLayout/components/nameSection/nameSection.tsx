@@ -1,7 +1,7 @@
 import React from 'react';
 import './nameSection.css';
 
-import { SearchBar } from '../searchBar';
+import { SearchBar } from './searchBar';
 
 type NameSectionProps = {
     name: string,
@@ -28,13 +28,13 @@ function NameSection(props: NameSectionProps) {
             return <SearchBar
                 initStr={props.name}
                 size={size}
-                setSearching={()=>props.setSearching(false)}
+                setSearching={() => props.setSearching(false)}
                 changeCountry={(index: number) => props.changeCountry(index)}
             />;
         } else {
             return (
-                <div className="country-name" style={{fontSize: size+"px"}} onClick={()=>props.setSearching(true)}>
-                    { name }
+                <div className="country-name" style={{ fontSize: size + "px" }} onClick={() => props.setSearching(true)}>
+                    {name}
                 </div>
             );
         }
@@ -51,8 +51,8 @@ function NameSection(props: NameSectionProps) {
                 <img className="flag-img" src={props.flagUrl} />
             </div>
             <div className="name-section__text">
-                { makeCountryNameElement(props.name) }
-                { makeTimezoneElement(props.timezone) }
+                {makeCountryNameElement(props.name)}
+                {makeTimezoneElement(props.timezone)}
             </div>
         </div>
     );
