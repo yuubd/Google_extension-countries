@@ -7,33 +7,17 @@ import { InfoPanelComponent } from './components/infoPanelComponent'
 import { MapComponent } from './components/mapComponent'
 import { NameSection } from './components/nameSection'
 
-import { Coord, Polyg0n } from './components/mapComponent/mapModel';
 import { ButtonBar } from './components/buttonBar';
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
 
 
-import { getRandomIndex, getAlphaCode, getAllCoords, NUMBER_OF_COUNTRIES } from './utils';
-
-export class MapModel {
-    public readonly polygons: Polyg0n[];
-    public readonly center: Coord;
-
-    constructor(polygons: Polyg0n[] = [[[0, 0]]], center: Coord = { lat: 0, lng: 0 }) {
-        if (!polygons.length) {
-            this.polygons = polygons;
-        } else if (!center) {
-            this.center = center;
-        }
-        this.polygons = polygons;
-        this.center = center;
-    }
-}
+import { getRandomIndex, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
 
 function MainLayout() {
     // states
     const [isSearching, setSearching]: [boolean, Function] = useState(false);
     const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
-    const [currIdx, setCurrIdx]: [number, any] = useState(0);
+    const [currIdx, setCurrIdx]: [number, Function] = useState(0);
     const [rawCountryData, setRawCountryData]: [RawCountry, Function] = useState({});
     const [countryIdxs, setCountryIdxs]: [number[], Function] = useState([]);
     const [load, setLoad]: [boolean, Function] = useState(false);

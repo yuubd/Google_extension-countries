@@ -16,7 +16,6 @@ export function getAlphaCode(idx: number): string {
 }
 
 export function getAllCoords(idx: number) {
-    console.log(idx);
     if (countries[idx].geometry.type === "Polygon") {
         return countries[idx].geometry.coordinates;
     } else if (countries[idx].geometry.type === "MultiPolygon") {
