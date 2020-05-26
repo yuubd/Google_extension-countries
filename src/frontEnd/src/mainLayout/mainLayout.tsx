@@ -5,13 +5,13 @@ import './mainLayout.css';
 
 import { InfoPanelComponent } from './components/infoPanelComponent'
 import { MapComponent } from './components/mapComponent'
-import { NameSection } from './components/nameSection'
+import { NameSectionComponent } from './components/nameSectionComponent'
 
-import { ButtonBar } from './components/buttonBar';
+import { ButtonBarComponent } from './components/buttonBarComponent';
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
 
 
-import { getRandomIndex, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
+import { getRandomIndex, getCountryName, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
 
 function MainLayout() {
     // states
@@ -119,17 +119,17 @@ function MainLayout() {
         return (
             <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
                 {isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
-                {/* <NameSection
-                    name={countryModelArr[currIdx].name}
-                    timezone={countryModelArr[currIdx].timezone}
-                    flagUrl={countryModelArr[currIdx].flagUrl}
+                <NameSectionComponent
+                    name={getCountryName(countryIdxs[currIdx])}
+                    timezone={rawCountryData.timezones[0]}
+                    flagUrl={rawCountryData.flag}
                     isSearching={isSearching}
                     setSearching={(state: boolean) => setSearching(state)}
                     changeCountry={(index: number) => setNextCountryAndReplace(index)}
-                /> */}
+                />
                 <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} />
                 <InfoPanelComponent rawCountryData={rawCountryData} />
-                <ButtonBar
+                <ButtonBarComponent
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
                     isDarkTheme={isDarkTheme}
