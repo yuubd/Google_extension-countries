@@ -15,15 +15,7 @@ type NameSectionProps = {
 }
 
 function NameSectionComponent(props: NameSectionProps) {
-
-    const nameSectionModel: NameSectionModel = new NameSectionModel(
-        props.name,
-        props.timezone,
-        props.flagUrl,
-        props.isSearching,
-        props.setSearching,
-        props.changeCountry
-    );
+    const nameSectionModel: NameSectionModel = new NameSectionModel(props.name, props.timezone, props.flagUrl, props.isSearching);
 
     return (
         <div className="name-section">
@@ -35,12 +27,12 @@ function NameSectionComponent(props: NameSectionProps) {
                     ? <SearchBarComponent
                         initStr={ nameSectionModel.name }
                         size={ nameSectionModel.nameSize }
-                        setSearching={() => nameSectionModel.setSearching(false)}
-                        changeCountry={(index: number) => nameSectionModel.changeCountry(index)} />
+                        setSearching={() => props.setSearching(false)}
+                        changeCountry={(index: number) => props.changeCountry(index)} />
                     : <div
                         className="country-name"
                         style={{ fontSize: nameSectionModel.nameSize + "px" }}
-                        onClick={() => nameSectionModel.setSearching(true)}>
+                        onClick={() => props.setSearching(true)}>
                         { nameSectionModel.name }
                     </div>
                 }

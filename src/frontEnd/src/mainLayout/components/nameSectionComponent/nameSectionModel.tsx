@@ -4,16 +4,12 @@ export class NameSectionModel {
     public readonly timezoneLabel: string;
     public readonly flagUrl: string;
     public readonly isSearching: boolean;
-    public readonly setSearching: Function;
-    public readonly changeCountry: Function;
 
     constructor(
         name: string = "",
         timezone: string = "",
         flagUrl: string = "",
         isSearching: boolean = false,
-        setSearching: Function,
-        changeCountry: Function
     ) {
 
         function _getNameSize(name: string): number {
@@ -36,7 +32,5 @@ export class NameSectionModel {
         this.timezoneLabel = _getTimezoneLabel(timezone);
         this.flagUrl = flagUrl;
         this.isSearching = isSearching;
-        this.setSearching = setSearching;
-        this.changeCountry = changeCountry;
     }
 }
