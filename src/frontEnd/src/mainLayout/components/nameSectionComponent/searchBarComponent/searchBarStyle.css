@@ -2,6 +2,7 @@
     line-height: 1;
     width: 100%;
     position: relative;
+    z-index: 1;
 }
 
 /* search bar input field */

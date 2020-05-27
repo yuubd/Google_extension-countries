@@ -73,8 +73,6 @@ function SettingsLayout(props: {currPage: string, setCurrPage: Function, isDarkT
             <div className="settings-layout__settings">
                 <SettingMenu title="Time Threshold" description={thresholdArr[thresholdIdx]} onSettingClick={() => setmodalType("threshold")} />
                 <SettingMenu title="Theme" description={themeArr[props.isDarkTheme ? 1 : 0]} onSettingClick={() => setmodalType("theme")} />
-                <SettingMenu title="Bookmarks" description="Re-visit your saved country cards" />
-                <SettingMenu title="Send Feedback" description="Tell us what you think" />
                 <SettingMenu title="App Version" description="00.00.00" />
             </div>
             <ButtonBar

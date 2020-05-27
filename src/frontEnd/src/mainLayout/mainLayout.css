@@ -28,6 +28,7 @@
     top: -5%;
     right: -30%;
     opacity: 50%;
+    filter: blur(1px);
 }
 
 /* scrollbar background */
