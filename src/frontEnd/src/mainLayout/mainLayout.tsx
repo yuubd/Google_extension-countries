@@ -5,9 +5,9 @@ import './mainLayout.css';
 
 import { InfoPanelComponent } from './components/infoPanelComponent'
 import { MapComponent } from './components/mapComponent'
-import { NameSection } from './components/nameSection'
+import { NameSectionComponent } from './components/nameSectionComponent'
 
-import { ButtonBar } from './components/buttonBar';
+import { ButtonBarComponent } from './components/buttonBarComponent';
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
 
 
@@ -119,17 +119,16 @@ function MainLayout() {
         return (
             <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
                 {isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
-                {/* <NameSection
-                    name={countryModelArr[currIdx].name}
-                    timezone={countryModelArr[currIdx].timezone}
-                    flagUrl={countryModelArr[currIdx].flagUrl}
+                <NameSectionComponent
+                    countryIdx={countryIdxs[currIdx]}
+                    rawCountryData={rawCountryData}
                     isSearching={isSearching}
                     setSearching={(state: boolean) => setSearching(state)}
                     changeCountry={(index: number) => setNextCountryAndReplace(index)}
-                /> */}
+                />
                 <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} />
                 <InfoPanelComponent rawCountryData={rawCountryData} />
-                <ButtonBar
+                <ButtonBarComponent
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
                     isDarkTheme={isDarkTheme}

@@ -13,26 +13,13 @@
     border-top: 2px solid rgba(239,239,239,0.6);
 }
 
-.button-bar__section {
-    width: 50%;
-    display: flex;
-    flex-direction: row;
+.button-bar__button--center {
+    border-left: 2px solid #E4E4E4;
+    border-right: 2px solid #E4E4E4;
 }
 
-.left-border {
-    border-left: 1px solid #E4E4E4;
-}
-
-.right-border {
-    border-right: 1px solid #E4E4E4;
-}
-
-.theme-dark .left-border {
-    border-left: 1px solid rgba(239,239,239,0.6);
-}
-
-.theme-dark .right-border {
-    border-right: 1px solid rgba(239,239,239,0.6);
+.theme-dark .button-bar__button--center {
+    border-color: rgba(239,239,239,0.6);
 }
 
 .button-bar__button {
@@ -42,6 +29,11 @@
     flex: 1 1 0;
     text-align: center;
     position: relative;
+}
+
+.button-bar__button--settings {
+    width: 70px;
+    flex: 0 0 auto;
 }
 
 .theme-dark .button-bar__button {
