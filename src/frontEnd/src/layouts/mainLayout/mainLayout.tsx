@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import './mainLayout.css';
 
-import { SettingsLayout } from '../settingsLayout';
+import { SettingsComponent } from '../settingsComponent';
 import { InfoPanel } from '../../components/infoPanel'
 import { MapComponent } from '../../components/mapComponent'
 import { NameSection } from '../../components/nameSection'
@@ -202,7 +202,7 @@ function MainLayout() {
 
     function renderSettingsLayout(): JSX.Element {
         return (
-            <SettingsLayout
+            <SettingsComponent
                 currPage={currPage}
                 setCurrPage={(page: string) => setCurrPage(page)}
                 isDarkTheme={isDarkTheme}
