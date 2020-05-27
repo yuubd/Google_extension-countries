@@ -1,21 +1,21 @@
 import React from "react";
 
 import { SearchBarComponent } from "./searchBarComponent";
+import { RawCountry } from "../infoPanelComponent/InfoPanelModel";
 
 import { NameSectionModel } from "./nameSectionModel";
 import "./nameSectionStyle.css";
 
 type NameSectionProps = {
-    name: string;
-    timezone: string;
-    flagUrl: string;
+    countryIdx: number;
+    rawCountryData: RawCountry;
     isSearching: boolean;
     setSearching: Function;
     changeCountry: Function;
 }
 
 function NameSectionComponent(props: NameSectionProps) {
-    const nameSectionModel: NameSectionModel = new NameSectionModel(props.name, props.timezone, props.flagUrl, props.isSearching);
+    const nameSectionModel = new NameSectionModel(props.countryIdx, props.rawCountryData, props.isSearching);
 
     return (
         <div className="name-section">

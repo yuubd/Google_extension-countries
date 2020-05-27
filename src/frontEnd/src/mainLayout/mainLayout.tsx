@@ -11,7 +11,7 @@ import { ButtonBarComponent } from './components/buttonBarComponent';
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
 
 
-import { getRandomIndex, getCountryName, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
+import { getRandomIndex, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
 
 function MainLayout() {
     // states
@@ -120,9 +120,8 @@ function MainLayout() {
             <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
                 {isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
                 <NameSectionComponent
-                    name={getCountryName(countryIdxs[currIdx])}
-                    timezone={rawCountryData.timezones[0]}
-                    flagUrl={rawCountryData.flag}
+                    countryIdx={countryIdxs[currIdx]}
+                    rawCountryData={rawCountryData}
                     isSearching={isSearching}
                     setSearching={(state: boolean) => setSearching(state)}
                     changeCountry={(index: number) => setNextCountryAndReplace(index)}

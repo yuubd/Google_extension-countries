@@ -11,7 +11,7 @@ type CountryInfo = {
 }
 
 function SearchBarComponent(props: { initStr: string, size: number, setSearching: Function, changeCountry: Function }) {
-    const searchBarModel: SearchBarModel = new SearchBarModel(props.initStr, props.size);
+    const searchBarModel = new SearchBarModel(props.initStr, props.size);
 
     // states
     const [searchValue, setSearchValue]: [string, Function] = useState(searchBarModel.initStr);

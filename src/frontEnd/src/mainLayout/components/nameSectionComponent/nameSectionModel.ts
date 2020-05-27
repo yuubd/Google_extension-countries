@@ -1,3 +1,6 @@
+import { getCountryName } from "../../utils";
+import { RawCountry } from "../infoPanelComponent/InfoPanelModel";
+
 export class NameSectionModel {
     public readonly name: string;
     public readonly nameSize: number;
@@ -5,12 +8,7 @@ export class NameSectionModel {
     public readonly flagUrl: string;
     public readonly isSearching: boolean;
 
-    constructor(
-        name: string = "",
-        timezone: string = "",
-        flagUrl: string = "",
-        isSearching: boolean = false,
-    ) {
+    constructor(countryIdx: number = 0, rawCountry: RawCountry, isSearching: boolean = false) {
 
         function _getNameSize(name: string): number {
             const fontSizes: number[] = [32, 28, 24]; // in pixels
@@ -23,14 +21,15 @@ export class NameSectionModel {
             return 20; // default value
         }
 
-        function _getTimezoneLabel(timezone: string): string {
-            return timezone === "UTC" ? "" : timezone; // hide undefined timezones
+        function _getTimezoneLabel(rawCountry: RawCountry): string {
+            const timezone = rawCountry.timezones[0];
+            return (timezone === "UTC") ? "" : timezone; // hide undefined timezones
         }
 
-        this.name = name;
-        this.nameSize = _getNameSize(name);
-        this.timezoneLabel = _getTimezoneLabel(timezone);
-        this.flagUrl = flagUrl;
+        this.name = getCountryName(countryIdx);
+        this.nameSize = _getNameSize(this.name);
+        this.timezoneLabel = _getTimezoneLabel(rawCountry);
+        this.flagUrl = rawCountry.flag;
         this.isSearching = isSearching;
     }
 }

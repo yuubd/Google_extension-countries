@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { ButtonBarModel } from './buttonBarModel';
-import './buttonBarStyle.css';
+import { ButtonBarModel } from "./buttonBarModel";
+import "./buttonBarStyle.css";
 
 function ButtonBarComponent(props: { onClickPrev: Function, onClickNext: Function, isDarkTheme: boolean, setDarkTheme: Function }) {
     const buttonBarModel = new ButtonBarModel(props.isDarkTheme);
 
     function onSettingsClicked(): void {
-        props.setDarkTheme(buttonBarModel.isDarkTheme);
+        props.setDarkTheme(!buttonBarModel.isDarkTheme);
     }
 
     return (
