@@ -4,7 +4,7 @@ import { InfoRowComponent } from './infoRowComponent';
 import { InfoRowModel } from '../../data/models';
 
 import { RawCountry, InfoPanelModel } from './InfoPanelModel';
-import './infoPanel.css';
+import './infoPanelStyle.css';
 
 function InfoPanelComponent(props: { rawCountryData: RawCountry }) {
   const infoPanelModel = new InfoPanelModel(props.rawCountryData);

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./settingsStyle.css";
 
-import { PageHeaderComponent } from "../../components/pageHeaderComponent";
-import { SettingRowComponent } from "../../components/settingRowComponent";
-import { SettingModalComponent } from "../../components/settingModalComponent";
-import { ButtonBar } from "../../components/buttonBar";
+import { PageHeaderComponent } from "./pageHeaderComponent";
+import { SettingRowComponent } from "./settingRowComponent";
+import { SettingModalComponent } from "./settingModalComponent";
+import { ButtonBarComponent } from "../buttonBarComponent";
 import { SettingsModel, SETTING_TYPES } from "./settingsModel";
 
 function SettingsComponent(props: {currPage: string, setCurrPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
@@ -60,11 +60,9 @@ function SettingsComponent(props: {currPage: string, setCurrPage: Function, isDa
                     description="00.00.00"
                 />
             </div>
-            <ButtonBar
-                onClickPrev={() => console.log('prev')}
-                onClickNext={() => console.log('next')}
-                currPage={ settingsModel.currPage }
-                setCurrPage={() => settingsModel.goToMainPage()}
+            <ButtonBarComponent
+                currPage={ "settings" }
+                setCurrPage={(page: string) => props.setCurrPage(page)}
             />
         </div>
     );

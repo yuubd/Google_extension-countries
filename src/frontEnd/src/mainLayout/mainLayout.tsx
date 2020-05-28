@@ -3,9 +3,10 @@ import axios from 'axios'
 import './mainLayout.css';
 
 
-import { InfoPanelComponent } from './components/infoPanelComponent'
-import { MapComponent } from './components/mapComponent'
-import { NameSectionComponent } from './components/nameSectionComponent'
+import { SettingsComponent } from './components/settingsComponent';
+import { InfoPanelComponent } from './components/infoPanelComponent';
+import { MapComponent } from './components/mapComponent';
+import { NameSectionComponent } from './components/nameSectionComponent';
 
 import { ButtonBarComponent } from './components/buttonBarComponent';
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
@@ -22,10 +23,14 @@ function MainLayout() {
     const [countryIdxs, setCountryIdxs]: [number[], Function] = useState([]);
     const [load, setLoad]: [boolean, Function] = useState(false);
     const [error, setError]: [string, Function] = useState('');
+    const [currPage, setCurrPage]: [string, Function] = useState(""); // ""(main), "settings"
 
     // componentDidMount
     useEffect(() => {
-        chrome.storage.local.get("countryIdx", async (data) => {
+        chrome.storage.local.get(["isDarkTheme", "countryIdx"], async (data) => {
+            if (typeof data.isDarkTheme != "undefined") {
+                setDarkTheme(data.isDarkTheme);
+            }
             let countryIdx = data.countryIdx;
             if (typeof data.countryIdx == "undefined") {
                 countryIdx = getRandomIndex();
@@ -108,17 +113,9 @@ function MainLayout() {
         //countryModelArr.splice(currIdx + 1); // remove elements after it
     }
 
-    // main
-    if (!load || !Object.keys(rawCountryData).length)
-        return <div> Loading... </div>;
-
-    else if (error)
-        return <li> {error.message} </li>;
-
-    else {
+    function renderMainLayout(): JSX.Element {
         return (
-            <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
-                {isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
+            <div className="main-layout">
                 <NameSectionComponent
                     countryIdx={countryIdxs[currIdx]}
                     rawCountryData={rawCountryData}
@@ -129,11 +126,46 @@ function MainLayout() {
                 <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} />
                 <InfoPanelComponent rawCountryData={rawCountryData} />
                 <ButtonBarComponent
+                    currPage={ currPage }
+                    setCurrPage={(page: string) => setCurrPage(page)}
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
-                    isDarkTheme={isDarkTheme}
-                    setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
                 />
+            </div>
+        );
+    }
+
+    function renderSettingsLayout(): JSX.Element {
+        return (
+            <SettingsComponent
+                currPage={currPage}
+                setCurrPage={(page: string) => setCurrPage(page)}
+                isDarkTheme={isDarkTheme}
+                setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
+            />
+        )
+    }
+
+    function renderPageContent(): JSX.Element {
+        if (currPage === "settings") {
+            return renderSettingsLayout();
+        } else {
+            return renderMainLayout();
+        }
+    }
+
+    // main
+    if (!load || !Object.keys(rawCountryData).length)
+        return <div> Loading... </div>;
+
+    else if (error)
+        return <li> {error.message} </li>;
+
+    else {
+        return (
+            <div className={`main${isDarkTheme ? " theme-dark" : ""}`}>
+                { isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
+                { renderPageContent() }
             </div>
         );
     }
