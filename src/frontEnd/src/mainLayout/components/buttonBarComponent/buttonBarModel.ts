@@ -1,7 +1,7 @@
 export class ButtonBarModel {
-    public readonly isDarkTheme: boolean;
+    public readonly isSettingsPage: boolean;
 
-    constructor(isDarkTheme: boolean = false) {
-        this.isDarkTheme = isDarkTheme;
+    constructor(isSettingsPage: boolean = false) {
+        this.isSettingsPage = isSettingsPage;
     }
 }

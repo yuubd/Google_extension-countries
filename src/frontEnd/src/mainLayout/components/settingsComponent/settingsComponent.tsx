@@ -4,11 +4,10 @@ import "./settingsStyle.css";
 import { PageHeaderComponent } from "./pageHeaderComponent";
 import { SettingRowComponent } from "./settingRowComponent";
 import { SettingModalComponent } from "./settingModalComponent";
-import { ButtonBarComponent } from "../buttonBarComponent";
 import { SettingsModel, SETTING_TYPES } from "./settingsModel";
 
-function SettingsComponent(props: {currPage: string, setCurrPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
-    const settingsModel = new SettingsModel(props.currPage, props.setCurrPage, props.isDarkTheme, props.setDarkTheme);
+function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
+    const settingsModel = new SettingsModel(props.isDarkTheme, props.setDarkTheme);
 
     // states
     const [modalType, setModalType]: [string, Function] = useState(""); // ""(closed), "threshold", "theme"
@@ -43,7 +42,7 @@ function SettingsComponent(props: {currPage: string, setCurrPage: Function, isDa
                     onSaveClicked={() => settingsModel.onModalSaveClicked(SETTING_TYPES.THEME, modalThemeIdx, setModalType)}
                 />
             }
-            <PageHeaderComponent title="Settings" onGoBackClicked={()=> settingsModel.goToMainPage()} />
+            <PageHeaderComponent title="Settings" onGoBackClicked={()=> props.setSettingsPage(false)} />
             <div className="settings-layout__settings">
                 <SettingRowComponent
                     title="Time Threshold"
@@ -60,10 +59,6 @@ function SettingsComponent(props: {currPage: string, setCurrPage: Function, isDa
                     description="00.00.00"
                 />
             </div>
-            <ButtonBarComponent
-                currPage={ "settings" }
-                setCurrPage={(page: string) => props.setCurrPage(page)}
-            />
         </div>
     );
 }

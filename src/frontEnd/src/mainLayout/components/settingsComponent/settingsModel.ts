@@ -9,10 +9,8 @@ export class SettingsModel {
     public readonly getModalValue: Function;
     public readonly loadTimeThreshold: Function;
     public readonly onModalSaveClicked: Function;
-    public readonly currPage: string;
-    public readonly goToMainPage: Function;
 
-    constructor(currPage: string = "", setCurrPage: Function, isDarkTheme: boolean, setDarkTheme: Function) {
+    constructor(isDarkTheme: boolean, setDarkTheme: Function) {
 
         const _thresholdTimeArr: number[] = [60, 120, 300, 600, 0];
         const _thresholdStrArr: string[] = ["1 minute", "2 minutes", "5 minutes", "10 minutes", "disable"];
@@ -68,16 +66,10 @@ export class SettingsModel {
             setModalType("");
         }
 
-        function _goToMainPage(): void {
-            setCurrPage("");
-        }
-
         this.themeIndex = _getThemeIndex(isDarkTheme);
         this.getModalOptions = _getModalOptions;
         this.getModalValue = _getModalValue;
         this.loadTimeThreshold = _loadTimeThreshold;
         this.onModalSaveClicked = _onModalSaveClicked;
-        this.currPage = currPage;
-        this.goToMainPage = _goToMainPage;
     }
 }

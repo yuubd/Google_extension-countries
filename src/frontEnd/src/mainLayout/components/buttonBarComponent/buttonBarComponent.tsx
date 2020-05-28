@@ -4,27 +4,33 @@ import { ButtonBarModel } from "./buttonBarModel";
 import "./buttonBarStyle.css";
 
 type ButtonBarProps = {
-    currPage: string,
-    setCurrPage: Function,
-    onClickPrev?: Function,
-    onClickNext?: Function
+    isSettingsPage: boolean,
+    setSettingsPage: Function,
+    onClickPrev: Function,
+    onClickNext: Function
 }
 
 function ButtonBarComponent(props: ButtonBarProps) {
-    // const buttonBarModel = new ButtonBarModel(props.isDarkTheme);
+    const buttonBarModel = new ButtonBarModel(props.isSettingsPage);
 
     return (
-        <div className={`button-bar button-bar--${props.currPage === "" ? "enabled" : "disabled"}`}>
+        <div className={`button-bar button-bar--${buttonBarModel.isSettingsPage ? "settings-page" : "enabled"}`}>
             <div
-                className={`button-bar__button button-bar__button--settings${props.currPage === "settings" ? " button-bar__button--selected" : ""}`}
-                onClick={() => ((props.currPage === "settings") ? props.setCurrPage("") : props.setCurrPage("settings"))}
+                className="button-bar__button button-bar__button--settings"
+                onClick={() => props.setSettingsPage(!buttonBarModel.isSettingsPage)}
             >
                 <i className="setting large icon" />
             </div>
-            <div className="button-bar__button button-bar__button--center" onClick={() => (typeof props.onClickPrev === "undefined") ? "" : props.onClickPrev()}>
+            <div
+                className="button-bar__button button-bar__button--center"
+                onClick={() => (buttonBarModel.isSettingsPage ? "" : props.onClickPrev())}
+            >
                 <i className="reply large icon" />
             </div>
-            <div className="button-bar__button" onClick={() => (typeof props.onClickNext === "undefined") ? "" : props.onClickNext()}>
+            <div
+                className="button-bar__button"
+                onClick={() => (buttonBarModel.isSettingsPage ? "" : props.onClickNext())}
+            >
                 <i className="share large icon" />
             </div>
         </div>

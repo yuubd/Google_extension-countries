@@ -6,37 +6,18 @@
     border-top: 2px solid #E4E4E4;
 }
 
-.button-bar--disabled {
+.button-bar--settings-page {
     background-color: rgb(61, 123, 170);
 }
 
 .theme-dark .button-bar {
     background-color: transparent;
-    border-top: 2px solid rgba(239,239,239,0.6);
+    border-color: rgba(239,239,239,0.6);
 }
 
-/* TODO: clean up styles */
 .button-bar__button--center {
     border-left: 2px solid #E4E4E4;
     border-right: 2px solid #E4E4E4;
-}
-
-.main-layout .button-bar {
-    margin: 0 -20px; /* needs to match main-layout padding */
-}
-
-.button-bar__section {
-    width: 50%;
-    display: flex;
-    flex-direction: row;
-}
-
-.left-border {
-    border-left: 1px solid #E4E4E4;
-}
-
-.right-border {
-    border-right: 1px solid #E4E4E4;
 }
 
 .theme-dark .button-bar__button--center {
@@ -52,28 +33,30 @@
     position: relative;
 }
 
+.theme-dark .button-bar__button {
+    color: rgba(239,239,239,0.75);
+}
+
 .button-bar__button--settings {
     width: 70px;
     flex: 0 0 auto;
 }
 
-.theme-dark .button-bar__button {
-    color: rgba(239,239,239,0.75);
-}
-
-.theme-dark
-.button-bar--disabled
-.button-bar__button:not(.button-bar__button--selected) {
+/* Dark Mode: disabled buttons */
+.theme-dark .button-bar--settings-page
+.button-bar__button:not(.button-bar__button--settings) {
     color: rgba(239,239,239,0.3);
 }
 
-.button-bar__button--selected,
+/* Light Mode: selected settings button and enabled button hover */
+.button-bar--settings-page .button-bar__button--settings,
 .button-bar--enabled .button-bar__button:hover {
     cursor: pointer;
     background-color: #1a4c73;
 }
 
-.theme-dark .button-bar__button--selected,
+/* Dark Mode: selected settings button and enabled button hover */
+.theme-dark .button-bar--settings-page .button-bar__button--settings,
 .theme-dark .button-bar--enabled .button-bar__button:hover {
     background-color: rgba(27, 117, 187, 0.4);
 }
