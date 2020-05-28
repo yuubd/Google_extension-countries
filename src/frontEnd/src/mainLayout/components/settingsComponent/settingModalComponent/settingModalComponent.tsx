@@ -1,38 +1,29 @@
-import React from 'react';
-import './settingModalStyle.css';
+import React, { useState } from 'react';
+
+import { SettingItem } from "../settingsComponent";
+
 import { SettingModalModel } from './settingModalModel';
+import './settingModalStyle.css';
 
-type SettingModalProps = {
-    title: string,
-    options: string[],
-    selected: string,
-    onOptionChanged: Function,
-    onSaveClicked: Function
-}
+function SettingModalComponent(props: { settings: SettingItem, selectedIdx: number, onSaveClicked: Function }) {
+    const settingModalModel = new SettingModalModel(props.settings, props.selectedIdx);
 
-function SettingModalComponent(props: SettingModalProps) {
-    const settingModalModel = new SettingModalModel(props.title, props.options, props.selected);
+    // states
+    const [selectedIdx, setSelectedIdx]: [number, Function] = useState(settingModalModel.selectedIdx);
 
     return (
         <div className="setting-modal">
             <div className="setting-modal__modal">
-                <div>
+                <div className="setting-modal__content">
                     <div className="setting-modal__title">{ settingModalModel.title }</div>
                     { settingModalModel.options.map((option: string, idx: number) =>
                         <div key={ idx }>
-                        <input
-                            type="radio"
-                            value={ idx }
-                            checked={settingModalModel.selected === option}
-                            onChange={() => props.onOptionChanged(idx)}
-                        />
-                        <div className="setting-modal__option" onClick={() => props.onOptionChanged(idx)}>
-                            { option }
+                            <input type="radio" checked={ selectedIdx === idx } onChange={() => setSelectedIdx(idx)} />
+                            <div className="setting-modal__option" onClick={() => setSelectedIdx(idx)}>{ option }</div>
                         </div>
-                    </div>
                     )}
                 </div>
-                <div className="setting-modal__close" onClick={() => props.onSaveClicked()}>Save</div>
+                <div className="setting-modal__save" onClick={() => props.onSaveClicked(selectedIdx)}>Save</div>
             </div>
         </div>
     );

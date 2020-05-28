@@ -44,7 +44,7 @@
     cursor: pointer;
 }
 
-.setting-modal__close {
+.setting-modal__save {
     align-self: flex-end;
     cursor: pointer;
     color: #1B75BB;

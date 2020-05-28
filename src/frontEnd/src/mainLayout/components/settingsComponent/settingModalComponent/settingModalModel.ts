@@ -1,11 +1,13 @@
+import { SettingItem } from "../settingsComponent";
+
 export class SettingModalModel {
     public readonly title: string;
     public readonly options: string[];
-    public readonly selected: string;
+    public readonly selectedIdx: number;
 
-    constructor(title: string = "", options: string[] = [], selected: string = "") {
-        this.title = title;
-        this.options = options;
-        this.selected = selected;
+    constructor(settings: SettingItem, selectedIdx: number = 0) {
+        this.title = settings.title;
+        this.options = settings.labels;
+        this.selectedIdx = +selectedIdx;
     }
 }
