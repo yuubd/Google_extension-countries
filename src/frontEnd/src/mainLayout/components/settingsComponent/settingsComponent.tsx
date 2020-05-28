@@ -14,19 +14,28 @@ export type SettingItem = {
     values: any[]
 }
 
-export const THRESHOLD_SETTING: SettingItem = {
+const THRESHOLD_SETTING: SettingItem = {
     id: "threshold",
     title: "Time Threshold",
     labels: ["1 minute", "2 minutes", "5 minutes", "10 minutes", "disable"],
     values: [60, 120, 300, 600, 0]
 }
 
-export const THEME_SETTING: SettingItem = {
+const THEME_SETTING: SettingItem = {
     id: "theme",
     title: "Theme",
     labels: ["Light Mode", "Dark Mode"],
     values: [false, true]
 }
+
+const VERSION_SETTING: SettingItem = {
+    id: "version",
+    title: "App Version",
+    labels: ["00.00.00"],
+    values: [0]
+}
+
+const settingItems: SettingItem[] = [THRESHOLD_SETTING, THEME_SETTING, VERSION_SETTING];
 
 function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
     const settingsModel = new SettingsModel(props.isDarkTheme);
@@ -55,6 +64,16 @@ function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boole
         props.setDarkTheme(index === 1);
     }
 
+    function getIndexFromType(type: string): number {
+        if (type === THRESHOLD_SETTING.id) {
+            return thresholdIdx;
+        } else if (type === THEME_SETTING.id) {
+            return settingsModel.themeIdx;
+        } else {
+            return 0;
+        }
+    }
+
     function onModalSaveClicked(index: number): void {
         if (modalType === THRESHOLD_SETTING.id) {
             chrome.storage.local.set({ timeThreshold: THRESHOLD_SETTING.values[index] });
@@ -71,26 +90,20 @@ function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boole
             { (modalType !== "") &&
                 <SettingModalComponent
                     settings={ (modalType === THRESHOLD_SETTING.id) ? THRESHOLD_SETTING : THEME_SETTING }
-                    selectedIdx={ (modalType === THRESHOLD_SETTING.id) ? thresholdIdx : settingsModel.themeIdx }
+                    selectedIdx={ getIndexFromType(modalType) }
                     onSaveClicked={(index: number) => onModalSaveClicked(index)}
                 />
             }
             <PageHeaderComponent title="Settings" onGoBackClicked={()=> props.setSettingsPage(false)} />
             <div className="settings-layout__settings">
-                <SettingRowComponent
-                    title={ THRESHOLD_SETTING.title }
-                    description={ THRESHOLD_SETTING.labels[thresholdIdx] }
-                    onSettingClick={() => setModalType(THRESHOLD_SETTING.id)}
-                />
-                <SettingRowComponent
-                    title={ THEME_SETTING.title }
-                    description={ THEME_SETTING.labels[settingsModel.themeIdx] }
-                    onSettingClick={() => setModalType(THEME_SETTING.id)}
-                />
-                <SettingRowComponent
-                    title="App Version"
-                    description="00.00.00"
-                />
+                { settingItems.map((setting: SettingItem, idx: number) =>
+                    <SettingRowComponent
+                        key={ idx }
+                        settingItem={ setting }
+                        selectedIdx={ getIndexFromType(setting.id) }
+                        setModalType={(type: string) => setModalType(type)}
+                    />
+                )}
             </div>
         </div>
     );

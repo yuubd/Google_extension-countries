@@ -3,14 +3,7 @@ import React from "react";
 import { ButtonBarModel } from "./buttonBarModel";
 import "./buttonBarStyle.css";
 
-type ButtonBarProps = {
-    isSettingsPage: boolean,
-    setSettingsPage: Function,
-    onClickPrev: Function,
-    onClickNext: Function
-}
-
-function ButtonBarComponent(props: ButtonBarProps) {
+function ButtonBarComponent(props: {isSettingsPage: boolean, setSettingsPage: Function, onClickPrev: Function, onClickNext: Function}) {
     const buttonBarModel = new ButtonBarModel(props.isSettingsPage);
 
     return (

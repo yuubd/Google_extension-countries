@@ -6,6 +6,7 @@
     border-top: 2px solid #E4E4E4;
 }
 
+/* Light Mode: disabled buttons */
 .button-bar--settings-page {
     background-color: rgb(61, 123, 170);
 }

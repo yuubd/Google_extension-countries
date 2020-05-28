@@ -1,6 +1,7 @@
 import React from "react";
-import "./pageHeaderStyle.css";
+
 import { PageHeaderModel } from "./pageHeaderModel";
+import "./pageHeaderStyle.css";
 
 function PageHeaderComponent(props: { title: string, onGoBackClicked: Function }) {
     const pageHeaderModel = new PageHeaderModel(props.title);

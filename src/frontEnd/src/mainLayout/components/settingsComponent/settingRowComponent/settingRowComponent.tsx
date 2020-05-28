@@ -1,14 +1,15 @@
 import React from "react";
 import "./settingRowStyle.css";
 import { SettingRowModel } from "./settingRowModel";
+import { SettingItem } from "../settingsComponent";
 
-function SettingRowComponent(props: { title: string, description: string, onSettingClick?: Function }) {
-    const settingRowModel = new SettingRowModel(props.title, props.description);
+function SettingRowComponent(props: { settingItem: SettingItem, selectedIdx: number, setModalType: Function }) {
+    const settingRowModel = new SettingRowModel(props.settingItem, props.selectedIdx);
 
     return (
         <div
-            className={ `setting-row ${ props.onSettingClick ? "setting-row--clickable" : "" }` }
-            onClick={() => (props.onSettingClick ? props.onSettingClick() : "")}
+            className={ `setting-row ${ settingRowModel.isClickable ? "setting-row--clickable" : "" }` }
+            onClick={() => (settingRowModel.isClickable ? props.setModalType(settingRowModel.type) : "")}
         >
             <div className="setting-row__title">{ settingRowModel.title }</div>
             <div className="setting-row__description">{ settingRowModel.description }</div>
