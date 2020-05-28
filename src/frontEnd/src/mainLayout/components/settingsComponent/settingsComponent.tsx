@@ -4,10 +4,10 @@ import "./settingsStyle.css";
 import { PageHeaderComponent } from "./pageHeaderComponent";
 import { SettingRowComponent } from "./settingRowComponent";
 import { SettingModalComponent } from "./settingModalComponent";
-import { SettingsModel, SETTING_TYPES } from "./settingsModel";
+import { SettingsModel, THRESHOLD_TIMES, THRESHOLD_LABELS, THEME_LABELS } from "./settingsModel";
 
 function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
-    const settingsModel = new SettingsModel(props.isDarkTheme, props.setDarkTheme);
+    const settingsModel = new SettingsModel(props.isDarkTheme);
 
     // states
     const [modalType, setModalType]: [string, Function] = useState(""); // ""(closed), "threshold", "theme"
@@ -19,40 +19,63 @@ function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boole
 
     // componentDidMount
     useEffect(() => {
-        settingsModel.loadTimeThreshold(setThresholdIdx, setModalThresholdIdx);
+        // load time threshold from local storage
+        chrome.storage.local.get("timeThreshold", (storage) => {
+            if (typeof storage.timeThreshold === "number") {
+                let seconds: number = storage.timeThreshold;
+                for (let index in THRESHOLD_TIMES) {
+                    if (seconds === THRESHOLD_TIMES[index]) {
+                        setThresholdIdx(index);
+                        setModalThresholdIdx(index);
+                        break;
+                    }
+                }
+            }
+        });
     }, []);
+
+    function onModalSaveClicked(): void {
+        if (modalType === "threshold") {
+            chrome.storage.local.set({ timeThreshold: THRESHOLD_TIMES[modalThresholdIdx] });
+            setThresholdIdx(modalThresholdIdx);
+        } else if (modalType === "theme") {
+            chrome.storage.local.set({ isDarkTheme: (modalThemeIdx === 1) });
+            props.setDarkTheme(modalThemeIdx === 1);
+        }
+        setModalType("");
+    }
 
     return (
         <div className="settings-layout">
-            { (modalType === SETTING_TYPES.THRESHOLD) &&
+            { (modalType === "threshold") &&
                 <SettingModalComponent
                     title="Time Threshold"
-                    options={settingsModel.getModalOptions(SETTING_TYPES.THRESHOLD)}
-                    selected={settingsModel.getModalValue(SETTING_TYPES.THRESHOLD, modalThresholdIdx)}
+                    options={settingsModel.getModalOptions("threshold")}
+                    selected={settingsModel.getModalValue("threshold", modalThresholdIdx)}
                     onOptionChanged={(index: number) => setModalThresholdIdx(index)}
-                    onSaveClicked={() => settingsModel.onModalSaveClicked(SETTING_TYPES.THRESHOLD, modalThresholdIdx, setModalType, setThresholdIdx)}
+                    onSaveClicked={() => onModalSaveClicked()}
                 />
             }
-            { (modalType === SETTING_TYPES.THEME) &&
+            { (modalType === "theme") &&
                 <SettingModalComponent
                     title="Theme"
-                    options={settingsModel.getModalOptions(SETTING_TYPES.THEME)}
-                    selected={settingsModel.getModalValue(SETTING_TYPES.THEME, modalThemeIdx)}
+                    options={settingsModel.getModalOptions("theme")}
+                    selected={settingsModel.getModalValue("theme", modalThemeIdx)}
                     onOptionChanged={(index: number) => setModalThemeIdx(index)}
-                    onSaveClicked={() => settingsModel.onModalSaveClicked(SETTING_TYPES.THEME, modalThemeIdx, setModalType)}
+                    onSaveClicked={() => onModalSaveClicked()}
                 />
             }
             <PageHeaderComponent title="Settings" onGoBackClicked={()=> props.setSettingsPage(false)} />
             <div className="settings-layout__settings">
                 <SettingRowComponent
                     title="Time Threshold"
-                    description={settingsModel.getModalValue(SETTING_TYPES.THRESHOLD, thresholdIdx)}
-                    onSettingClick={() => setModalType(SETTING_TYPES.THRESHOLD)}
+                    description={settingsModel.getModalValue("threshold", thresholdIdx)}
+                    onSettingClick={() => setModalType("threshold")}
                 />
                 <SettingRowComponent
                     title="Theme"
-                    description={settingsModel.getModalValue(SETTING_TYPES.THEME, settingsModel.themeIndex)}
-                    onSettingClick={() => setModalType(SETTING_TYPES.THEME)}
+                    description={settingsModel.getModalValue("theme", settingsModel.themeIndex)}
+                    onSettingClick={() => setModalType("theme")}
                 />
                 <SettingRowComponent
                     title="App Version"

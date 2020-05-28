@@ -1,9 +1,7 @@
 export class PageHeaderModel {
     public readonly title: string;
-    public readonly onGoBackClicked: Function;
 
-    constructor(title: string = "", onGoBackClicked: Function) {
+    constructor(title: string = "") {
         this.title = title;
-        this.onGoBackClicked = onGoBackClicked;
     }
 }

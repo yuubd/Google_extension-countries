@@ -11,13 +11,7 @@ type SettingModalProps = {
 }
 
 function SettingModalComponent(props: SettingModalProps) {
-    const settingModalModel = new SettingModalModel(
-        props.title,
-        props.options,
-        props.selected,
-        props.onOptionChanged,
-        props.onSaveClicked
-    );
+    const settingModalModel = new SettingModalModel(props.title, props.options, props.selected);
 
     return (
         <div className="setting-modal">
@@ -30,15 +24,15 @@ function SettingModalComponent(props: SettingModalProps) {
                             type="radio"
                             value={ idx }
                             checked={settingModalModel.selected === option}
-                            onChange={() => settingModalModel.onOptionChanged(idx)}
+                            onChange={() => props.onOptionChanged(idx)}
                         />
-                        <div className="setting-modal__option" onClick={() => settingModalModel.onOptionChanged(idx)}>
+                        <div className="setting-modal__option" onClick={() => props.onOptionChanged(idx)}>
                             { option }
                         </div>
                     </div>
-                    ) }
+                    )}
                 </div>
-                <div className="setting-modal__close" onClick={() => settingModalModel.onSaveClicked()}>Save</div>
+                <div className="setting-modal__close" onClick={() => props.onSaveClicked()}>Save</div>
             </div>
         </div>
     );
