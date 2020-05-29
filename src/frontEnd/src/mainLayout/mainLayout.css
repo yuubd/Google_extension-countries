@@ -1,19 +1,12 @@
 .main-layout {
-    width: 400px !important;
-    height: 600px !important;
-    padding: 0 20px;
+    width: 400px;
+    height: 600px;
+    background-color: white;
     border: 2px solid transparent;
-    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
-.map-row {
-    width: 400px !important; 
-    height: 325px !important; 
-}
-/* .main-layout {} */
 .main-layout.theme-dark {
     background-color: #13151b;
     border-color: #efefef;
@@ -21,12 +14,22 @@
 
 .background-image {
     position: absolute;
-    z-index: 0;
     height: 110%;
     width: auto;
     top: -5%;
     right: -30%;
     opacity: 50%;
+    filter: blur(1px);
+}
+
+.main-layout > div:not(.button-bar) {
+    width: 100%;
+    flex: 1 1 0;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 /* scrollbar background */

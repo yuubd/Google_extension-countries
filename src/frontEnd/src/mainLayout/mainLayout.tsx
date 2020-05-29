@@ -3,10 +3,10 @@ import axios from 'axios'
 import './mainLayout.css';
 
 
-import { InfoPanelComponent } from './components/infoPanelComponent'
-import { MapComponent } from './components/mapComponent'
-import { NameSectionComponent } from './components/nameSectionComponent'
-
+import { SettingsComponent } from './components/settingsComponent';
+import { InfoPanelComponent } from './components/infoPanelComponent';
+import { MapComponent } from './components/mapComponent';
+import { NameSectionComponent } from './components/nameSectionComponent';
 import { ButtonBarComponent } from './components/buttonBarComponent';
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
 
@@ -15,17 +15,21 @@ import { getRandomIndex, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
 
 function MainLayout() {
     // states
-    const [isSearching, setSearching]: [boolean, Function] = useState(false);
-    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
     const [currIdx, setCurrIdx]: [number, Function] = useState(0);
     const [rawCountryData, setRawCountryData]: [RawCountry, Function] = useState({});
     const [countryIdxs, setCountryIdxs]: [number[], Function] = useState([]);
+    const [isSettingsPage, setSettingsPage]: [boolean, Function] = useState(false);
+    const [isSearching, setSearching]: [boolean, Function] = useState(false);
+    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
     const [load, setLoad]: [boolean, Function] = useState(false);
     const [error, setError]: [string, Function] = useState('');
 
     // componentDidMount
     useEffect(() => {
-        chrome.storage.local.get("countryIdx", async (data) => {
+        chrome.storage.local.get(["isDarkTheme", "countryIdx"], async (data) => {
+            if (typeof data.isDarkTheme != "undefined") {
+                setDarkTheme(data.isDarkTheme);
+            }
             let countryIdx = data.countryIdx;
             if (typeof data.countryIdx == "undefined") {
                 countryIdx = getRandomIndex();
@@ -117,22 +121,30 @@ function MainLayout() {
 
     else {
         return (
-            <div className={`main-layout ${isDarkTheme ? "theme-dark" : ""}`}>
-                {isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
-                <NameSectionComponent
-                    countryIdx={countryIdxs[currIdx]}
-                    rawCountryData={rawCountryData}
-                    isSearching={isSearching}
-                    setSearching={(state: boolean) => setSearching(state)}
-                    changeCountry={(index: number) => setNextCountryAndReplace(index)}
-                />
-                <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} />
-                <InfoPanelComponent rawCountryData={rawCountryData} />
+            <div className={`main-layout${isDarkTheme ? " theme-dark" : ""}`}>
+                { isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" /> }
+                { isSettingsPage
+                    ? <SettingsComponent
+                        setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
+                        isDarkTheme={isDarkTheme}
+                        setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)} />
+                    : <div>
+                        <NameSectionComponent
+                            countryIdx={countryIdxs[currIdx]}
+                            rawCountryData={rawCountryData}
+                            isSearching={isSearching}
+                            setSearching={(state: boolean) => setSearching(state)}
+                            changeCountry={(index: number) => setNextCountryAndReplace(index)}
+                        />
+                        <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} />
+                        <InfoPanelComponent rawCountryData={rawCountryData} />
+                    </div>
+                }
                 <ButtonBarComponent
+                    isSettingsPage={isSettingsPage}
+                    setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
-                    isDarkTheme={isDarkTheme}
-                    setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)}
                 />
             </div>
         );

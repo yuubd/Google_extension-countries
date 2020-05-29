@@ -2,6 +2,7 @@
     line-height: 1;
     width: 100%;
     position: relative;
+    z-index: 1;
 }
 
 /* search bar input field */
@@ -10,7 +11,6 @@
     border: 1px solid #DBDFE3;
     width: 100%;
     position: relative;
-    z-index: 2;
     font-family: "Ubuntu", sans-serif;
     font-weight: 300;
     padding: 4px;
@@ -29,7 +29,7 @@
 .search-bar__button-bar {
     margin: 0 6px !important;
     position: absolute;
-    z-index: 3;
+    z-index: 1;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
@@ -83,7 +83,7 @@
 }
 
 .search-bar__results__result:not(.no-results):hover {
-    background-color: #EFEFEF;
+    background-color: rgba(239,239,239,0.95);
     cursor: pointer;
 }
 

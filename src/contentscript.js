@@ -7,15 +7,24 @@ let isRunning = false;
 
 // Listening to messages
 chrome.runtime.onMessage.addListener((msg, sender, senderRes) => {
+    let maxInactivity = 0;
     // console.log(isRunning);
-    // if already running a monitoring thread, do not start a new monitoring thread
-    if (!isRunning) {
-        isRunning = true;
-        activityWatcher(msg.activeTab);
-    }
+
+    chrome.storage.local.get("timeThreshold", (storage) => {
+        if (typeof storage.timeThreshold === "number") {
+            maxInactivity = storage.timeThreshold;
+            // only run if maxInactivity > 0 (i.e. time threshold is not disabled)
+            // if already running a monitoring thread, do not start a new monitoring thread
+            if (!isRunning && (maxInactivity > 0)) {
+                isRunning = true;
+                activityWatcher(msg.activeTab, maxInactivity);
+            }
+        }
+    });
+
 });
 
-function activityWatcher(currentTab) {
+function activityWatcher(currentTab, maxInactivity){
     // An array of DOM events that should be interpreted as user activity and 
     // add these events to the document. register the activity function as the listener parameter.
     const activityEvents = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
@@ -31,7 +40,6 @@ function activityWatcher(currentTab) {
     // The number of seconds that have passed since the user was active.
     let secondsSinceLastActivity = 0;
 
-    const maxInactivity = 120;
     function monitor() {
         let monitoring = setInterval(setCountryIdx, 1000);
         function setCountryIdx() {
