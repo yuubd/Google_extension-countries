@@ -145,6 +145,7 @@ function MainLayout() {
                     </div>
                 }
                 <ButtonBarComponent
+                    currIdx={currIdx}
                     isSettingsPage={isSettingsPage}
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}

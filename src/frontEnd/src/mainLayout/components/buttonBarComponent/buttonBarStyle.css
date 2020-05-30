@@ -2,16 +2,15 @@
     height: 55px;
     display: flex;
     justify-content: space-between;
-    background-color: #1B75BB;
     border-top: 2px solid #E4E4E4;
 }
 
 .theme-dark .button-bar {
-    background-color: transparent;
     border-color: rgba(239,239,239,0.6);
 }
 
 .button-bar__button {
+    background-color: #1B75BB;
     color: #E4E4E4;
     width: 100%;
     height: 100%;
@@ -25,6 +24,7 @@
 }
 
 .theme-dark .button-bar__button {
+    background-color: transparent !important;
     color: rgba(239,239,239,0.75);
     border-color: rgba(239,239,239,0.6);
 }
@@ -38,20 +38,20 @@
 }
 
 /* hover state */
-.button-bar--enabled .button-bar__button:hover {
+.button-bar__button--enabled:hover {
     cursor: pointer;
     background-color: #1A4C73;
 }
 
-.theme-dark .button-bar--enabled .button-bar__button:hover {
+.theme-dark .button-bar__button--enabled:hover {
     background-color: rgba(27, 117, 187, 0.4);
 }
 
 /* disabled state */
-.button-bar--disabled {
+.button-bar__button--disabled {
     background-color: rgb(61, 123, 170);
 }
 
-.theme-dark .button-bar--disabled .button-bar__button {
+.theme-dark .button-bar__button--disabled {
     color: rgba(239,239,239,0.3);
 }
