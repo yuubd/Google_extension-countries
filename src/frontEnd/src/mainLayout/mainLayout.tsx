@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import './mainLayout.css';
 
-
 import { SettingsComponent } from './components/settingsComponent';
-import { InfoPanelComponent } from './components/infoPanelComponent';
-import { MapComponent } from './components/mapComponent';
+import { SettingButtonComponent } from './components/settingButtonComponent';
 import { NameSectionComponent } from './components/nameSectionComponent';
+import { MapComponent } from './components/mapComponent';
+import { InfoPanelComponent } from './components/infoPanelComponent';
 import { ButtonBarComponent } from './components/buttonBarComponent';
+
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
-
-
 import { getRandomIndex, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
 
 function MainLayout() {
@@ -129,6 +128,9 @@ function MainLayout() {
                         isDarkTheme={isDarkTheme}
                         setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)} />
                     : <div>
+                        { !isSearching &&
+                            <SettingButtonComponent setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)} />
+                        }
                         <NameSectionComponent
                             countryIdx={countryIdxs[currIdx]}
                             rawCountryData={rawCountryData}
@@ -142,7 +144,6 @@ function MainLayout() {
                 }
                 <ButtonBarComponent
                     isSettingsPage={isSettingsPage}
-                    setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
                 />

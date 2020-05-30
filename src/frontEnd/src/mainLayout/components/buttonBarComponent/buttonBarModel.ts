@@ -1,7 +1,7 @@
 export class ButtonBarModel {
-    public readonly isSettingsPage: boolean;
+    public readonly isDisabled: boolean;
 
     constructor(isSettingsPage: boolean = false) {
-        this.isSettingsPage = isSettingsPage;
+        this.isDisabled = isSettingsPage;
     }
 }
