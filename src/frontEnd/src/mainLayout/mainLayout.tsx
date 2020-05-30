@@ -122,15 +122,17 @@ function MainLayout() {
         return (
             <div className={`main-layout${isDarkTheme ? " theme-dark" : ""}`}>
                 { isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" /> }
+                { !isSearching &&
+                    <SettingButtonComponent
+                        isSettingsPage={isSettingsPage}
+                        setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)} />
+                }
                 { isSettingsPage
                     ? <SettingsComponent
                         setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                         isDarkTheme={isDarkTheme}
                         setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)} />
                     : <div>
-                        { !isSearching &&
-                            <SettingButtonComponent setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)} />
-                        }
                         <NameSectionComponent
                             countryIdx={countryIdxs[currIdx]}
                             rawCountryData={rawCountryData}

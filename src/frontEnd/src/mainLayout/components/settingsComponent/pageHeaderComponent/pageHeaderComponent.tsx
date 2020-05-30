@@ -8,7 +8,6 @@ function PageHeaderComponent(props: { title: string, onGoBackClicked: Function }
 
     return (
         <div className="page-header">
-            <i className="reply default icon page-header__icon" onClick={() => props.onGoBackClicked()} />
             <div>{ pageHeaderModel.title }</div>
         </div>
     );

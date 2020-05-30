@@ -22,7 +22,7 @@
     filter: blur(1px);
 }
 
-.main-layout > div:not(.button-bar) {
+.main-layout > div:not(.setting-button):not(.button-bar) {
     width: 100%;
     flex: 1 1 0;
     padding: 20px;
