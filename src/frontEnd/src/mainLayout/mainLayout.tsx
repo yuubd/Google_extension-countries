@@ -2,15 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios'
 import './mainLayout.css';
 
-
 import { SettingsComponent } from './components/settingsComponent';
-import { InfoPanelComponent } from './components/infoPanelComponent';
-import { MapComponent } from './components/mapComponent';
+import { SettingButtonComponent } from './components/settingButtonComponent';
 import { NameSectionComponent } from './components/nameSectionComponent';
+import { MapComponent } from './components/mapComponent';
+import { InfoPanelComponent } from './components/infoPanelComponent';
 import { ButtonBarComponent } from './components/buttonBarComponent';
+
 import { RawCountry } from './components/infoPanelComponent/InfoPanelModel';
-
-
 import { getRandomIndex, getAlphaCode, NUMBER_OF_COUNTRIES } from './utils';
 
 function MainLayout() {
@@ -123,6 +122,11 @@ function MainLayout() {
         return (
             <div className={`main-layout${isDarkTheme ? " theme-dark" : ""}`}>
                 { isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" /> }
+                { !isSearching &&
+                    <SettingButtonComponent
+                        isSettingsPage={isSettingsPage}
+                        setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)} />
+                }
                 { isSettingsPage
                     ? <SettingsComponent
                         setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
@@ -141,8 +145,8 @@ function MainLayout() {
                     </div>
                 }
                 <ButtonBarComponent
+                    currIdx={currIdx}
                     isSettingsPage={isSettingsPage}
-                    setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
                 />
