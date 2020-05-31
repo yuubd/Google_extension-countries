@@ -14,9 +14,12 @@
     cursor: pointer;
 }
 
-/* colors */
 .setting-button__icon--home:hover {
-    filter: brightness(0.8);
+    animation-name: home-hover;
+    animation-duration: 0.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    animation-direction: alternate;
 }
 
 .setting-button__icon--settings {
@@ -24,13 +27,33 @@
 }
 
 .setting-button__icon--settings:hover {
-    filter: brightness(0.3);
+    animation-name: setting-hover;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
 }
 
 .theme-dark .setting-button__icon--settings {
     filter: none;
 }
 
-.theme-dark .setting-button__icon--settings:hover {
-    filter: brightness(0.8);
+/* keyframes */
+@keyframes home-hover {
+    from {
+        transform: rotate(-15deg);
+    }
+
+    to {
+        transform: rotate(15deg);
+    }
+}
+
+@keyframes setting-hover {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
