@@ -22,8 +22,13 @@ export class NameSectionModel {
         }
 
         function _getTimezoneLabel(rawCountry: RawCountry): string {
-            const timezone = rawCountry.timezones[0];
-            return (timezone === "UTC") ? "" : timezone; // hide undefined timezones
+            for (let index in rawCountry.timezones) {
+                const timezone = rawCountry.timezones[index];
+                if (timezone !== "UTC") {
+                    return timezone;
+                }
+            }
+            return "";
         }
 
         this.name = getCountryName(countryIdx);
