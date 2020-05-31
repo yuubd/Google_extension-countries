@@ -7,6 +7,7 @@
 
 .setting-button__icon {
     margin: 0 !important;
+    width: 22px;
 }
 
 .setting-button__icon:hover {
@@ -14,30 +15,22 @@
 }
 
 /* colors */
-.setting.setting-button__icon {
-    color: #CCCCCC;
-}
-.setting.setting-button__icon:hover {
-    color: #BBBBBB;
+.setting-button__icon--home:hover {
+    filter: brightness(0.8);
 }
 
-.home.setting-button__icon {
-    color: rgba(232, 245, 255, 0.8);
-}
-.home.setting-button__icon:hover {
-    color: rgba(232, 245, 255, 0.95);
+.setting-button__icon--settings {
+    filter: brightness(0.5);
 }
 
-.theme-dark .setting.setting-button__icon {
-    color: rgba(239,239,239,0.3);
-}
-.theme-dark .setting.setting-button__icon:hover {
-    color: rgba(239,239,239,0.45);
+.setting-button__icon--settings:hover {
+    filter: brightness(0.3);
 }
 
-.theme-dark .home.setting-button__icon {
-    color: rgba(239,239,239,0.6);
+.theme-dark .setting-button__icon--settings {
+    filter: none;
 }
-.theme-dark .home.setting-button__icon:hover {
-    color: rgba(239,239,239,0.8);
+
+.theme-dark .setting-button__icon--settings:hover {
+    filter: brightness(0.8);
 }
