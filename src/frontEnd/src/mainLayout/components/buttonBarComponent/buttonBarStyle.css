@@ -1,16 +1,15 @@
 .button-bar {
-    height: 55px;
+    position: absolute;
+    width: 100%;
+    height: 217px; /* below map */
+    left: 0;
+    bottom: 0;
     display: flex;
     justify-content: space-between;
 }
 
-.theme-dark .button-bar {
-    border-color: rgba(239,239,239,0.6);
-}
-
-.button-bar__button {
-    background-color: #1B75BB;
-    color: #E4E4E4;
+.button-bar__side {
+    color: transparent;
     width: 100%;
     height: 100%;
     flex: 1 1 0;
@@ -18,36 +17,21 @@
     position: relative;
 }
 
-
-.theme-dark .button-bar__button {
-    background-color: transparent !important;
-    color: rgba(239,239,239,0.75);
-    border-color: rgba(239,239,239,0.6);
+.button-bar__side--disabled {
+    cursor: default !important;
 }
 
-.button-bar__button .icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin: 0;
-}
-
-/* hover state */
-.button-bar__button--enabled:hover {
+.button-bar__side:hover {
     cursor: pointer;
-    background-color: #1A4C73;
+    color: #E4E4E4;
 }
 
-.theme-dark .button-bar__button--enabled:hover {
-    background-color: rgba(27, 117, 187, 0.4);
+.theme-dark .button-bar__side:hover {
+    color: rgba(239,239,239,0.75);
 }
 
-/* disabled state */
-.button-bar__button--disabled {
-    background-color: rgb(61, 123, 170);
-}
-
-.theme-dark .button-bar__button--disabled {
-    color: rgba(239,239,239,0.3);
+.button-bar__side .icon {
+    position: absolute;
+    bottom: 24px;
+    margin: 0;
 }

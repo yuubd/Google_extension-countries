@@ -3,28 +3,24 @@ import React from "react";
 import { ButtonBarModel } from "./buttonBarModel";
 import "./buttonBarStyle.css";
 
-function ButtonBarComponent(props: {currIdx: number, isSettingsPage: boolean, onClickPrev: Function, onClickNext: Function}) {
-    const buttonBarModel = new ButtonBarModel(props.currIdx, props.isSettingsPage);
+function ButtonBarComponent(props: {currIdx: number, onClickPrev: Function, onClickNext: Function}) {
+    const buttonBarModel = new ButtonBarModel(props.currIdx);
 
-    function onButtonClick(isPrev: boolean) {
-        if (isPrev && !buttonBarModel.isLeftDisabled) {
+    function onLeftClicked() {
+        if (!buttonBarModel.isLeftDisabled) {
             props.onClickPrev();
-        } else if (!isPrev && !buttonBarModel.isRightDisabled) {
-            props.onClickNext();
         }
     }
 
     return (
         <div className="button-bar">
             <div
-                className={`button-bar__button button-bar__button--${buttonBarModel.isLeftDisabled ? "disabled" : "enabled"}`}
-                onClick={() => onButtonClick(true)}>
-                <i className="reply large icon" />
+                className={`button-bar__side${buttonBarModel.isLeftDisabled ? " button-bar__side--disabled" : ""}`}
+                onClick={() => onLeftClicked()}>
+                { !buttonBarModel.isLeftDisabled && <i className="reply big icon" /> }
             </div>
-            <div
-                className={`button-bar__button button-bar__button--${buttonBarModel.isRightDisabled ? "disabled" : "enabled"}`}
-                onClick={() => onButtonClick(false)}>
-                <i className="share large icon" />
+            <div className="button-bar__side" onClick={() => props.onClickNext()}>
+                <i className="share big icon" />
             </div>
         </div>
     );
