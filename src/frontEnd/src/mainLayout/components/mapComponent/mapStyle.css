@@ -1,6 +1,8 @@
 .map-component {
     z-index: 1;
-    height: 250px;
+    height: 275px;
+    margin: 24px 0;
+    flex: 0 0 auto;
 }
 div > .place-card.place-card-large {
     display: none;

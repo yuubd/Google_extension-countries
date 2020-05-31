@@ -1,17 +1,13 @@
 .infoRow {
     display: flex;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 400;
     position: relative;
     align-items: center;
 }
 
-.infoRow:not(:last-child) {
-    margin-bottom: 12px;
-}
-
 .icon-title {
-    width: 50%;
+    width: 45%;
     margin: auto 0;
     display: flex;
     text-align: center;
@@ -27,7 +23,7 @@
 }
 
 .value {
-    width: 50%;
+    width: 55%;
     padding-left: 18px;
     color: #424242;
     position: absolute;
@@ -39,7 +35,7 @@
 }
 
 .value.very-long-value {
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1;
 }
 

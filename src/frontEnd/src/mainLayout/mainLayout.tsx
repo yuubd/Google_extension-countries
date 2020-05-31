@@ -144,12 +144,12 @@ function MainLayout() {
                         <InfoPanelComponent rawCountryData={rawCountryData} />
                     </div>
                 }
-                <ButtonBarComponent
+                {/* <ButtonBarComponent
                     currIdx={currIdx}
                     isSettingsPage={isSettingsPage}
                     onClickPrev={() => setPrevCountry(currIdx)}
                     onClickNext={() => setNextCountry(currIdx, countryIdxs)}
-                />
+                /> */}
             </div>
         );
     }

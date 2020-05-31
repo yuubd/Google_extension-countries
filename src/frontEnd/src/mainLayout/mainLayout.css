@@ -3,8 +3,6 @@
     height: 600px;
     background-color: white;
     border: 0px solid transparent;
-    display: flex;
-    flex-direction: column;
 }
 
 .main-layout.theme-dark {
@@ -22,14 +20,13 @@
     filter: blur(1px);
 }
 
-.main-layout > div:not(.setting-button):not(.button-bar) {
+.main-layout > div:not(.setting-button) {
     width: 100%;
-    flex: 1 1 0;
-    padding: 20px;
+    height: 100%;
+    padding: 24px;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 
 /* scrollbar background */
