@@ -15,12 +15,18 @@ function ButtonBarComponent(props: {currIdx: number, onClickPrev: Function, onCl
     return (
         <div className="button-bar">
             <div
-                className={`button-bar__side${buttonBarModel.isLeftDisabled ? " button-bar__side--disabled" : ""}`}
+                className={`button-bar__hoverable${buttonBarModel.isLeftDisabled ? " button-bar__hoverable--disabled" : ""}`}
                 onClick={() => onLeftClicked()}>
-                { !buttonBarModel.isLeftDisabled && <i className="reply big icon" /> }
+                { !buttonBarModel.isLeftDisabled &&
+                    <div className="button-bar__side button-bar__side--left">
+                        <i className="angle left huge icon" />
+                    </div>
+                }
             </div>
-            <div className="button-bar__side" onClick={() => props.onClickNext()}>
-                <i className="share big icon" />
+            <div className="button-bar__hoverable" onClick={() => props.onClickNext()}>
+                <div className="button-bar__side button-bar__side--right">
+                    <i className="angle right huge icon" />
+                </div>
             </div>
         </div>
     );
