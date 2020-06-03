@@ -8,7 +8,7 @@ export type RawInfoRow = {
 const ROW_TYPES = {
     continent: "Continent",
     capital: "Capital City",
-    pupolation: "Population",
+    population: "Population",
     language: "Language",
     currency: "Currency"
 }
@@ -36,9 +36,11 @@ export class InfoPanelModel {
         }
 
         function _getLabelFromArray(propArr: PropertyObj[]): string {
+            let regex = /\[/; // check for "["
             for (let index in propArr) {
-                if (propArr[index].name.length > 0 && propArr[index].name[0] !== "[") {
-                    return propArr[index].name;
+                let name = propArr[index].name;
+                if (name.length > 0 && !regex.test(name)) {
+                    return name;
                 }
             }
             return "-";
@@ -54,7 +56,7 @@ export class InfoPanelModel {
             const infoForRows = [
                 { title: ROW_TYPES.continent, value: continent },
                 { title: ROW_TYPES.capital, value: capital },
-                { title: ROW_TYPES.pupolation, value: population },
+                { title: ROW_TYPES.population, value: population },
                 { title: ROW_TYPES.language, value: language },
                 { title: ROW_TYPES.currency, value: currency }
             ]
