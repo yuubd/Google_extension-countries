@@ -12,8 +12,9 @@ export type LngLat = [number, number]
 export class MapModel {
     public readonly polygons: Array<Coord[]>;
     public readonly center: Coord;
+    public readonly isDark: boolean;
 
-    constructor(countryIdx: number, rawCountryData: Object) {
+    constructor(countryIdx: number, rawCountryData: Object, isDark: boolean) {
 
         const polygons = getAllCoords(countryIdx);
         console.log(rawCountryData);
@@ -31,5 +32,6 @@ export class MapModel {
 
         this.polygons = _getCoordsForPolygons(polygons);
         this.center = center;
+        this.isDark = isDark;
     }
 }
