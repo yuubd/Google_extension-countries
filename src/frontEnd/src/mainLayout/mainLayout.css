@@ -29,6 +29,19 @@
     flex-direction: column;
 }
 
+.main-layout__main {
+    transform: perspective(1000px) rotateY(0deg);
+    transition: 0.35s transform;
+}
+
+.main-layout__main--tilt-right {
+    transform: perspective(1000px) rotateY(8deg);
+}
+
+.main-layout__main--tilt-left {
+    transform: perspective(1000px) rotateY(-8deg);
+}
+
 /* scrollbar background */
 .main-layout ::-webkit-scrollbar {
     background-color: rgba(256, 256, 256, 0.9);

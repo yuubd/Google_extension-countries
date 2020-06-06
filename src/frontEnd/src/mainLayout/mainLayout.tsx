@@ -20,6 +20,7 @@ function MainLayout() {
     const [isSettingsPage, setSettingsPage]: [boolean, Function] = useState(false);
     const [isSearching, setSearching]: [boolean, Function] = useState(false);
     const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
+    const [mainClassName, setMainClassName]: [string, Function] = useState("main-layout__main");
     const [load, setLoad]: [boolean, Function] = useState(false);
     const [error, setError]: [string, Function] = useState('');
 
@@ -111,6 +112,14 @@ function MainLayout() {
         //countryModelArr.splice(currIdx + 1); // remove elements after it
     }
 
+    function onButtonBarHover(direction: string, isEnter: boolean) {
+        if (isEnter) {
+            setMainClassName(`main-layout__main main-layout__main--tilt-${direction}`);
+        } else {
+            setMainClassName("main-layout__main");
+        }
+    }
+
     // main
     if (!load || !Object.keys(rawCountryData).length)
         return <div> Loading... </div>;
@@ -132,7 +141,7 @@ function MainLayout() {
                         setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                         isDarkTheme={isDarkTheme}
                         setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)} />
-                    : <div>
+                    : <div className={mainClassName}>
                         <NameSectionComponent
                             countryIdx={countryIdxs[currIdx]}
                             rawCountryData={rawCountryData}
@@ -142,12 +151,15 @@ function MainLayout() {
                         />
                         <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} isDark={isDarkTheme} />
                         <InfoPanelComponent rawCountryData={rawCountryData} />
-                        <ButtonBarComponent
-                            currIdx={currIdx}
-                            onClickPrev={() => setPrevCountry(currIdx)}
-                            onClickNext={() => setNextCountry(currIdx, countryIdxs)}
-                        />
                     </div>
+                }
+                {!isSettingsPage &&
+                    <ButtonBarComponent
+                        currIdx={currIdx}
+                        onHover={(dir: string, isEnter: boolean) => onButtonBarHover(dir, isEnter)}
+                        onClickPrev={() => setPrevCountry(currIdx)}
+                        onClickNext={() => setNextCountry(currIdx, countryIdxs)}
+                    />
                 }
             </div>
         );
