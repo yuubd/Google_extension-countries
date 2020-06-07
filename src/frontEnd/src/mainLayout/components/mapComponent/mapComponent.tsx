@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import { Map, Polygon, GoogleApiWrapper } from "google-maps-react";
-import { MapModel } from "./mapModel";
+import { Coord, MapModel } from "./mapModel";
 import mapStyles from "./mapStyles";
 
 import "./mapStyle.css";
 
 export function MapComponent(props: { contryIdx: number, rawCountryData: Object, isDark: boolean, google: any }) {
+    // TODO ED-29 remove mockserver
+    const [coords, setCoords]: [Array<Coord[]>, Function] = useState([]);
+    const [prevIdx, setPrevIdx]: [number, Function] = useState(0);
+    useEffect(() => {
+        chrome.runtime.onMessage.addListener(
+            function (data) {
+                if (data.type === "getAllCoordsRes") {
+                    setCoords(data.coords);
+                }
+            }
+        );
+    }, []);
+
+    // TODO ED-29 remove mockserver
+    if (props.contryIdx != prevIdx) {
+        setPrevIdx(props.contryIdx);
+        chrome.runtime.sendMessage({
+            type: "getAllCoords",
+            countryIdx: props.contryIdx
+        });
+    }
+
 
     function _mapLoaded(mapProps, map, isDark) {
         const theme = isDark ? mapStyles.dark : mapStyles.light;
@@ -17,15 +39,14 @@ export function MapComponent(props: { contryIdx: number, rawCountryData: Object,
     function _getPolygonColor(isDark: boolean) {
         return isDark ? "#cfcfcf" : "#0080FF"
     }
-    console.log("props.rawCountryData in map component");
-    console.log(props.rawCountryData);
-    const mapModel = new MapModel(props.contryIdx, props.rawCountryData, props.isDark);
+
+    const mapModel = new MapModel(props.contryIdx, props.rawCountryData, props.isDark, coords);
     return (
         <div className="map-component">
             <Map initialCenter={mapModel.center}
                 center={mapModel.center}
                 google={props.google}
-                zoom={3}
+                zoom={2}
                 onReady={(mapProps, map) => _mapLoaded(mapProps, map, mapModel.isDark)}
             >
                 {
