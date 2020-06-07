@@ -1,5 +1,4 @@
-// import { countries } from '../../data/json/countries.json';
-import { features as countries } from './data/json/fullCountries.json';
+import { countries } from './data/json/countries.json';
 
 export const NUMBER_OF_COUNTRIES = countries.length;
 
@@ -8,24 +7,11 @@ export function getRandomIndex(): number {
 }
 
 export function getCountryName(idx: number): string {
-    return countries[idx].properties.ADMIN;
+    return countries[idx].ADMIN;
 }
 
 export function getAlphaCode(idx: number): string {
-    return countries[idx].properties.ISO_A3.toLowerCase();
-}
-
-export function getAllCoords(idx: number) {
-    if (countries[idx].geometry.type === "Polygon") {
-        return countries[idx].geometry.coordinates;
-    } else if (countries[idx].geometry.type === "MultiPolygon") {
-        return unseal(countries[idx].geometry.coordinates);
-    }
-}
-function unseal(sealedCoords) {
-    return sealedCoords.map((sealed) => {
-        return sealed[0];
-    });
+    return countries[idx].ISO_A3.toLowerCase();
 }
 
 export function formatNumber(num: number): string {

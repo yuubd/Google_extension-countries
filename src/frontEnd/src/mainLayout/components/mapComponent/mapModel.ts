@@ -1,4 +1,4 @@
-import { getAllCoords } from "../../utils";
+
 
 export type Coord = {
     lat: number,
@@ -14,10 +14,9 @@ export class MapModel {
     public readonly center: Coord;
     public readonly isDark: boolean;
 
-    constructor(countryIdx: number, rawCountryData: Object, isDark: boolean) {
-
-        const polygons = getAllCoords(countryIdx);
-        console.log(rawCountryData);
+    // country Idx should be used to get coords but we are using mock server for now
+    constructor(countryIdx: number, rawCountryData: Object, isDark: boolean, tmpCoord: Array<Coord[]>) {
+        const polygons = tmpCoord; // TODO ED-29 remove mockserver
         const center: Coord = { lat: rawCountryData.latlng[0], lng: rawCountryData.latlng[1] };
 
         function _getCoordsForPolygons(polygons: Polyg0n[]): Array<Coord[]> {

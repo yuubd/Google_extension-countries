@@ -12,7 +12,8 @@
     width: 100%;
     position: relative;
     font-family: "Ubuntu", sans-serif;
-    font-weight: 300;
+    font-weight: 950;
+    color: #424242;
     padding: 4px;
     padding-right: 32px;
 }
