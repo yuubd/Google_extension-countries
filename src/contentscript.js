@@ -7,21 +7,20 @@ let isRunning = false;
 
 // Listening to messages
 chrome.runtime.onMessage.addListener((msg, sender, senderRes) => {
-    let maxInactivity = 0;
+    let maxInactivity = 120; // default
     // console.log(isRunning);
 
     chrome.storage.local.get("timeThreshold", (storage) => {
         if (typeof storage.timeThreshold === "number") {
             maxInactivity = storage.timeThreshold;
-            // only run if maxInactivity > 0 (i.e. time threshold is not disabled)
-            // if already running a monitoring thread, do not start a new monitoring thread
-            if (!isRunning && (maxInactivity > 0)) {
-                isRunning = true;
-                activityWatcher(msg.activeTab, maxInactivity);
-            }
+        }
+        // only run if maxInactivity > 0 (i.e. time threshold is not disabled)
+        // if already running a monitoring thread, do not start a new monitoring thread
+        if (!isRunning && (maxInactivity > 0)) {
+            isRunning = true;
+            activityWatcher(msg.activeTab, maxInactivity);
         }
     });
-
 });
 
 function activityWatcher(currentTab, maxInactivity){

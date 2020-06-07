@@ -42,7 +42,7 @@ function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boole
 
     // states
     const [modalType, setModalType]: [string, Function] = useState(""); // closed: ""
-    const [thresholdIdx, setThresholdIdx]: [number, Function] = useState(0);
+    const [thresholdIdx, setThresholdIdx]: [number, Function] = useState(1); // default: 2 mins
 
     // componentDidMount
     useEffect(() => {
