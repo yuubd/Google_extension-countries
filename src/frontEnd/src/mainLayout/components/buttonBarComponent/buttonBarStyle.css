@@ -14,6 +14,7 @@
     text-align: center;
     position: relative;
     opacity: 0;
+    transition: 0.3s opacity;
 }
 
 .button-bar__hoverable--disabled {
@@ -22,23 +23,21 @@
 
 .button-bar__hoverable:hover {
     cursor: pointer;
-    opacity: 100%;
-    transition: 0.15s opacity linear;
+    opacity: 1;
+    transition: 0.3s opacity;
 }
 
 .button-bar__side {
-    background-color: rgba(255,255,255, 0.6);
-    width: 40px;
+    width: 0;
+    box-shadow: 0 0 30px 40px rgba(255, 255, 255, 0.85);
     height: 600px;
     position: absolute;
     top: -381px;
     right: -2px;
-    width: 0;
-    box-shadow: 0 0 30px 50px rgba(255, 255, 255, 0.85);
 }
 
 .theme-dark .button-bar__side {
-    box-shadow: 0 0 30px 50px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 30px 40px rgba(0, 0, 0, 0.5);
 }
 
 .button-bar__side--left {
@@ -54,18 +53,18 @@
     margin: 0;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 40px !important;
-    color: rgba(140, 140, 140, 0.5);
+    font-size: 36px !important;
+    color: rgba(140, 140, 140, 0.35);
 }
 
 .theme-dark .button-bar__side .icon {
-    color: rgba(239,239,239,0.4);
+    color: rgba(239,239,239,0.3);
 }
 
 .button-bar__side--left .icon {
-    left: -6px;
+    left: -8px;
 }
 
 .button-bar__side--right .icon {
-    right: -6px;
+    right: -8px;
 }

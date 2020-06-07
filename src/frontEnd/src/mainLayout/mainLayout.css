@@ -2,12 +2,10 @@
     width: 400px;
     height: 600px;
     background-color: white;
-    border: 0px solid transparent;
 }
 
 .main-layout.theme-dark {
     background-color: #13151b;
-    border-color: #efefef;
 }
 
 .background-image {
@@ -31,15 +29,15 @@
 
 .main-layout__main {
     transform: perspective(1000px) rotateY(0deg);
-    transition: 0.35s transform;
+    transition: 0.2s transform;
 }
 
 .main-layout__main--tilt-right {
-    transform: perspective(1000px) rotateY(8deg);
+    transform: perspective(1000px) rotateY(1.5deg);
 }
 
 .main-layout__main--tilt-left {
-    transform: perspective(1000px) rotateY(-8deg);
+    transform: perspective(1000px) rotateY(-1deg);
 }
 
 /* scrollbar background */
