@@ -1,6 +1,6 @@
 .setting-row {
     height: 100px;
-    border-bottom: 2px solid #E4E4E4;
+    border-bottom: 1px solid #E4E4E4;
     display: flex;
     flex-direction: column;
     justify-content: center;

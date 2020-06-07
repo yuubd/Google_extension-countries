@@ -79,7 +79,7 @@ function MainLayout() {
         try {
             setSearching(false);
             // Have traversed all countries
-            if (idx + 1 == NUMBER_OF_COUNTRIES) {
+            if (idx + 1 === NUMBER_OF_COUNTRIES) {
                 setCurrIdx(0);
             } else {
                 const newIdx = idx + 1;
@@ -121,13 +121,13 @@ function MainLayout() {
     else {
         return (
             <div className={`main-layout${isDarkTheme ? " theme-dark" : ""}`}>
-                { isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" /> }
-                { !isSearching &&
+                {isDarkTheme && <img className="background-image" src={require("./assets/darkmode-bg.png")} alt="background" />}
+                {!isSearching &&
                     <SettingButtonComponent
                         isSettingsPage={isSettingsPage}
                         setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)} />
                 }
-                { isSettingsPage
+                {isSettingsPage
                     ? <SettingsComponent
                         setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                         isDarkTheme={isDarkTheme}
@@ -140,7 +140,7 @@ function MainLayout() {
                             setSearching={(state: boolean) => setSearching(state)}
                             changeCountry={(index: number) => setNextCountryAndReplace(index)}
                         />
-                        <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} />
+                        <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} isDark={isDarkTheme} />
                         <InfoPanelComponent rawCountryData={rawCountryData} />
                     </div>
                 }
