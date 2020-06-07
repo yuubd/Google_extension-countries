@@ -142,12 +142,14 @@ function MainLayout() {
                         />
                         <MapComponent contryIdx={countryIdxs[currIdx]} rawCountryData={rawCountryData} isDark={isDarkTheme} />
                         <InfoPanelComponent rawCountryData={rawCountryData} />
-                        <ButtonBarComponent
-                            currIdx={currIdx}
-                            onClickPrev={() => setPrevCountry(currIdx)}
-                            onClickNext={() => setNextCountry(currIdx, countryIdxs)}
-                        />
                     </div>
+                }
+                {!isSettingsPage &&
+                    <ButtonBarComponent
+                        currIdx={currIdx}
+                        onClickPrev={() => setPrevCountry(currIdx)}
+                        onClickNext={() => setNextCountry(currIdx, countryIdxs)}
+                    />
                 }
             </div>
         );
