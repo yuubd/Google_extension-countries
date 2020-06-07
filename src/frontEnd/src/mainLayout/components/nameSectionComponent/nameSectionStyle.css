@@ -12,11 +12,12 @@
 
 .country-name {
     line-height: 1;
-    font-weight: 300;
+    font-weight: 950;
+    color: #525357;
 }
 
 .theme-dark .country-name {
-    color: #ffffff;
+    color: #dbdbdb;
 }
 
 .timezone {
@@ -26,7 +27,7 @@
 }
 
 .theme-dark .timezone {
-    color: #FFFFFF;
+    color: #dbdbdb;
 }
 
 .name-section__flag {

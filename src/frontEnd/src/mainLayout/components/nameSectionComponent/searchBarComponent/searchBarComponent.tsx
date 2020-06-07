@@ -26,8 +26,8 @@ function SearchBarComponent(props: { initStr: string, size: number, setSearching
         let regex = new RegExp(search.toLowerCase());
         const matched: CountryInfo[] = [];
         for (let idx = 0; idx < NUMBER_OF_COUNTRIES; idx++) {
-            const countryName = getCountryName(idx).toLowerCase();
-            if (regex.test(countryName)) {
+            const countryName = getCountryName(idx);
+            if (regex.test(countryName.toLowerCase())) {
                 matched.push({
                     index: +idx,
                     name: countryName
