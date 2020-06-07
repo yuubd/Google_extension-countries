@@ -21,7 +21,7 @@ export function MapComponent(props: { contryIdx: number, rawCountryData: Object,
     }, []);
 
     // TODO ED-29 remove mockserver
-    if (props.contryIdx != prevIdx) {
+    if (props.contryIdx !== prevIdx) {
         setPrevIdx(props.contryIdx);
         chrome.runtime.sendMessage({
             type: "getAllCoords",
