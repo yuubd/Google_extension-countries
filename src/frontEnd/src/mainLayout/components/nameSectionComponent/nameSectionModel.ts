@@ -11,7 +11,7 @@ export class NameSectionModel {
     constructor(countryIdx: number = 0, rawCountry: RawCountry, isSearching: boolean = false) {
 
         function _getNameSize(name: string): number {
-            const fontSizes: number[] = [32, 28, 24]; // in pixels
+            const fontSizes: number[] = [32, 26, 23]; // in pixels
             const maxLengths: number[] = [13, 17, 21];
             for (let index in maxLengths) {
                 if (name.length <= maxLengths[index]) {

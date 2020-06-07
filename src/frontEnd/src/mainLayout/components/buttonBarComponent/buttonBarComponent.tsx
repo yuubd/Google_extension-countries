@@ -3,28 +3,42 @@ import React from "react";
 import { ButtonBarModel } from "./buttonBarModel";
 import "./buttonBarStyle.css";
 
-function ButtonBarComponent(props: {currIdx: number, isSettingsPage: boolean, onClickPrev: Function, onClickNext: Function}) {
-    const buttonBarModel = new ButtonBarModel(props.currIdx, props.isSettingsPage);
+function ButtonBarComponent(props: {currIdx: number, onHover: Function, onClickPrev: Function, onClickNext: Function}) {
+    const buttonBarModel = new ButtonBarModel(props.currIdx);
 
-    function onButtonClick(isPrev: boolean) {
-        if (isPrev && !buttonBarModel.isLeftDisabled) {
+    function onLeftHovered(isEnter: boolean) {
+        if (!buttonBarModel.isLeftDisabled) {
+            props.onHover("left", isEnter);
+        }
+    }
+
+    function onLeftClicked() {
+        if (!buttonBarModel.isLeftDisabled) {
             props.onClickPrev();
-        } else if (!isPrev && !buttonBarModel.isRightDisabled) {
-            props.onClickNext();
         }
     }
 
     return (
         <div className="button-bar">
             <div
-                className={`button-bar__button button-bar__button--${buttonBarModel.isLeftDisabled ? "disabled" : "enabled"}`}
-                onClick={() => onButtonClick(true)}>
-                <i className="reply large icon" />
+                className={`button-bar__hoverable${buttonBarModel.isLeftDisabled ? " button-bar__hoverable--disabled" : ""}`}
+                onMouseEnter={() => onLeftHovered(true)}
+                onMouseLeave={() => onLeftHovered(false)}
+                onClick={() => onLeftClicked()}>
+                { !buttonBarModel.isLeftDisabled &&
+                    <div className="button-bar__side button-bar__side--left">
+                        <i className="angle left huge icon" />
+                    </div>
+                }
             </div>
             <div
-                className={`button-bar__button button-bar__button--${buttonBarModel.isRightDisabled ? "disabled" : "enabled"}`}
-                onClick={() => onButtonClick(false)}>
-                <i className="share large icon" />
+                className="button-bar__hoverable"
+                onClick={() => props.onClickNext()}
+                onMouseEnter={() => props.onHover("right", true)}
+                onMouseLeave={() => props.onHover("right", false)}>
+                <div className="button-bar__side button-bar__side--right">
+                    <i className="angle right huge icon" />
+                </div>
             </div>
         </div>
     );

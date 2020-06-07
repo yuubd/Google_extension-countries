@@ -2,14 +2,10 @@
     width: 400px;
     height: 600px;
     background-color: white;
-    border: 0px solid transparent;
-    display: flex;
-    flex-direction: column;
 }
 
 .main-layout.theme-dark {
     background-color: #13151b;
-    border-color: #efefef;
 }
 
 .background-image {
@@ -24,12 +20,24 @@
 
 .main-layout > div:not(.setting-button):not(.button-bar) {
     width: 100%;
-    flex: 1 1 0;
-    padding: 20px;
+    height: 100%;
+    padding: 24px;
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+}
+
+.main-layout__main {
+    transform: perspective(1000px) rotateY(0deg);
+    transition: 0.2s transform;
+}
+
+.main-layout__main--tilt-right {
+    transform: perspective(1000px) rotateY(1.5deg);
+}
+
+.main-layout__main--tilt-left {
+    transform: perspective(1000px) rotateY(-1deg);
 }
 
 /* scrollbar background */

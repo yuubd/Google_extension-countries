@@ -8,8 +8,9 @@ function SettingButtonComponent(props: {isSettingsPage: boolean, setSettingsPage
 
     return (
         <div className="setting-button">
-            <i
-                className={`${settingButtonModel.icon} large icon setting-button__icon`}
+            <img
+                className={`setting-button__icon setting-button__icon--${settingButtonModel.icon}`}
+                src={settingButtonModel.iconSrc}
                 onClick={() => props.setSettingsPage(!settingButtonModel.isSettingsPage)}
             />
         </div>
