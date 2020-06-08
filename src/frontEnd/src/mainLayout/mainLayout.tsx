@@ -19,7 +19,7 @@ function MainLayout() {
     const [countryIdxs, setCountryIdxs]: [number[], Function] = useState([]);
     const [isSettingsPage, setSettingsPage]: [boolean, Function] = useState(false);
     const [isSearching, setSearching]: [boolean, Function] = useState(false);
-    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
+    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(true);
     const [load, setLoad]: [boolean, Function] = useState(false);
     const [error, setError]: [string, Function] = useState('');
 
