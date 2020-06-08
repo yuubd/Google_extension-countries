@@ -8,13 +8,13 @@
 
 .name-section__text {
     padding-left: 8px;
-    padding-right: 14px;
     width: 70%;
 }
 
 .country-name {
     line-height: 1;
     font-weight: 950;
+    padding-right: 14px;
     color: #525357;
 }
 
