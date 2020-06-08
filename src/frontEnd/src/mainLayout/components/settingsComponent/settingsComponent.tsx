@@ -31,7 +31,7 @@ const THEME_SETTING: SettingItem = {
 const VERSION_SETTING: SettingItem = {
     id: "version",
     title: "App Version",
-    labels: ["1.0"],
+    labels: ["1.0.0"],
     values: [0]
 }
 

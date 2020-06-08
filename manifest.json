@@ -1,6 +1,6 @@
 {
   "name": "EduGlobe",
-  "version": "1.0",
+  "version": "1.0.0",
   "description": "EduGlobe introduces countries around the world by providing bite-sized yet insightful information.",
   "permissions": ["notifications", "activeTab", "tabs", "declarativeContent", "storage", "debugger"],
   "content_scripts": [
