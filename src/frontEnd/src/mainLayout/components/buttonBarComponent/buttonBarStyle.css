@@ -29,7 +29,7 @@
 
 .button-bar__side {
     width: 0;
-    box-shadow: 0 0 30px 40px rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 30px 40px rgba(150, 150, 150, 0.35);
     height: 600px;
     position: absolute;
     top: -381px;
@@ -54,7 +54,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 36px !important;
-    color: rgba(140, 140, 140, 0.35);
+    color: rgba(239,239,239,0.85);
 }
 
 .theme-dark .button-bar__side .icon {
