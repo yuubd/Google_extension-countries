@@ -19,8 +19,7 @@ function MainLayout() {
     const [countryIdxs, setCountryIdxs]: [number[], Function] = useState([]);
     const [isSettingsPage, setSettingsPage]: [boolean, Function] = useState(false);
     const [isSearching, setSearching]: [boolean, Function] = useState(false);
-    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(false);
-    const [mainClassName, setMainClassName]: [string, Function] = useState("main-layout__main");
+    const [isDarkTheme, setDarkTheme]: [boolean, Function] = useState(true);
     const [load, setLoad]: [boolean, Function] = useState(false);
     const [error, setError]: [string, Function] = useState('');
 
@@ -52,6 +51,7 @@ function MainLayout() {
 
     async function addNewCountry(index?: number): Promise<void> {
         const countryIdx = (index === undefined) ? getRandomIndex() : index;
+
         setCountryIdxs([...countryIdxs, countryIdx]);
         try {
             const res = await getRestCountry(getAlphaCode(countryIdx));
@@ -106,18 +106,13 @@ function MainLayout() {
         }
     }
 
+    // TODO change name
     async function setNextCountryAndReplace(countryIdx: number): Promise<void> {
         setSearching(false);
-        await addNewCountry(countryIdx);
-        //countryModelArr.splice(currIdx + 1); // remove elements after it
-    }
-
-    function onButtonBarHover(direction: string, isEnter: boolean) {
-        if (isEnter) {
-            setMainClassName(`main-layout__main main-layout__main--tilt-${direction}`);
-        } else {
-            setMainClassName("main-layout__main");
-        }
+        setCurrIdx(0);
+        setCountryIdxs([countryIdx]);
+        const res = await getRestCountry(getAlphaCode(countryIdx));
+        setRawCountryData(res.data);
     }
 
     // main
@@ -141,7 +136,7 @@ function MainLayout() {
                         setSettingsPage={(isSettings: boolean) => setSettingsPage(isSettings)}
                         isDarkTheme={isDarkTheme}
                         setDarkTheme={(isDark: boolean) => setDarkTheme(isDark)} />
-                    : <div className={mainClassName}>
+                    : <div className="main-layout__main">
                         <NameSectionComponent
                             countryIdx={countryIdxs[currIdx]}
                             rawCountryData={rawCountryData}
@@ -156,7 +151,6 @@ function MainLayout() {
                 {!isSettingsPage &&
                     <ButtonBarComponent
                         currIdx={currIdx}
-                        onHover={(dir: string, isEnter: boolean) => onButtonBarHover(dir, isEnter)}
                         onClickPrev={() => setPrevCountry(currIdx)}
                         onClickNext={() => setNextCountry(currIdx, countryIdxs)}
                     />

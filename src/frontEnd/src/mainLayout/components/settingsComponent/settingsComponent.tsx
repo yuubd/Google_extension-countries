@@ -31,7 +31,7 @@ const THEME_SETTING: SettingItem = {
 const VERSION_SETTING: SettingItem = {
     id: "version",
     title: "App Version",
-    labels: ["00.00.00"],
+    labels: ["1.0.0"],
     values: [0]
 }
 
@@ -42,7 +42,7 @@ function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boole
 
     // states
     const [modalType, setModalType]: [string, Function] = useState(""); // closed: ""
-    const [thresholdIdx, setThresholdIdx]: [number, Function] = useState(0);
+    const [thresholdIdx, setThresholdIdx]: [number, Function] = useState(1); // default: 2 mins
 
     // componentDidMount
     useEffect(() => {
