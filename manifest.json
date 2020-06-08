@@ -1,7 +1,7 @@
 {
-  "name": "Getting Started Example",
+  "name": "EduGlobe",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "EduGlobe introduces countries around the world by providing bite-sized yet insightful information.",
   "permissions": ["notifications", "activeTab", "tabs", "declarativeContent", "storage", "debugger"],
   "content_scripts": [
     {
