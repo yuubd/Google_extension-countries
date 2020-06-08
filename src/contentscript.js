@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener((msg, sender, senderRes) => {
     });
 });
 
-function activityWatcher(currentTab, maxInactivity){
+function activityWatcher(currentTab, maxInactivity) {
     // An array of DOM events that should be interpreted as user activity and 
     // add these events to the document. register the activity function as the listener parameter.
     const activityEvents = ["mousedown", "mousemove", "keydown", "scroll", "touchstart"];
@@ -76,7 +76,7 @@ function getNotificationOption(alphaCode) {
         type: "notification",
         options: {
             title: "EduGlobe",
-            message: "Can you recognize this country? \nOpen Eduglobe it to explore!",
+            message: "Can you recognize this country? \nOpen EduGlobe to explore!",
             iconUrl: `https://restcountries.eu/data/${alphaCode}.svg`,
             type: "basic"
         }

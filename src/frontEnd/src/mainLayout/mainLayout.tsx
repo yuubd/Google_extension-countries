@@ -51,6 +51,7 @@ function MainLayout() {
 
     async function addNewCountry(index?: number): Promise<void> {
         const countryIdx = (index === undefined) ? getRandomIndex() : index;
+
         setCountryIdxs([...countryIdxs, countryIdx]);
         try {
             const res = await getRestCountry(getAlphaCode(countryIdx));
@@ -105,10 +106,13 @@ function MainLayout() {
         }
     }
 
+    // TODO change name
     async function setNextCountryAndReplace(countryIdx: number): Promise<void> {
         setSearching(false);
-        await addNewCountry(countryIdx);
-        //countryModelArr.splice(currIdx + 1); // remove elements after it
+        setCurrIdx(0);
+        setCountryIdxs([countryIdx]);
+        const res = await getRestCountry(getAlphaCode(countryIdx));
+        setRawCountryData(res.data);
     }
 
     // main

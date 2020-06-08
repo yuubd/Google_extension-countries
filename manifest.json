@@ -2,16 +2,27 @@
   "name": "EduGlobe",
   "version": "1.0.0",
   "description": "EduGlobe introduces countries around the world by providing bite-sized yet insightful information.",
-  "permissions": ["notifications", "activeTab", "tabs", "declarativeContent", "storage", "debugger"],
+  "permissions": [
+    "notifications",
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
   "content_scripts": [
     {
-      "js": ["contentscript.js"],
+      "js": [
+        "contentscript.js"
+      ],
       "_comment": "css: [contentscript.css]",
-      "matches": ["<all_urls>"]
+      "matches": [
+        "<all_urls>"
+      ]
     }
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js"
+    ],
     "persistent": false
   },
   "browser_action": {
@@ -24,7 +35,9 @@
     "48": "assets/EduGlobe-logo-48x48.png",
     "128": "assets/EduGlobe-logo-128x128.png"
   },
-  "web_accessible_resources": ["assets/*"],
+  "web_accessible_resources": [
+    "assets/*"
+  ],
   "content_security_policy": "script-src 'self' https://maps.googleapis.com; object-src 'self'",
   "manifest_version": 2
 }
