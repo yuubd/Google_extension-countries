@@ -76,4 +76,4 @@ function activityWatcher(maxInactivity) {
     }
     monitor();
 }
-activityWatcher(3);
+activityWatcher(1800);
