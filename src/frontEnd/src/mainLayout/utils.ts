@@ -14,6 +14,10 @@ export function getAlphaCode(idx: number): string {
     return countries[idx].ISO_A3.toLowerCase();
 }
 
+export function getTwoLetterCode(idx: number): string {
+    return countries[idx].ISO_A2.toLowerCase();
+}
+
 export function formatNumber(num: number): string {
     const numStr = num.toString()
     if (numStr.length <= 3) { return numStr; }
