@@ -35,7 +35,8 @@ const VERSION_SETTING: SettingItem = {
     values: [0]
 }
 
-const settingItems: SettingItem[] = [THRESHOLD_SETTING, THEME_SETTING, VERSION_SETTING];
+// const settingItems: SettingItem[] = [THRESHOLD_SETTING, THEME_SETTING, VERSION_SETTING];
+const settingItems: SettingItem[] = [THEME_SETTING, VERSION_SETTING];
 
 function SettingsComponent(props: {setSettingsPage: Function, isDarkTheme: boolean, setDarkTheme: Function}) {
     const settingsModel = new SettingsModel(props.isDarkTheme);
