@@ -18,7 +18,7 @@ export function MapComponent(props: { contryIdx: number, rawCountryData: Object,
                 }
             }
         );
-        return setCoords([]);
+        return setCoords(null);
     }, []);
 
     // TODO ED-29 remove mockserver
