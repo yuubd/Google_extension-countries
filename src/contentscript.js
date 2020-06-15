@@ -1,5 +1,3 @@
-// /** This script is for each tab */
-
 // import { getRandomIndex, getAlphaCode } from "./frontEnd/src/mainLayout/utils";
 
 // // This checks if the current tab is running the monitoring 
