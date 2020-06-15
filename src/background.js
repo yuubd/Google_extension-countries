@@ -46,10 +46,10 @@ chrome.runtime.onMessage.addListener(async (data) => {
 //     // alert("detached" + tabId.id); 
 // });
 
-const countryIdx = getRandomIndex();
-const twoLetterCode = getTwoLetterCode(countryIdx);
-chrome.browserAction.setIcon({ path: `https://www.countryflags.io/${twoLetterCode}/flat/64.png` });
-chrome.storage.local.set({ countryIdx: countryIdx });
+// const countryIdx = getRandomIndex();
+// const twoLetterCode = getTwoLetterCode(countryIdx);
+// chrome.browserAction.setIcon({ path: `https://www.countryflags.io/${twoLetterCode}/flat/64.png` });
+// chrome.storage.local.set({ countryIdx: countryIdx });
 function activityWatcher(maxInactivity) {
     let secondsSinceLastActivity = 0;
     function monitor() {
