@@ -4,5 +4,7 @@ https://chrome.google.com/webstore/detail/eduglobe/bmmhbhjoecckbmaclggmclhjpaoog
 Know more countries
 
 $/ npm install
+
 $/src/frontEnd npm install
+
 $/ npm run watch    
